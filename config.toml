@@ -1,0 +1,64 @@
+# 网站的根URL
+baseurl = "https://techqu.github.io/"
+# 首页的标题
+title = "Techqu Blog"
+
+subtitle = "专注于Android、Java、Go语言(golang)、移动互联网、项目管理、软件架构"
+keywords = "golang,go语言,go语言笔记,飞雪无情,java,android,博客,项目管理,python,软件架构,公众号,小程序"
+description = "专注于IT互联网，包括但不限于Go语言(golang)、Java、Android、Python、项目管理、抖音分析、软件架构等"
+
+
+
+# 设置使用的主题
+theme = "maupassant"
+# 设置网站默认的语言，所有的语言翻译文件在i18n目录下，文件名于此处配置的语言代码相同
+languageCode = "zh"
+defaultContentLanguage = "zh"
+# 值为空的话则不启用disqus，因为需要翻墙才能访问，所以我们不启用
+disqusShortname = ""
+# 取消默认的代码高亮，我们使用prism代码高亮
+pygmentsUseClasses = false
+pygmentCodeFences = true
+
+## 保持分类的原始名字（false会做转小写处理）
+preserveTaxonomyNames = true
+## 是否禁止URL Path转小写
+disablePathToLower = true
+
+# 每页显示的文章数量用于分页
+paginate = 5
+
+[menu]
+
+# 板块化分
+# 权重对应在页面上显示的次序
+
+
+
+
+
+
+[[menu.main]]
+  identifier = "archives"
+   name = "归档"
+   url = "/archives/"
+   weight = 3
+
+[[menu.main]]
+   name = "学习路线图"
+   url = "/roadmap/"
+   weight = 4
+
+[[menu.main]]
+    name = "简历模版"
+    url  = "/resume/"
+    weight = 6
+
+[[params.links]]
+  title = "Android Gradle权威指南"
+  name = "Android Gradle权威指南"
+  url = "http://yuedu.baidu.com/ebook/14a722970740be1e640e9a3e"
+[[params.links]]
+  title = "常用开发工具CDN镜像"
+  name = "常用开发工具CDN镜像"
+  url = "http://mirrors.flysnow.org/"
