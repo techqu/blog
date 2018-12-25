@@ -4,8 +4,8 @@ subtitle:    ""
 description: ""
 date:        2018-12-04
 author:      "瞿广"
-tags:        ["data structure", "program","数据结构","算法"]
-categories:  ["Tech" ]
+tags:        ["数据结构","算法"]
+categories:  ["Tech"]
 ---
 
 >极客时间中数据结构与算法课程的笔记
