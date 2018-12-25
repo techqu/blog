@@ -1,11 +1,11 @@
 # 网站的根URL
 baseurl = "https://techqu.github.io/"
 # 首页的标题
-title = "Techqu Blog"
+title = "Quguang's Blog"
 
 subtitle = "专注于Android、Java、Go语言(golang)、移动互联网、项目管理、软件架构"
-keywords = "golang,go语言,go语言笔记,飞雪无情,java,android,博客,项目管理,python,软件架构,公众号,小程序"
-description = "专注于IT互联网，包括但不限于Go语言(golang)、Java、Android、Python、项目管理、抖音分析、软件架构等"
+keywords = "java,java语言,java语言笔记,techqu,quguang,瞿广,博客,项目管理,python,软件架构,公众号,小程序"
+description = "专注于IT互联网，包括但不限于Java语言(golang)、Go、Android、Python、项目管理、抖音分析、软件架构等"
 
 
 
@@ -45,9 +45,15 @@ paginate = 5
    weight = 3
 
 [[menu.main]]
+   name = "markdown示例"
+   url = "/markdown/"
+   weight = 7
+
+
+[[menu.main]]
    name = "学习路线图"
    url = "/roadmap/"
-   weight = 4
+   weight = 5
 
 [[menu.main]]
     name = "简历模版"
@@ -55,10 +61,20 @@ paginate = 5
     weight = 6
 
 [[params.links]]
-  title = "Android Gradle权威指南"
-  name = "Android Gradle权威指南"
-  url = "http://yuedu.baidu.com/ebook/14a722970740be1e640e9a3e"
+  title = "ImportNew - 专注Java & Android 技术分享"
+  name = "ImportNew - 专注Java & Android 技术分享"
+  url = "http://www.importnew.com/"
 [[params.links]]
-  title = "常用开发工具CDN镜像"
-  name = "常用开发工具CDN镜像"
-  url = "http://mirrors.flysnow.org/"
+  title = "springboot中文索引"
+  name = "springboot中文索引"
+  url = "http://springboot.fun/"
+[[params.links]]
+  title = "springcloud中文索引"
+  name = "springcloud中文索引"
+  url = "http://springcloud.fun/"
+
+
+#[[params.ads]]
+#  title = "广告位测试"
+#  url = "https://promotion.aliyun.com/ntms/act/vmpt/aliyun-group/home.html?userCode=jdg9oj97"
+#  img = "https://img.alicdn.com/tfs/TB17qJhXpzqK1RjSZFvXXcB7VXa-200-126.jpg"

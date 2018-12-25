@@ -1,5 +1,5 @@
 ---
-title: "欢迎使用hugo,markdown语法说明"
+title: "markdown语法例子"
 date: 2018-12-20T10:58:38+08:00
 draft: false
 author: "瞿广"
@@ -8,27 +8,21 @@ summary: "这里填写文章文章摘要。"
 tags:        ["java", "volatile","synchronized","多线程","并发"]
 categories:  ["Tech"]
 ---
+>摘要：markdown语法例子
+
+
+
+
+
 
 # H1
 ##  标题2
 ### 标题3
 #### 标题四
 
-> 这是区块引用， 这是区块引用
->
-> 这是区块引用
- 这是区块引用
+
 
 ## 这是一个标题。
-
-> ## 这是一个标题。
-> 
-> 1.   这是第一行列表项。
-> 2.   这是第二行列表项。
-> 
-> 给出一些例子代码：
-> 
->     return shell_exec("echo $input | $markdown_script");
 
 ##  无序列表，使用星号、加号、或者减号
 *   Red
@@ -40,6 +34,22 @@ categories:  ["Tech"]
 1.   Green
 1.   Blue
 
+> ## 这是一个标题。
+> 
+> 1.   这是第一行列表项。
+> 2.   这是第二行列表项。
+> 
+> 给出一些例子代码：
+> 
+>     return shell_exec("echo $input | $markdown_script");
+
+
+
+> 这是区块引用， 这是区块引用
+>
+> 这是区块引用
+ 这是区块引用
+ 
 
 
 ##  调整好缩进的无序列表

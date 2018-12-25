@@ -6,10 +6,9 @@ draft: false
 
 # 个人信息
 
- - 冷熊/男/1990 
- - 本科/北极大学计算机系 
+ - xx/男/1990 
+ - 本科/xx大学计算机系 
  - 工作年限：3年
- - 微博：[@Easy](http://weibo.com/easy) （如果没有技术相关内容，也可以不放）
  - 技术博客：http://xxx.xxx.com ( 使用GitHub Host的Big较高  )
  - Github：http://github.com/xxx ( 有原创repo的Github帐号会极大的提升你的个人品牌  )
 
@@ -87,13 +86,13 @@ draft: false
 
 以下均为我熟练使用的技能
 
-- Web开发：JAVA/Hack/Node
+- Web开发：JAVA/Spring/Node
 - Web框架：JAVA/Yaf/Yii/Lavarel/LazyJAVA
 - 前端框架：Bootstrap/AngularJS/EmberJS/HTML5/Cocos2dJS/ionic
 - 前端工具：Bower/Gulp/SaSS/LeSS/PhoneGap
 - 数据库相关：MySQL/PgSQL/PDO/SQLite
-- 版本管理、文档和自动化部署工具：Svn/Git/JAVADoc/Phing/Composer
-- 单元测试：JUnit/SimpleTest/Qunit
+- 版本管理、文档和自动化部署工具：Svn/Git/Swagger/Phing/Composer
+- 单元测试：JUnit/TestNG
 - 云和开放平台：SAE/BAE/AWS/微博开放平台/微信应用开发
       
 ---      
