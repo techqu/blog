@@ -1,5 +1,5 @@
 ---
-title: "集成maven和Spring boot的profile功能"
+title: "如何集成maven和Spring boot的profile功能"
 date: 2019-01-04T23:05:13+08:00
 draft: false
 author: "瞿广"
@@ -8,6 +8,9 @@ summary: "这里填写文章文章摘要。"
 tags: ["java"]
 categories: ["Tech"]
 ---
+
+今天看 guns 项目的 application.properties 文件，发现了`spring.profiles.active = @profiles.active@`的写法，查了好些资料终于搞明白了。
+
 ### 首先，maven和springboot都有profile功能
 - maven 支持 profile 功能，当使用`maven profile`打包时，可以打包指定目录和指定文件，且可以修改文件中的变量。
 
