@@ -5,11 +5,11 @@ draft: false
 author: "瞿广"
 originallink: ""
 summary: "这里填写文章文章摘要。"
-tags: ["java"]
+tags: ["java","maven"]
 categories: ["Tech"]
 ---
 
-今天看 guns 项目的 application.properties 文件，发现了`spring.profiles.active = @profiles.active@`的写法，查了好些资料终于搞明白了。
+今天看 guns 项目的 application.properties 文件，发现了`spring.profiles.active = @profiles.active@`的写法，查了好些资料终于搞明白了。原来是在集成maven和Spring boot的profile功能时用的，那么如何集成呢？
 
 ### 首先，maven和springboot都有profile功能
 - maven 支持 profile 功能，当使用`maven profile`打包时，可以打包指定目录和指定文件，且可以修改文件中的变量。
@@ -50,7 +50,7 @@ categories: ["Tech"]
     </profiles>
 ```
 
-其中`profiles.active`是我们定义的一个变量，可通过mvn命令指定
+其中`profiles.active`是我们定义的一个变量，可通过 mvn 命令指定
 
 在`pom.xml`中配置可修改可访问资源文件
 
@@ -82,7 +82,7 @@ categories: ["Tech"]
 
 #### 步骤二： 配置springboot的profile
 
-　　这是通过`spring.profiles.active`，在`application.properties`中指定
+这是通过`spring.profiles.active`，在`application.properties`中指定
 　　
 ```
 spring.profiles.active = @profiles.active@
@@ -96,6 +96,3 @@ spring.profiles.active = @profiles.active@
 ```sh
 mvn clean package -Dmaven.test.skip=true -P prod -e
 ```
-
-
-这样就将maven与springboot的profile结合了
