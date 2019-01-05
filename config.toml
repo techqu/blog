@@ -37,6 +37,7 @@ paginate = 5
     subtitle = "专注于Java、移动互联网、项目管理、软件架构"
     keywords = "java,java语言,java语言笔记,techqu,quguang,瞿广,博客,项目管理,python,软件架构,公众号,小程序"
     description = "专注于IT互联网，包括但不限于Java语言(golang)、Go、Android、Python、项目管理、抖音分析、软件架构等"
+    busuanzi = true
 
 
 [[menu.main]]

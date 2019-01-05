@@ -7,6 +7,17 @@
     <div class="container">
         <div class="col-group">
 
+            <p >
+                <span id="busuanzi_container_site_pv">
+                    pv <span id="busuanzi_value_site_pv"></span> 
+                </span>
+    
+                <span id="busuanzi_container_site_uv">
+                    uv <span id="busuanzi_value_site_uv"></span> 
+                  </span>
+            </p>
+           
+
             <div class="col-8" id="main">
                 <div class="res-cons">
                     {{ range $index,$data := (where .Paginator.Pages "Type" "in" (slice "post" "posts")) }}
@@ -27,6 +38,7 @@
                                 {{ end }}
                             </div>
                             {{ end }}
+                            
                             <div class="post-content">
                                 {{ .Content | markdownify | truncate 180 }}
                             </div>
