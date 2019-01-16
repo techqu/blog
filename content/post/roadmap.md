@@ -6,12 +6,14 @@ author: "瞿广"
 originallink: ""
 summary: "这里填写文章文章摘要。"
 tags: ["java"]
-categories: ["Tech"]
+categories: ["Tech","毕生目标"]
 ---
+网罗了比较全面的java技术栈。
 
-> 本文基于微信公众号文章基础上添加，原文链接：
+ 本文基于微信公众号文章基础上添加，原文链接：
 https://mp.weixin.qq.com/s/UKwZkwYmDSVTbj62ACuapg
 
+<!--more-->
 # 一、基础篇
 ## JVM
 #### JVM内存结构

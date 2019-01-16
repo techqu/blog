@@ -2,8 +2,13 @@
 title: "简历模版"
 date: 2018-12-19T21:45:56+08:00
 draft: false
+tags: []
+categories:  ["面试"]
 ---
 
+  本文是一个markdown风格语法的简历模版，转载自网络
+
+<!--more-->
 # 个人信息
 
  - xx/男/1990 

@@ -7,17 +7,6 @@
     <div class="container">
         <div class="col-group">
 
-            <p >
-                <span id="busuanzi_container_site_pv">
-                    pv <span id="busuanzi_value_site_pv"></span> 
-                </span>
-    
-                <span id="busuanzi_container_site_uv">
-                    uv <span id="busuanzi_value_site_uv"></span> 
-                  </span>
-            </p>
-           
-
             <div class="col-8" id="main">
                 <div class="res-cons">
                     {{ range $index,$data := (where .Paginator.Pages "Type" "in" (slice "post" "posts")) }}
@@ -31,16 +20,15 @@
                                 {{ .Date.Year }}年{{ printf "%d" .Date.Month }}月{{ .Date.Day }}日
                             </date>
                             {{ with .Params.Categories }}
-                            <div class="post-meta meta-category">
-                                |
+                            <div class="post-meta">
+                                <span>|</span>
                                 {{ range . }}
-                                    <a href="{{ "/categories/" | absLangURL }}{{ . | urlize }}">{{ . }}</a>
+                                <span class="meta-category"><a href="{{ "/categories/" | absLangURL }}{{ . | urlize }}">{{ . }}</a></span>
                                 {{ end }}
                             </div>
                             {{ end }}
-                            
                             <div class="post-content">
-                                {{ .Content | markdownify | truncate 180 }}
+                                {{ .Summary }}……
                             </div>
                             <p class="readmore"><a href="{{ .Permalink }}">阅读全文</a></p>
                         </article>

@@ -3,12 +3,12 @@ title: "MYSQL实战45讲-笔记"
 date: 2018-12-19T17:32:22+08:00
 draft: false
 tags:        ["mysql"]
-categories:  ["极客时间"]
+categories:  ["极客时间笔记"]
 ---
 
->MYSQL实战45讲
+MYSQL实战45讲-极客时间笔记
 
-
+<!--more-->
 
 
 ### 基础架构：一条SQL查询语句是如何执行的

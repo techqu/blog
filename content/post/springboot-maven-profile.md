@@ -9,10 +9,11 @@ tags: ["java","maven"]
 categories: ["Tech"]
 ---
 
-今天看 guns 项目的 application.properties 文件，发现了`spring.profiles.active = @profiles.active@`的写法，查了好些资料终于搞明白了。原来是在集成maven和Spring boot的profile功能时用的，那么如何集成呢？
+>今天看 guns 项目的 application.properties 文件，发现了`spring.profiles.active = @profiles.active@`的写法，查了好些资料终于搞明白了。原来是在集成maven和Spring boot的profile功能时用的，那么如何集成呢？
 
-### 首先，maven和springboot都有profile功能
-- maven 支持 profile 功能，当使用`maven profile`打包时，可以打包指定目录和指定文件，且可以修改文件中的变量。
+<!--more-->
+#### 前提
+- maven 支持 profile 功能，当使用 maven profile 打包时，可以打包指定目录和指定文件，且可以修改文件中的变量。
 
 - spring boot 也支持 profile 功能，只要在`application.properties`文件中指定`spring.profiles.active=xxx` 即可，其中xxx是一个变量，当maven打包时，修改这个变量即可。
 
@@ -96,3 +97,10 @@ spring.profiles.active = @profiles.active@
 ```sh
 mvn clean package -Dmaven.test.skip=true -P prod -e
 ```
+这样就可以一步指定profile了，是不是很方便
+
+{{% admonition tip tip %}}
+
+Maven官方文档：[Introduction to Build Profiles](http://maven.apache.org/guides/introduction/introduction-to-profiles.html)
+{{% /admonition %}}
+

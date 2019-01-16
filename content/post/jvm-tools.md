@@ -1,5 +1,5 @@
 ---
-title: "Jvm 工具"
+title: "JVM 工具"
 date: 2018-12-24T18:08:25+08:00
 draft: false
 author: "瞿广"
@@ -9,8 +9,11 @@ tags: ["java","JVM","虚拟机"]
 categories: ["Tech"]
 ---
 
-> JDK的命令行工具
+ 本文介绍了常用的JDK的命令行工具
 
+<!--more-->
+内容出自：
+{{< douban 9787111421900>}}
 ## 一、jps:虚拟机进程状况工具
 
 jsp命令格式：

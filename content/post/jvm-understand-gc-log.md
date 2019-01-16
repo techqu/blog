@@ -9,8 +9,8 @@ tags: ["java","JVM","虚拟机"]
 categories: ["Tech"]
 ---
 
-> 理解GC日志，基于jdk1.7,一步步看懂GC日志
-
+ 理解GC日志，基于jdk1.7,一步步看懂GC日志
+<!--more-->
 ## GC 堆
 1、GC 分为两种：Minor GC、Full GC ( 或称为 Major GC )。
 

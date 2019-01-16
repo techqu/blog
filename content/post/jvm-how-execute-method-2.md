@@ -6,9 +6,11 @@ author: "瞿广"
 originallink: ""
 summary: "这里填写文章文章摘要。"
 tags: ["java"]
-categories: ["Tech","极客时间"]
+categories: ["Tech","极客时间笔记"]
 ---
->《极客时间-深入拆解java虚拟机》笔记
+《极客时间-深入拆解java虚拟机》笔记
+
+<!--more-->
 
 ### 1.虚方法调用
 Java里所有非私有实例方法调用都会被编译成invokevirtual指令，接口方法调用都会编译成invokeinterface指令。这两种指令，均属于Java虚拟机中的虚方法调用
