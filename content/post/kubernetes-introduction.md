@@ -72,21 +72,3 @@ Kubernetes项目正式依托着Borg项目的理论优势，才在短短几个月
 Kubernetes项目核心功能“全景图”
 
 ![kubernetes-features](/img/k8s-features.png)
-
-1. pod
-2. service服务发现：如何找到我的容器
-3. 自动化滚动更新
-
-  ```shell
-  $ kubectl scale deployment nginx-deployment --replicas=4
-  deployment.apps/nginx-deployment scaled
-  ```
-
-4. ingress
-4. Job与CronJob
-
-5. 调度、网络、资源管理、容器运行时的设计和实现方法
-6. 声明式API和控制器模式
-
-
-内核态、用户态
