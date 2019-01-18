@@ -1,9 +1,9 @@
 ---
-title: "Docker的本质"
+title: "Docker的实现原理"
 date: 2019-01-17T15:12:03+08:00
-lastmod: 2019-01-17T15:12:03+08:00
+lastmod: 2019-01-18T15:12:03+08:00
 draft: false
-keywords: []
+keywords: ["Docker的实现原理","容器","Docker"]
 description: ""
 tags: ["docker","容器"]
 categories: ["极客时间笔记","容器"]
@@ -42,6 +42,12 @@ sequenceDiagrams:
 
 容器技术的核心功能，就是通过约束和修改进程的动态表现，从而为其创造一个“边界”
 
+Docker容器具有以下3个特点：
+
+- **轻量级**：在同一台宿主机上的容器共享系统Kernel，这使得他们可以迅速启动而且占有的内存极少。镜像是以分层文件系统构造的，这可以让它们共享相同的文件，使得磁盘使用率和镜像下载速度得到提高。
+- **开放**：Docker容器基于开放标准，这使得Docker容器可以运行在主流Linux发行版和Windows操作系统上。
+- **安全**：容器将各个应用程序隔离开来，这给所有的应用程序提供了一层额外的安全防护。
+
 对于Docker等大多数Linux容器来说，**Cgroups技术是用来制造约束的主要手段，而Namespace技术则是用来修改进程视图的主要方法。**
 
 <!--more-->
@@ -72,13 +78,13 @@ PID  USER   TIME COMMAND
 可以看到，我们在 Docker 里最开始执行的 /bin/sh ，就是这个容器内部的第 1 号进程（PID=1），而这个容器里一共只有两个进程在运行。这就意味着，前面执行的 /bin/sh，以及我们刚刚执行的 ps，已经被 Docker 隔离在了一个跟宿主机完全不同的世界当中。
 
 **这种技术，就是 Linux 里面的 Namespace 机制**。而 Namespace 的使用方式也非常有意思：它其实只是 Linux 创建新进程的一个可选参数。我们知道，在 Linux 系统中创建线程的系统调用是 `clone()`，比如：
-```shell
+```
 int pid = clone(main_function, stack_size, SIGCHLD, NULL); 
 ```
 这个系统调用就会为我们创建一个新的进程，并且返回它的进程号pid。
 
 而当我们用clone（）系统调用创建一个新进程时，就可以在参数中指定 CLONE_NEWPID 参数，比如：
-```shell
+```
 int pid = clone(main_function, stack_size, CLONE_NEWPID | SIGCHLD, NULL); 
 ```
 
@@ -87,6 +93,18 @@ int pid = clone(main_function, stack_size, CLONE_NEWPID | SIGCHLD, NULL);
 当然，我们还可以多次执行上面的 clone() 调用，这样就会创建多个 PID Namespace，而每个 Namespace 里的应用进程，都会认为自己是当前容器里的第 1 号进程，它们既看不到宿主机里真正的进程空间，也看不到其他 PID Namespace 里的具体情况。
 
 **除了我们刚刚用到的 PID Namespace，Linux 操作系统还提供了 Mount、UTS、IPC、Network 和 User 这些 Namespace，用来对各种不同的进程上下文进行“障眼法”操作。**
+
+
+
+| namespace	| 引入的相关内核版本 |	被隔离的全局系统资源 |	在容器语境下的隔离效果 |
+| --- | --- | --- | --- |
+|Mount namespaces |	Linux 2.4.19 |	文件系统挂接点 |	每个容器能看到不同的文件系统层次结构 |
+|UTS namespaces |	Linux 2.6.19 |	nodename 和 domainname |	每个容器可以有自己的 hostname 和 domainame |
+|IPC namespaces	| Linux 2.6.19 |	特定的进程间通信资源，包括System V IPC 和  POSIX message queues	| 每个容器有其自己的 System V IPC 和 POSIX 消息队列文件系统，因此，只有在同一个 IPC |namespace 的进程之间才能互相通信 |
+|PID namespaces	| Linux 2.6.24 |	进程 ID 数字空间 （process ID number space）	| 每个 PID namespace 中的进程可以有其独立的 PID； 每个容器可以有其 PID 为 1 的root 进程；也使得容器可以在不同的 host 之间迁移，因为 namespace 中的进程 ID 和 host 无关了。这也使得容器中的每个进程有两个PID：容器中的 PID 和 host 上的 PID。
+|Network namespaces	| 始于Linux 2.6.24 完成于 Linux 2.6.29	| 网络相关的系统资源	| 每个容器用有其独立的网络设备，IP 地址，IP 路由表，/proc/net 目录，端口号等等。这也使得一个 host 上多个容器内的同一个应用都绑定到各自容器的 80 端口上。|
+|User namespaces	| 始于 Linux 2.6.23 完成于 Linux 3.8)	| 用户和组 ID 空间	| 在 user namespace 中的进程的用户和组 ID 可以和在 host 上不同； 每个 container 可以有不同的 user 和 group id；一个 host 上的非特权用户可以成为 user namespace 中的特权用户；| 
+
 
 比如，Mount Namespace ，用于让被隔离进程只看到当前 Namespace 里的挂载点信息； Network Namespace，用于让被隔离进程看到当前 Namespace 里的网络设备和配置。
 
@@ -112,7 +130,7 @@ int pid = clone(main_function, stack_size, CLONE_NEWPID | SIGCHLD, NULL);
 
 一个正在运行的 Docker 容器，其实就是一个启用了多个 Linux Namespace 的应用进程，而这个进程能够使用的资源量，则受 Cgroups 配置的限制。
 
-**Linux Cgroups 的全称是 Linux Control Group。它最主要的作用，就是限制一个进程组能够使用的资源上限，包括 CPU、内存、磁盘、网络带宽等等。**
+**Linux Cgroups 的全称是 Linux Control Group。它最主要的作用，就是限制一个进程组能够使用的资源上限，包括 CPU、内存、磁盘、网络带宽等等。**通过Cgroup，可以方便地限制某个进程的资源占用，并且可以实时地监控进程的监控和统计信息。
 
 **Linux Cgroups 的设计还是比较易用的，简单粗暴地理解呢，它就是一个子系统目录加上一组资源限制文件的组合**
 。而对于 Docker 等 Linux 容器项目来说，它们只需要在每个子系统下面，为每个容器创建一个控制组（即创建一个新目录），然后在启动容器进程之后，把这个进程的 PID 填写到对应控制组的 tasks 文件中就可以了。
@@ -231,8 +249,11 @@ $ tree ./C
 我的环境是 Ubuntu 16.04 和 Docker CE 18.05，这对组合默认使用的是 AuFS 这个联合文件系统的实现。你可以通过 docker info 命令，查看到这个信息。AuFS 的全称是 Another UnionFS，后改名为 Alternative UnionFS，再后来干脆改名叫作 Advance UnionFS.
 
 
-## 文章出处
+## 参考书目
+{{% douban 9787121317866 %}}
 
+## 参考文章
 - [05 | 白话容器基础（一）：从进程说开去](https://time.geekbang.org/column/article/14642)
 - [06 | 白话容器基础（二）：隔离与限制](https://time.geekbang.org/column/article/14653)
 - [07 | 白话容器基础（三）：深入理解容器镜像](https://time.geekbang.org/column/article/17921)
+
