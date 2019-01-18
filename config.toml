@@ -50,6 +50,13 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
   identifier = "categories"
   url = "/categories/"
 [[menu.main]]
+  name = "导航"
+  weight = 45
+  identifier = "navigator"
+  url = "/navigator/"
+
+
+[[menu.main]]
   name = "关于"
   weight = 50
   identifier = "about"
