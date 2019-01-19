@@ -50,8 +50,8 @@ sequenceDiagrams:
 | | [springcloud](http://springcloud.fun/) | [springboot](http://springboot.fun/) | | | | | |  |
 
 
-| _Colors_      | Fruits          | Vegetable         |     |     |     |      |        |
+|  每日必看      | Fruits          | Vegetable         |     |     |     |      |        |
 | ------------- |:---------------:| -----------------:|   ---  |   ---  |   ---  |  ---    |   ---     |
-| Red           | *Apple*         | [Pepper](#Tables) |     |     |     |      |        |
-| ~~Orange~~    | Oranges         | **Carrot**        |     |     |     |      |        |
-| Green         | ~~***Pears***~~ | Spinach           |     |     |     |      |        |
+| 每日必看           | [ImportNew](http://www.importnew.com/)         | [ImportNew](http://www.importnew.com/) |  [leetcode](https://leetcode.com/)   |   [juejin](https://juejin.im/)   |  [medium](https://medium.com/)   |   [sf](https://segmentfault.com/)   |  [oschina](http://tool.oschina.net/)      |
+| ~~Orange~~    |  [springcloud](http://springcloud.fun/)         |  [springboot](http://springboot.fun/)        |     |     |     |      |        |
+| Green         | ~~***Pears***~~ | Spinach           |     |     |     |      |         |
