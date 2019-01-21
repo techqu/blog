@@ -2,7 +2,7 @@
 title: "Drools Documentation"
 date: 2019-01-19T13:18:56+08:00
 lastmod: 2019-01-19T13:18:56+08:00
-draft: false
+draft: true
 keywords: []
 description: ""
 tags: []
