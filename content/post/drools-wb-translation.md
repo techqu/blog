@@ -2,7 +2,7 @@
 title: "Drools Documentation"
 date: 2019-01-19T13:18:56+08:00
 lastmod: 2019-01-19T13:18:56+08:00
-draft: true
+draft: false
 keywords: []
 description: ""
 tags: []
@@ -31,7 +31,7 @@ hideHeaderAndFooter: false
 #enableOutdatedInfoWarning: false
 
 flowchartDiagrams:
-  enable: false
+  enable: true
   options: ""
 
 sequenceDiagrams: 
@@ -39,6 +39,16 @@ sequenceDiagrams:
   options: ""
 
 ---
+
+
+
+
+
+
+
+
+
+
 
 
 1. Introduction
