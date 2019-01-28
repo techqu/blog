@@ -8,6 +8,7 @@ preserveTaxonomyNames = true
 enableRobotsTXT = true
 enableEmoji = true
 theme = "even"
+# theme = "jane"
 
 # Syntax highlighting by Chroma. NOTE: Don't enable `highlightInClient` and `chroma` at the same time!
 pygmentsOptions = "linenos=table"
@@ -35,20 +36,21 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
   identifier = "home"
   url = "/"
 [[menu.main]]
-  name = "归档"
+  name = "全部文章"
   weight = 20
   identifier = "archives"
   url = "/post/"
-[[menu.main]]
-  name = "标签"
-  weight = 30
-  identifier = "tags"
-  url = "/tags/"
-[[menu.main]]
+  [[menu.main]]
   name = "分类"
-  weight = 40
+  weight = 30
   identifier = "categories"
   url = "/categories/"
+[[menu.main]]
+  name = "标签"
+  weight = 40
+  identifier = "tags"
+  url = "/tags/"
+
 # [[menu.main]]
 #   name = "导航"
 #   weight = 45
@@ -69,7 +71,7 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
   since = "2018"            # Site creation time          # 站点建立时间
 
   # site info (optional)                                  # 站点信息（可选，不需要的可以直接注释掉）
-  logoTitle = "学习、记录、分享"        # default: the title value    # 默认值: 上面设置的title值
+  logoTitle = "miao"        # default: the title value    # 默认值: 上面设置的title值
 
   keywords = ["java","java语言","java语言笔记","techqu","quguang","瞿广","博客","项目管理","python","软件架构","公众号","小程序"]
   description = "专注于IT互联网，包括但不限于Java语言(golang)、Go、Android、Python、项目管理、抖音分析、软件架构等"
