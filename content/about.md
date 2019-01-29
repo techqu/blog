@@ -1,18 +1,46 @@
 ---
 title: "关于"
-date: 2019-01-10T20:25:33+08:00
+date: 2019-01-19T07:56:14+08:00
+lastmod: 2019-01-19T07:56:14+08:00
 draft: false
+keywords: ["java","锁","并发"]
+description: ""
+tags: ["java","锁","并发"]
+categories: ["并发编程","java面试"]
 author: "瞿广"
-originallink: ""
-summary: "这里填写文章文章摘要。"
-tags: ["java"]
-categories: ["Tech"]
+
+# You can also close(false) or open(true) something for this content.
+# P.S. comment can only be closed
+comment: false
+toc: true
+autoCollapseToc: false
+postMetaInFooter: true
+hiddenFromHomePage: false
+# You can also define another contentCopyright. e.g. contentCopyright: "This is another copyright."
+contentCopyright: false
+reward: false
+mathjax: false
+mathjaxEnableSingleDollar: false
+mathjaxEnableAutoNumber: false
+
+# You unlisted posts you might want not want the header or footer to show
+hideHeaderAndFooter: false
+
+# You can enable or disable out-of-date content warning for individual post.
+# Comment this out to use the global config.
+#enableOutdatedInfoWarning: false
+
+flowchartDiagrams:
+  enable: false
+  options: ""
+
+sequenceDiagrams: 
+  enable: false
+  options: ""
+
 ---
 
-
 从14年参加工作，到现在也有三四年了，业余时间也都有学习，可惜一直感觉工作中能用上的东西很少，学了angular、react、vue、ionic、小程序等很多前端知识都有了解，但是很多都用不上就忘记了，java、python、大数据课程也都买来了培训班的视频看了。鉴于计算机行业知识更新速度之快，深感自己的学习能力有待提高。这么一直追逐框架，也不是办法，还是需要系统学习，总结归纳吸收，提升内力才是根本。
-
-
 
 
 ### 平时经常会思考的一些点：
