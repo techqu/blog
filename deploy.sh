@@ -9,10 +9,8 @@ fi
 
 
 git clone https://github.com/techqu/techqu.github.io.git public
-cd public
-git config --local https.proxy socks5://127.0.0.1:1080
-git config --local http.proxy socks5://127.0.0.1:1080
-cd ..
+
+echo "quguang.wang" > ./public/CNAME
 hugo
 cd public
 git add .
