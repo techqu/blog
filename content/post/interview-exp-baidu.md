@@ -58,11 +58,18 @@ sequenceDiagrams:
 
 3、反射中，Class.forName和classloader的区别
 
+  >Java中class.forName()和classLoader都可用来对类进行加载。
+  class.forName()前者除了将类的.class文件加载到jvm中之外，还会对类进行解释，执行类中的static块。
+  而classLoader只干一件事情，就是将.class文件加载到jvm中，不会执行static中的内容,只有在newInstance才会去执行static块。
+  Class.forName(name, initialize, loader)带参函数也可控制是否加载static块。并且只有调用了newInstance()方法采用调用构造函数，创建类的对象。
+  参考文章：https://blog.csdn.net/qq_27093465/article/details/52262340
+
+
 4、session和cookie的区别和联系，session的生命周期，多个服务部署时session管理。
 
 5、Java中的队列都有哪些，有什么区别。
 
-6、Java的内存模型以及GC算法
+6、Java的内存模型 JMM 以及GC算法
 
 7、Java7、Java8的新特性(baidu问的,好BT)
 
