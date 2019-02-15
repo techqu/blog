@@ -286,7 +286,8 @@ private void setDone(Response res) {
 
 有没有一种方法能实现自动告知，即机器的增添、剔除对调用方透明，调用者不再需要写死服务提供方地址？你需要一个服务注册中心（服务自动注册与发现功能）
 
-可选技术： 
+可选技术：
+ 
 - Redis 
 - Zookeeper
 - Consul 
