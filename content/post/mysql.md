@@ -2,9 +2,11 @@
 title: "MYSQL实战45讲-笔记"
 date: 2018-12-19T17:32:22+08:00
 draft: false
-tags:        ["mysql"]
-categories:  ["极客时间笔记"]
-
+keywords: []
+description: ""
+tags: []
+categories: ["极客时间笔记","MySQL"]
+author: "瞿广"
 # You can also close(false) or open(true) something for this content.
 # P.S. comment can only be closed
 comment: false
@@ -44,12 +46,20 @@ MYSQL实战45讲-极客时间笔记
 ## 基础架构：一条SQL查询语句是如何执行的
 
 ### mysql架构组成
+
+MySQL的逻辑架构图
+
+![mysql-framework](/img/mysql-framework.png)
+
  - server端
     - 连接器：管理连接、权限验证
     - 分析器：词法分析、语法分析
     - 优化器：执行计划生成、索引选择
     - 执行器：操作引擎、返回结果
  - 存储引擎：存储数据，提供读写接口
+
+
+
 
 ## 日志系统：一条SQL更新语句是如何执行的
 
