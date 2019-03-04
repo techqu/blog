@@ -1,5 +1,5 @@
 ---
-title: "Kubernetes 入门"
+title: "《深入剖析Kubernetes》-入门"
 date: 2019-01-17T08:41:16+08:00
 lastmod: 2019-01-17T08:41:16+08:00
 draft: false

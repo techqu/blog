@@ -1,5 +1,5 @@
 ---
-title:       "数据结构与算法-高级篇"
+title:       "《数据结构与算法之美》-高级篇"
 subtitle:    ""
 description: ""
 date:        2018-12-04

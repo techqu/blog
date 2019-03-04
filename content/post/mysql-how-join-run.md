@@ -1,12 +1,12 @@
 ---
-title: "Join语句是怎么执行的"
+title: "《MYSQL实战45讲》-Join语句是怎么执行的"
 date: 2019-02-22T22:27:38+08:00
 lastmod: 2019-02-22T22:27:38+08:00
 draft: false
 keywords: []
 description: ""
 tags: []
-categories: ["极客时间","MySQL"]
+categories: ["极客时间笔记","MySQL"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

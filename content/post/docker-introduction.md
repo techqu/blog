@@ -1,5 +1,5 @@
 ---
-title: "Docker的实现原理"
+title: "《深入剖析Kubernetes》-Docker的实现原理"
 date: 2019-01-17T15:12:03+08:00
 lastmod: 2019-01-18T15:12:03+08:00
 draft: false
