@@ -13,7 +13,7 @@ author: "瞿广"
 # P.S. comment can only be closed
 comment: false
 toc: true
-autoCollapseToc: false
+autoCollapseToc: true
 postMetaInFooter: true
 hiddenFromHomePage: false
 # You can also define another contentCopyright. e.g. contentCopyright: "This is another copyright."
@@ -96,7 +96,7 @@ t1是驱动表，t2是被驱动表
 3. 取出表 t2 中满足条件的行，更 R 组成一行，作为结果集的一部分；
 4. 重复执行步骤 1 和 3 ，知道 t1 的末尾循环结束。
 
-在形式上，这个过程就跟我们写成程序时的嵌套查询类似，并且可以用上被驱动表的索引，所以我们成为**“Index Nested-Loop Join”，简称NLJ**
+在形式上，这个过程就跟我们写成程序时的嵌套查询类似，并且**可以用上被驱动表的索引，所以我们成为“Index Nested-Loop Join”，简称NLJ**
 
 ### 流程分析
 
