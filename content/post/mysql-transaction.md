@@ -6,7 +6,7 @@ draft: false
 keywords: []
 description: ""
 tags: []
-categories: []
+categories: ["极客时间笔记","MySQL"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.
