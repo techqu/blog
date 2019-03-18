@@ -58,11 +58,26 @@ sequenceDiagrams:
 
 每一个索引在InnoDB里面对应一棵B+树
 
+假设，我们有一个主键列为ID的表，表中有字段k，并且在k上有索引。
+
+```sql
+
+mysql> create table T(
+id int primary key, 
+k int not null, 
+name varchar(16),
+index (k))engine=InnoDB;
+
+```
+表中 R1~R5 的 (ID,k) 值分别为 (100,1)、(200,2)、(300,3)、(500,5) 和 (600,6)，两棵树的示例示意图如下。
+
+![InnoDB的索引组织结构](/img/InnoDB-index.png)
+
 根据叶子节点的内容，索引类型分为主键索引和非主键索引。
 
-主键索引的叶子节点存的是整行数据。在InnoDB里，主键索引也被称为聚簇索引（clustered index）
+**主键索引的叶子节点存的是整行数据。**在InnoDB里，主键索引也被称为聚簇索引（clustered index）
 
-非主键索引的叶子节点内容是主键的值。在InnoDB里，非主键索引也被称为二级索引（secondary index）
+**非主键索引的叶子节点内容是主键的值。**在InnoDB里，非主键索引也被称为二级索引（secondary index）
 
  基于主键索引和普通索引的查询有什么区别？
 
