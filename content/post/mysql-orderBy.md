@@ -1,5 +1,5 @@
 ---
-title: "Mysql OrderBy"
+title: "《MYSQL实战45讲》- Order By"
 date: 2019-03-20T08:49:19+08:00
 lastmod: 2019-03-20T08:49:19+08:00
 draft: false
