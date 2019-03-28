@@ -2,7 +2,7 @@
 title: "{{ replace .TranslationBaseName "-" " " | title }}"
 date: {{ .Date }}
 lastmod: {{ .Date }}
-draft: true
+draft: false
 keywords: []
 description: ""
 tags: []
@@ -13,7 +13,7 @@ author: "瞿广"
 # P.S. comment can only be closed
 comment: false
 toc: true
-autoCollapseToc: false
+autoCollapseToc: true
 postMetaInFooter: true
 hiddenFromHomePage: false
 # You can also define another contentCopyright. e.g. contentCopyright: "This is another copyright."
