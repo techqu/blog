@@ -1,5 +1,5 @@
 ---
-title: "Python 入门"
+title: "Python 学习入门"
 date: 2019-03-19T20:04:31+08:00
 lastmod: 2019-03-19T20:04:31+08:00
 draft: false
@@ -39,6 +39,8 @@ sequenceDiagrams:
   options: ""
 
 ---
+
+学习了python的基础语法、变量类型、条件语句、数据结构、模块引用等
 
 <!--more-->
 

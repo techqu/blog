@@ -1,12 +1,12 @@
 ---
-title: "Mysql Question 03"
+title: "《MYSQL实战45讲》- Question 03"
 date: 2019-03-27T15:49:58+08:00
 lastmod: 2019-03-27T15:49:58+08:00
 draft: false
 keywords: []
 description: ""
 tags: []
-categories: []
+categories: ["极客时间笔记","MySQL"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.
