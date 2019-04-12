@@ -1,12 +1,12 @@
 ---
-title: "归并排序"
+title: "《数据结构与算法之美》-归并排序"
 date: 2019-03-07T16:54:30+08:00
 lastmod: 2019-03-07T16:54:30+08:00
 draft: false
 keywords: []
 description: ""
 tags: []
-categories: []
+categories:  ["极客时间笔记","数据结构与算法"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.
