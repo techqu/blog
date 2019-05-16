@@ -1,5 +1,5 @@
 ---
-title: "CI CD Introduce"
+title: "《持续交付》"
 date: 2019-04-19T15:23:49+08:00
 lastmod: 2019-04-19T15:23:49+08:00
 draft: false
