@@ -1,5 +1,5 @@
 ---
-title: "Java Interview Cache04"
+title: "Java面试-高并发-redis的过期策略"
 date: 2019-05-16T17:47:24+08:00
 lastmod: 2019-05-16T17:47:24+08:00
 draft: false

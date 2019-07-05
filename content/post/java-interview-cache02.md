@@ -1,5 +1,5 @@
 ---
-title: "Java Interview 缓存（为什么redis是单线程的但是还可以支撑高并发）"
+title: "Java面试-高并发-为什么redis是单线程的但是还可以支撑高并发"
 date: 2019-05-16T17:28:03+08:00
 lastmod: 2019-05-15T20:36:47+08:00
 draft: false

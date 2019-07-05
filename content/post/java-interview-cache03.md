@@ -1,5 +1,5 @@
 ---
-title: "Java Interview redis 数据类型"
+title: "Java面试-高并发-redis 数据类型"
 date: 2019-05-16T17:38:03+08:00
 lastmod: 2019-05-15T20:36:47+08:00
 draft: false

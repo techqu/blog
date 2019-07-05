@@ -1,5 +1,5 @@
 ---
-title: "Java Interview redis的持久化 06"
+title: "Java面试-高并发-redis的持久化"
 date: 2019-05-16T18:11:25+08:00
 lastmod: 2019-05-16T18:11:25+08:00
 draft: false
@@ -187,3 +187,5 @@ AOF机制对每条写入命令作为日志，以append-only的模式写入一个
 （3）综合使用AOF和RDB两种持久化机制，用AOF来保证数据不丢失，作为数据恢复的第一选择; 用RDB来做不同程度的冷备，在AOF文件都丢失或损坏不可用的时候，还可以使用RDB来进行快速的数据恢复
 
 ## 04_redis的RDB和AOF两种持久化机制的优劣势对比
+
+//TODO

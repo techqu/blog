@@ -1,12 +1,12 @@
 ---
-title: "Java Interview MQ可靠性传输"
+title: "Java面试-高并发-MQ可靠性传输(4)"
 date: 2019-05-15T17:36:47+08:00
 lastmod: 2019-05-15T17:36:47+08:00
 draft: false
 keywords: []
 description: ""
 tags: []
-categories: ["面试","消息队列"]
+categories: ["面试","消息队列","MQ"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

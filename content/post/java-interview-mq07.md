@@ -1,12 +1,12 @@
 ---
-title: "Java Interview MQ自己设计一个"
+title: "Java面试-高并发-MQ自己设计一个(7)"
 date: 2019-05-15T20:36:47+08:00
 lastmod: 2019-05-15T20:36:47+08:00
 draft: false
 keywords: []
 description: ""
 tags: []
-categories: ["面试","消息队列"]
+categories: ["面试","消息队列","MQ"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

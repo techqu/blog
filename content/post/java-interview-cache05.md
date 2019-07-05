@@ -1,5 +1,5 @@
 ---
-title: "Java Interview Cache05"
+title: "Java面试-高并发-如何保证Redis的高并发和高可用"
 date: 2019-05-16T17:48:03+08:00
 lastmod: 2019-05-16T17:48:03+08:00
 draft: false

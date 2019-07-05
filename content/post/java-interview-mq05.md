@@ -1,12 +1,12 @@
 ---
-title: "Java Interview MQ消息的顺序性"
+title: "Java面试-高并发-MQ消息的顺序性(5)"
 date: 2019-05-15T18:36:47+08:00
 lastmod: 2019-05-15T18:36:47+08:00
 draft: false
 keywords: []
 description: ""
 tags: []
-categories: ["面试","消息队列"]
+categories: ["面试","消息队列","MQ"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.
