@@ -1,5 +1,5 @@
 ---
-title: "Java Interview Distributed Zk01"
+title: "Java面试-分布式 Zookeeper的使用场景"
 date: 2019-05-20T16:50:16+08:00
 lastmod: 2019-05-20T16:50:16+08:00
 draft: false

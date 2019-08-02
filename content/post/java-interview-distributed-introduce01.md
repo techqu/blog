@@ -1,5 +1,5 @@
 ---
-title: "Java Interview Distributed 什么是分布式？"
+title: "Java面试-分布式-什么是分布式？"
 date: 2019-05-21T10:49:00+08:00
 lastmod: 2019-05-21T10:49:00+08:00
 draft: false

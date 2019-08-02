@@ -44,6 +44,8 @@ Window上是ipconfig，Linux上是ifconfig，和 ip addr
 
 <!--more-->
 
+
+
 ```shell
 root@test:~# ip addr
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default 
@@ -224,4 +226,11 @@ step3：将二进制的结果转换为十进制（ip的最后一组不能为0和
             最小值：172.16.96.1
             最大值：172.16.177.254
 ```
+
+## 附
+
+课程所有协议
+
+![所有协议](/img/geektime-network-protocol.png)
+
 > 参考文章：https://time.geekbang.org/column/article/7772

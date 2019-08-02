@@ -1,19 +1,19 @@
 ---
-title: "{{ replace .TranslationBaseName "-" " " | title }}"
-date: {{ .Date }}
-lastmod: {{ .Date }}
-draft: false
+title: "《Java并发编程实战》-4-案例分析"
+date: 2019-07-28T17:31:24+08:00
+lastmod: 2019-07-27T17:31:24+08:00
+draft: true 
 keywords: []
 description: ""
 tags: []
-categories: []
+categories: ["极客时间笔记","java并发实战"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.
 # P.S. comment can only be closed
 comment: false
 toc: true
-autoCollapseToc: false
+autoCollapseToc: true
 postMetaInFooter: true
 hiddenFromHomePage: false
 # You can also define another contentCopyright. e.g. contentCopyright: "This is another copyright."

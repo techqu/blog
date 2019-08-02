@@ -1,5 +1,5 @@
 ---
-title: "Java Interview Distributed 分布式服务接口的幂等性和顺序性"
+title: "Java面试-分布式 分布式服务接口的幂等性和顺序性"
 date: 2019-05-21T17:35:10+08:00
 lastmod: 2019-05-21T17:35:10+08:00
 draft: false

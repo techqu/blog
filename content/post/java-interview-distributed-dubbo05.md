@@ -1,5 +1,5 @@
 ---
-title: "Java Interview Distributed Dubbo05"
+title: "Java面试-分布式 Dubbo的spi思想"
 date: 2019-05-21T16:01:24+08:00
 lastmod: 2019-05-21T16:01:24+08:00
 draft: false

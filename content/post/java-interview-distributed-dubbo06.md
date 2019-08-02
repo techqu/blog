@@ -1,5 +1,5 @@
 ---
-title: "Java Interview Distributed Dubbo服务治理、服务降级06"
+title: "Java面试-分布式 Dubbo服务治理、服务降级"
 date: 2019-05-21T16:46:51+08:00
 lastmod: 2019-05-21T16:46:51+08:00
 draft: false

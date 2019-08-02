@@ -1,5 +1,5 @@
 ---
-title: "Java面试 分布式系统-dubbo负载均衡策略和集群容错策略"
+title: "Java面试 分布式-dubbo负载均衡策略和集群容错策略"
 date: 2019-05-21T14:53:52+08:00
 lastmod: 2019-05-21T14:53:52+08:00
 draft: false
