@@ -6,7 +6,7 @@ draft: false
 keywords: []
 description: ""
 tags: []
-categories: ["极客时间笔记","java并发实战"]
+categories: ["geektime","java并发实战"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

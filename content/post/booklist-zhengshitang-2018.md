@@ -3,10 +3,11 @@ title: "政事堂书单 2018"
 date: 2019-01-21T16:34:26+08:00
 lastmod: 2019-01-21T16:34:26+08:00
 draft: false
+thumbnail: "/img/undraw/undraw_reading_list_4boi.png"
 keywords: []
 description: ""
 tags: []
-categories: []
+categories: ["毕生目标"]
 author: "政事堂pro"
 
 # You can also close(false) or open(true) something for this content.
@@ -40,7 +41,8 @@ sequenceDiagrams:
 
 ---
 
-![reading_list](/img/undraw/undraw_reading_list_4boi.png)
+读史明智，顾子明推荐书单
+
 <!--more-->
 
 {{% douban 9787010101286%}}

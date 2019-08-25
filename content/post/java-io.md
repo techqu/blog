@@ -6,7 +6,7 @@ author: "瞿广"
 originallink: ""
 summary: "这里填写文章文章摘要。"
 tags: ["java"]
-categories: ["Tech","极客时间笔记"]
+categories: ["Tech","geektime"]
 ---
 
  Java 提供了哪些IO方式？NIO如何实现多路复用？

@@ -6,7 +6,7 @@ draft: false
 keywords: []
 description: ""
 tags: []
-categories: []
+categories: ["spring","java"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.
@@ -39,6 +39,8 @@ sequenceDiagrams:
   options: ""
 
 ---
+
+给不知道如何阅读spring源码的同学一点借鉴
 
 <!--more-->
 

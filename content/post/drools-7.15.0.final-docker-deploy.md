@@ -5,7 +5,7 @@ lastmod: 2019-01-26T14:56:49+08:00
 draft: false
 keywords: ["Drools","docker","容器"]
 description: ""
-tags: []
+tags: ["docker"]
 categories: ["drools"]
 author: "瞿广"
 

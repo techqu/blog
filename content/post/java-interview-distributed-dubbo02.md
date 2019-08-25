@@ -6,7 +6,7 @@ draft: false
 keywords: []
 description: ""
 tags: []
-categories: []
+categories: ["java","dubbo"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.
@@ -40,14 +40,15 @@ sequenceDiagrams:
 
 ---
 
+
+面试题:说一下的dubbo的工作原理？注册中心挂了可以继续通信吗？说说一次rpc请求的流程？
+
 <!--more-->
 
 
-## 1、面试题
 
-说一下的dubbo的工作原理？注册中心挂了可以继续通信吗？说说一次rpc请求的流程？
 
-## 2、面试官心里分析
+## 1、面试官心里分析
 
 MQ、ES、Redis、Dubbo，上来先问你一些思考的问题，原理（**kafka高可用架构原理、es分布式架构原理、redis线程模型原理、Dubbo工作原理**），**生产环境里可能会碰到的一些问题（每种技术引入之后生产环境都可能会碰到一些问题），系统设计（设计MQ，设计搜索引擎，设计一个缓存，设计rpc框架）**
 
@@ -59,7 +60,7 @@ MQ、ES、Redis、Dubbo，上来先问你一些思考的问题，原理（**kafk
 
 既然聊dubbo，那肯定是先从dubbo原理开始聊了，你先说说dubbo支撑rpc分布式调用的架构师啥，然后说说一次rpc请求dubbo是怎么给你完成的，对吧。
 
-## 3、面试题剖析
+## 2、面试题剖析
 
 ### （1）dubbo工作原理
 

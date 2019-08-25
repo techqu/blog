@@ -6,7 +6,7 @@ draft: false
 keywords: []
 description: ""
 tags: []
-categories: []
+categories: ["java","dubbo"] 
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.
@@ -43,11 +43,9 @@ sequenceDiagrams:
 <!--more-->
 
 
-## 1、面试题
+面试题 分布式服务接口的幂等性如何设计（比如不能重复扣款）？
 
-分布式服务接口的幂等性如何设计（比如不能重复扣款）？
-
-## 2、面试官心里分析
+## 1、面试官心里分析
 
 从这个问题开始，面试官就已经进入了实际的生产问题的面试了
 
@@ -63,7 +61,7 @@ sequenceDiagrams:
 
 我们之前生产就遇到过，是往数据库里写入数据，重复的请求，就导致我们的数据经常会错，出现一些重复数据，就会导致一些问题
 
-## 3、面试题剖析
+## 2、面试题剖析
 
 ![01_分布式系统接口的幂等性问题](/img/01_分布式系统接口的幂等性问题.png)
 

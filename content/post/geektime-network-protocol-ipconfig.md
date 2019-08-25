@@ -1,12 +1,12 @@
 ---
-title: "《趣谈网络协议》-Ipconfig:最熟悉又陌生的命令行"
+title: "《趣谈网络协议》-Ipconfig"
 date: 2019-01-16T18:51:01+08:00
 lastmod: 2019-01-16T18:51:01+08:00
 draft: false
 keywords: []
 description: ""
 tags: []
-categories: ["极客时间笔记","网络协议","《趣谈网络协议》"]
+categories: ["geektime","网络协议","《趣谈网络协议》"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

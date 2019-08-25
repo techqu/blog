@@ -6,7 +6,7 @@ draft: false
 keywords: []
 description: ""
 tags: []
-categories: []
+categories: ["java","dubbo"] 
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.
@@ -39,21 +39,19 @@ sequenceDiagrams:
   options: ""
 
 ---
+面试题:dubbo支持哪些通信协议？支持哪些序列化协议？
 
 <!--more-->
 
 
-## 1、面试题
 
-dubbo支持哪些通信协议？支持哪些序列化协议？
-
-## 2、面试官心里分析
+## 1、面试官心里分析
 
 上一个问题，说说dubbo的基本工作原理，那是你必须知道的，至少知道dubbo分成哪些层，然后平时怎么发起rpc请求的，注册、发现、调用，这些是基本的。
 
 接着就可以针对底层进行深入的问问了，比如第一步就可以先问问序列化协议这块，就是平时rpc的时候怎么走的？
 
-## 3、面试题剖析
+## 2、面试题剖析
 
 ### （1）dubbo支持不同的通信协议
 

@@ -5,8 +5,8 @@ lastmod: 2019-02-13T07:56:41+08:00
 draft: false
 keywords: []
 description: ""
-tags: []
-categories: ["面试"]
+tags: ["面试"]
+categories: ["面经"]
 author: "来源于网络"
 
 # You can also close(false) or open(true) something for this content.
@@ -42,12 +42,15 @@ sequenceDiagrams:
 
 从事Java开发也有5年经验了，7月初来到帝都，开启面试经历，前后20天左右，主面互联网公司，一二线大公司或者是融资中的创业公司都面试过，拿了一些offer，其中包括奇虎360，最后综合决定还是去百度了。
 
+
+<!--more-->
+
+
 首先不同面试官面试风格一定不同，我这里就是总结这些天面试Java开发过程中的大多数问题，综合分类有Java基础，框架，多线程，网络通信，数据库以及设计模式，算法等几个模块。
 
 一名3年工作经验的Java程序员应该具备的技能，这可能是Java程序员们比较关心的内容。我这里要说明一下，以下列举的内容不是都要会的东西----但是如果你掌握得越多，最终能得到的评价、拿到的薪水势必也越高。
 
 
-<!--more-->
 
 
 ## 一、Java基础

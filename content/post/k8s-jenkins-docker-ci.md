@@ -6,7 +6,7 @@ draft: false
 keywords: []
 description: ""
 tags: []
-categories: []
+categories: ["devops"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.
@@ -48,15 +48,10 @@ sequenceDiagrams:
 
 1个Node项目VUE生成静态页面做前端+nginx
 
+pgsql、redis、rabbitmq、emqx
 
+<!--more-->
 
-pgsql
-
-redis
-
-rabbitmq
-
-emqx
 
 ![micro-service.png](/img/micro-service.png)
 
@@ -128,7 +123,7 @@ node {
 ```
 2，jenkins pipeline（Node服务的）
 
-```
+```bash
 
 node {
    
@@ -160,7 +155,8 @@ node {
 ```
 
 3，dockerfile （JAVA服务的）
-```
+
+```dockerfile
 FROM java:8u111
 MAINTAINER gongshubing@weds.com.cn
 # 定义变量
@@ -174,8 +170,10 @@ ENTRYPOINT ["sh", "-c"]
 CMD ["java -server -Dspring.profiles.active=ops -Xmx512m -Xms256m -Xmn256m -XX:+UseG1GC -XX:+DisableExplicitGC -Duser.timezone=GMT+8 -jar *.jar > /dev/null"
 ]
 ```
+
 4，dockerfile（NODE服务的）
-```
+
+```dockerfile
 FROM node:10.15.3
 MAINTAINER gongshubing@weds.com.cn
 # 定义变量
@@ -192,7 +190,8 @@ CMD ["npm start"]
 ```
 
 5，K8S 编排yaml文件（所有项目编排文件一样，不同之处只有镜像URL/IP/PORT）：pod中的日志文件写入nfs
-```
+
+{{< highlight yaml >}}
 # deployment
 ---
 apiVersion: apps/v1
@@ -241,9 +240,11 @@ spec:
       port: 8097
       targetPort: 8097
 
-```
+{{< /highlight >}}
+
 6，jenkins调用编排K8s脚本
-```
+
+```bash
 #!/bin/bash
 
 TAG=$1

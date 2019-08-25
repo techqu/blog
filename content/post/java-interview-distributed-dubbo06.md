@@ -6,7 +6,7 @@ draft: false
 keywords: []
 description: ""
 tags: []
-categories: []
+categories: ["java","dubbo"] 
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.
@@ -40,16 +40,14 @@ sequenceDiagrams:
 
 ---
 
-## 1、面试题
-
-如何基于dubbo进行服务治理、服务降级、失败重试以及超时重试？
+面试题 如何基于dubbo进行服务治理、服务降级、失败重试以及超时重试？
 
 <!--more-->
 
 
 
 
-## 2、面试官心里分析
+## 1、面试官心里分析
 
 **服务治理**，这个问题如果问你，其实就是看看你有没有服务治理的思想，因为这个是做过复杂微服务的人肯定会遇到的一个问题。
 
@@ -69,7 +67,7 @@ sequenceDiagrams:
 
  （5）dubbo的服务治理、降级、重试
 
-## 3、面试题剖析
+## 2、面试题剖析
 
 ### （1）服务治理
 

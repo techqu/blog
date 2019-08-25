@@ -1,5 +1,5 @@
 ---
-title: "高效学习"
+title: "learn method"
 date: 2019-01-12T11:59:01+08:00
 draft: false
 author: "瞿广"
@@ -7,6 +7,8 @@ originallink: ""
 summary: "这里填写文章文章摘要。"
 tags: ["java"]
 categories: ["学习方法"]
+# weight: 5
+menu: "main"
 ---
 
 

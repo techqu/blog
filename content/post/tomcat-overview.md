@@ -5,8 +5,8 @@ lastmod: 2019-02-12T15:12:30+08:00
 draft: false
 keywords: []
 description: ""
-tags: []
-categories: ["tomcat","java","springmvc","servlet"]
+tags: ["tomcat","java","springmvc","servlet"]
+categories: ["java"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

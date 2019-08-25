@@ -6,7 +6,7 @@ draft: false
 keywords: []
 description: ""
 tags: []
-categories: [考研]
+categories: ["考研"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

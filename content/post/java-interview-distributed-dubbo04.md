@@ -6,7 +6,7 @@ draft: false
 keywords: []
 description: ""
 tags: []
-categories: []
+categories: ["java","dubbo"] 
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.
@@ -40,16 +40,14 @@ sequenceDiagrams:
 
 ---
 
-## 1、面试题
-
-dubbo负载均衡策略和集群容错策略都有哪些？动态代理策略呢？
+面试题 dubbo负载均衡策略和集群容错策略都有哪些？动态代理策略呢？
 
 
 <!--more-->
 
 
 
-## 2、面试官心里分析
+## 1、面试官心里分析
 
 继续深问吧，这些都是用dubbo必须知道的一些东西，你得知道基本原理，知道序列化是什么协议，还得知道具体用dubbo的时候，如何负载均衡，如何高可用，如何动态代理。
 
@@ -63,7 +61,7 @@ dubbo负载均衡策略和集群容错策略都有哪些？动态代理策略呢
 
 （4）dubbo SPI机制：你了解不了解dubbo的SPI机制？如何基于SPI机制对dubbo进行扩展？
 
-## 3、面试题剖析
+## 2、面试题剖析
 
 ### （1）dubbo负载均衡策略
 

@@ -6,7 +6,7 @@ draft: false
 keywords: []
 description: ""
 tags: []
-categories: []
+categories: ["linux"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.
@@ -84,7 +84,7 @@ awk其名称得自于它的创始人 Alfred Aho 、Peter Weinberger 和 Brian Ke
 
 假设last -n 5的输出如下
 
-```
+```shell
 [root@www ~]# last -n 5 <==仅取出前五行
 root     pts/1   192.168.1.100  Tue Feb 10 11:21   still logged in
 root     pts/1   192.168.1.100  Tue Feb 10 00:46 - 02:28  (01:41)
@@ -127,7 +127,7 @@ sys
 3.如果只是显示/etc/passwd的账户和账户对应的shell,而账户与shell之间以tab键分割
 
 
-```
+```shell
 #cat /etc/passwd |awk  -F ':'  '{print $1"\t"$7}'
 root    /bin/bash
 daemon  /bin/sh
@@ -228,7 +228,7 @@ printf函数，其用法和c语言中printf基本相似,可以格式化字符串
 
 9.下面统计/etc/passwd的账户人数
 
-```
+```shell
 awk '{count++;print $0;} END{print "user count is ", count}' /etc/passwd
 root:x:0:0:root:/root:/bin/bash
 ......

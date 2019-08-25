@@ -5,8 +5,8 @@ lastmod: 2019-01-18T15:03:48+08:00
 draft: false
 keywords: []
 description: ""
-tags: []
-categories: []
+tags: ["书单"]
+categories: ["毕生目标"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

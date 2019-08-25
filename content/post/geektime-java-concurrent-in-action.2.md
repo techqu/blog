@@ -1,12 +1,12 @@
 ---
-title: "《Java并发编程实战》-3-并发设计模式"
+title: "《Java并发编程实战》-3-并发设计模式（未完待续）"
 date: 2019-07-27T17:31:24+08:00
 lastmod: 2019-07-27T17:31:24+08:00
 draft: false
 keywords: []
 description: ""
 tags: []
-categories: ["极客时间笔记","java并发实战"]
+categories: ["geektime","java并发实战"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

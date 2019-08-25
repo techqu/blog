@@ -11,6 +11,78 @@ categories: ["Tech"]
 
  理解GC日志，基于jdk1.7,一步步看懂GC日志
 <!--more-->
+## GC日志查看
+可以通过在java命令种加入参数来指定对应的gc类型，打印gc日志信息并输出至文件等策略。
+
+
+GC的日志是以替换的方式(>)写入的，而不是追加(>>)，如果下次写入到同一个文件中的话，以前的GC内容会被清空。
+
+ 
+
+对应的参数列表
+
+```
+-XX:+PrintGC 输出GC日志  
+-XX:+PrintGCDetails 输出GC的详细日志  
+-XX:+PrintGCTimeStamps 输出GC的时间戳（以基准时间的形式）  
+-XX:+PrintGCDateStamps 输出GC的时间戳（以日期的形式，如 2013-05-04T21:53:59.234+0800）  
+-XX:+PrintHeapAtGC 在进行GC的前后打印出堆的信息  
+-Xloggc:../logs/gc.log 日志文件的输出路径  
+``` 
+
+
+这里使用如下的参数来进行日志的打印：
+
+```
+-XX:+PrintGCDateStamps -XX:+PrintGCDetails -Xloggc:./gclogs  
+```
+
+对于新生代回收的一行日志，其基本内容如下：
+
+```
+2014-07-18T16:02:17.606+0800: 611.633: [GC 611.633: [DefNew: 843458K->2K(948864K), 0.0059180 secs] 2186589K->1343132K(3057292K), 0.0059490 secs] [Times: user=0.00 sys=0.00, real=0.00 secs]  
+``` 
+
+ 
+
+其含义大概如下：
+
+
+2014-07-18T16:02:17.606+0800（当前时间戳）: 611.633（时间戳）: [GC（表示Young GC） 611.633: [DefNew（单线程Serial年轻代GC）: 843458K（年轻代垃圾回收前的大小）->2K（年轻代回收后的大小）(948864K（年轻代总大小）), 0.0059180 secs（本次回收的时间）] 2186589K（整个堆回收前的大小）->1343132K（整个堆回收后的大小）(3057292K（堆总大小）), 0.0059490 secs（回收时间）] [Times: user=0.00（用户耗时） sys=0.00（系统耗时）, real=0.00 secs（实际耗时）]  
+
+
+ 
+
+老年代回收的日志如下：
+
+Java代码  收藏代码
+2014-07-18T16:19:16.794+0800: 1630.821: [GC 1630.821: [DefNew: 1005567K->111679K(1005568K), 0.9152360 secs]1631.736: [Tenured:  
+2573912K->1340650K(2574068K), 1.8511050 secs] 3122548K->1340650K(3579636K), [Perm : 17882K->17882K(21248K)], 2.7854350 secs] [Times: user=2.57 sys=0.22, real=2.79 secs]  
+ 
+
+ 
+
+gc日志中的最后貌似是系统运行完成前的快照：
+
+```
+Heap  
+ def new generation   total 1005568K, used 111158K [0x00000006fae00000, 0x000000073f110000, 0x0000000750350000)  
+  eden space 893888K,  12% used [0x00000006fae00000, 0x0000000701710e90, 0x00000007316f0000)  
+  from space 111680K,   3% used [0x0000000738400000, 0x000000073877c9b0, 0x000000073f110000)  
+  to   space 111680K,   0% used [0x00000007316f0000, 0x00000007316f0000, 0x0000000738400000)  
+ tenured generation   total 2234420K, used 1347671K [0x0000000750350000, 0x00000007d895d000, 0x00000007fae00000)  
+   the space 2234420K,  60% used [0x0000000750350000, 0x00000007a2765cb8, 0x00000007a2765e00, 0x00000007d895d000)  
+ compacting perm gen  total 21248K, used 17994K [0x00000007fae00000, 0x00000007fc2c0000, 0x0000000800000000)  
+   the space 21248K,  84% used [0x00000007fae00000, 0x00000007fbf92a50, 0x00000007fbf92c00, 0x00000007fc2c0000)  
+No shared spaces configured.  
+ 
+```
+ 
+
+GC日志的离线分析
+
+可以使用一些离线的工具来对GC日志进行分析，比如sun的gchisto(https://java.net/projects/gchisto)，gcviewer（https://github.com/chewiebug/GCViewer ），这些都是开源的工具，用户可以直接通过版本控制工具下载其源码，进行离线分析
+
 ## GC 堆
 1、GC 分为两种：Minor GC、Full GC ( 或称为 Major GC )。
 

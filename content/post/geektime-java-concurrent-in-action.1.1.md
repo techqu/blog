@@ -6,7 +6,7 @@ draft: false
 keywords: []
 description: ""
 tags: []
-categories: ["极客时间笔记","java并发实战"]
+categories: ["geektime","java并发实战"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.
@@ -40,11 +40,15 @@ sequenceDiagrams:
 
 ---
 
+
+
+在前面《08 | 管程:并发编程的万能钥 匙》中我们提到过在并发编程领域，有**两大核心问题:一个是互斥，即同一时刻只允许一个线程 访问共享资源;另一个是同步，即线程之间如何通信、协作**。这两大问题，管程都是能够解决 的。Java SDK 并发包通过 Lock 和 Condition 两个接口来实现管程，其中**Lock 用于解决互斥 问题，Condition 用于解决同步问题。**
+<!--more-->
+
 ## 14|Lock和Condition（上）：隐藏在并发包中的管程
 
 ### 再造管程的理由
 
-在前面《08 | 管程:并发编程的万能钥 匙》中我们提到过在并发编程领域，有两大核心问题:一个是互斥，即同一时刻只允许一个线程 访问共享资源;另一个是同步，即线程之间如何通信、协作。这两大问题，管程都是能够解决 的。Java SDK 并发包通过 Lock 和 Condition 两个接口来实现管程，其中 Lock 用于解决互斥 问题，Condition 用于解决同步问题。
 
 原因是 synchronized 申请资源的时候，如果申请不到，线程直 接进入阻塞状态了，而线程进入阻塞状态，啥都干不了，也释放不了线程已经占有的资源。但我 们希望的是:
 

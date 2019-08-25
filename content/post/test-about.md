@@ -4,9 +4,10 @@ date: 2019-01-31T13:39:29+08:00
 lastmod: 2019-01-31T13:39:29+08:00
 draft: false
 keywords: []
+thumbnail: "/img/undraw/undraw_mobile_testing_reah.png"
 description: ""
 tags: []
-categories: ["测试","极客时间笔记"]
+categories: ["测试","geektime"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.
@@ -40,12 +41,7 @@ sequenceDiagrams:
 
 ---
 
-![mobile_testing](/img/undraw/undraw_mobile_testing_reah.png)
-
 简单聊下我所了解的测试,测试基础知识、GUI 自动化测试、API 自动化测试、代码级测试、性能测试、测试数据准备、测试基础架构、测试新技术，测试覆盖率、软件缺陷报告、测试计划
-
-
-
 
 
 <!--more-->
@@ -207,3 +203,12 @@ Mock 代码和桩代码非常类似，都是用来代替真实代码的临时代
 做好测试计划，很多时候被风险打乱，也就是不确定性打乱。如跨部门合作、技术攻关、预研项目不成熟等的引进等的不确定性
 同时测试计划受开发进度，质量影响很大，可能之前估计一周搞完的结果质量太差，需要搞两周，那最后的发布日期都定下来，很可能就堆人，压缩测试周期了。
 
+
+
+|分类|功能|
+|---|---|
+|单元测试|确保类、模块功能正确|
+|集成测试|确保组件间接口、交互和链路正确|
+|组件测试|确保服务提供方和消费方都遵循契约规范|
+|端到端测试|确保整个应用满足用户需求|
+|探索测试|手工探索学习功能，改进自动化测试|

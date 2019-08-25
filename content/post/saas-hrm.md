@@ -6,7 +6,7 @@ draft: false
 keywords: []
 description: ""
 tags: []
-categories: []
+categories: ["saas"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.
@@ -39,6 +39,8 @@ sequenceDiagrams:
   options: ""
 
 ---
+
+一个实际的saas项目的例子
 
 <!--more-->
 

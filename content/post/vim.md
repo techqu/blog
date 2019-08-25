@@ -6,7 +6,7 @@ draft: false
 keywords: []
 description: ""
 tags: []
-categories: []
+categories: ["linux"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.
@@ -40,10 +40,10 @@ sequenceDiagrams:
 
 ---
 
-编辑器之神-vim
-神的编辑器-emacs
+**编辑器之神-vim,神的编辑器-emacs**
 
-最近开始使用vim键盘流，原因是写代码时真心不想再去碰鼠标，来回切换很麻烦。以下是记录了一些常用但是我不会的快捷键
+最近开始使用vim键盘流，写代码时真心不想再去碰鼠标，来回切换很麻烦。以下是记录了一些常用但是我不会的快捷键
+
 <!--more-->
 ## 环境准备
 - 安装vim

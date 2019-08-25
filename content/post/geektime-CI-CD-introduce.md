@@ -6,7 +6,7 @@ draft: false
 keywords: []
 description: ""
 tags: []
-categories: []
+categories: ["devops"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

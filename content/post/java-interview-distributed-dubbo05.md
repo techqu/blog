@@ -6,7 +6,7 @@ draft: false
 keywords: []
 description: ""
 tags: []
-categories: []
+categories: ["java","dubbo"] 
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.
@@ -41,21 +41,19 @@ sequenceDiagrams:
 ---
 
 
-## 1、面试题
-
-dubbo的spi思想是什么？
+面试题 dubbo的spi思想是什么？
 
 <!--more-->
 
 
 
-## 2、面试官心里分析
+## 1、面试官心里分析
 
 继续深入问呗，前面一些基础性的东西问完了，确定你应该都ok了解dubbo的一些基本东西，那么问个稍微难一点点的问题，就是spi，先问问你spi是啥？然后问问你dubbo的spi是怎么实现的？
 
 其实就是看看你对dubbo的掌握如何
 
-## 3、面试题剖析
+## 2、面试题剖析
 
 spi，简单来说，就是`service provider interface`，说白了是什么意思呢，比如你有个接口，现在这个接口有3个实现类，那么在系统运行的时候对这个接口到底选择哪个实现类呢？这就需要spi了，需要根据指定的配置或者是默认的配置，去找到对应的实现类加载进来，然后用这个实现类的实例对象。
 
