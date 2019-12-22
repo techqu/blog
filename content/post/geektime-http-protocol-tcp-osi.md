@@ -6,7 +6,7 @@ draft: false
 keywords: []
 description: ""
 tags: ["《透视HTTP协议》"]
-categories: []
+categories: ["Tech"]
 author: "CSDN-JeremyZJM"
 
 # You can also close(false) or open(true) something for this content.

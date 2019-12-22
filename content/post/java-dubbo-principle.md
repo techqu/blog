@@ -6,7 +6,7 @@ draft: false
 keywords: []
 description: ""
 tags: ["dubbo"]
-categories: []
+categories: ["Tech"]
 author: "CSDN-一杯就醉1929 "
 
 # You can also close(false) or open(true) something for this content.

@@ -6,7 +6,7 @@ draft: false
 keywords: ["Docker的实现原理","容器","Docker"]
 description: ""
 tags: ["docker","容器"]
-categories: []
+categories: ["Tech"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

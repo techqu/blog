@@ -7,7 +7,7 @@ draft: false
 keywords: []
 description: ""
 tags: ["Java核心技术36讲"]
-categories: []
+categories: ["Tech"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

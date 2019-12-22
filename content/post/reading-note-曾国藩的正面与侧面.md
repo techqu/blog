@@ -6,7 +6,7 @@ author: "瞿广"
 originallink: ""
 summary: "这里填写文章文章摘要。"
 tags: ["java","历史","人物传记"]
-categories: ["read"]
+categories: ["note"]
 ---
 
 从《曾国藩家书》了解到的曾国藩，以他为榜样，资质愚钝，后天补足。

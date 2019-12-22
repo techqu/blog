@@ -5,8 +5,8 @@ lastmod: 2019-01-14T14:53:02+08:00
 draft: false
 keywords: []
 description: ""
-tags: []
-categories: [""]
+tags: ["分布式"]
+categories: ["Tech"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

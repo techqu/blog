@@ -6,7 +6,7 @@ draft: false
 keywords: []
 description: ""
 tags: ["设计模式","spring"]
-categories: []
+categories: ["Tech"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

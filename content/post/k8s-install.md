@@ -1,12 +1,12 @@
 ---
-title: "K8s Install"
+title: "kubernetes Install"
 date: 2019-09-15T10:45:17+08:00
 lastmod: 2019-09-15T10:45:17+08:00
 draft: false
 keywords: []
 description: ""
 tags: ["kubernetes"]
-categories: []
+categories: ["Tech"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

@@ -7,7 +7,7 @@ keywords: []
 description: ""
 # lead: "Example lead - highlighted near the title"
 tags: []
-categories: []
+categories: ["Tech"]
 author: "瞿广"
 menu: "main"
 weight: 0

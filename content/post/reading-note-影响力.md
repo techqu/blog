@@ -6,7 +6,7 @@ author: "瞿广"
 originallink: ""
 summary: "这里填写文章文章摘要。"
 tags: ["心理学"]
-categories: ["read"]
+categories: ["note"]
 ---
 
 

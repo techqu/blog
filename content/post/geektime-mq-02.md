@@ -6,7 +6,7 @@ draft: false
 keywords: []
 description: ""
 tags: ["消息队列高手课"]
-categories: []
+categories: ["Tech"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

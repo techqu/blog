@@ -5,8 +5,8 @@ lastmod: 2019-07-02T11:50:35+08:00
 draft: false
 keywords: []
 description: ""
-tags: ["devops"]
-categories: []
+tags: ["devops","Kubernetes"]
+categories: ["Tech"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

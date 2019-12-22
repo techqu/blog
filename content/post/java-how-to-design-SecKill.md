@@ -6,7 +6,7 @@ draft: false
 keywords: []
 description: ""
 tags: []
-categories: []
+categories: ["Tech"]
 author: "CSDN-Heaven-Wang"
 
 # You can also close(false) or open(true) something for this content.

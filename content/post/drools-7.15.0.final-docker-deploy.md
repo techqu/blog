@@ -6,7 +6,7 @@ draft: false
 keywords: ["Drools","docker","容器"]
 description: ""
 tags: ["drools"]
-categories: []
+categories: ["Tech"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

@@ -6,7 +6,7 @@ draft: false
 keywords: []
 description: ""
 tags: ["面试"]
-categories: []
+categories: ["Tech"]
 author: "oschina-Hosee"
 
 # You can also close(false) or open(true) something for this content.

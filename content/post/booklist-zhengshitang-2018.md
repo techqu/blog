@@ -6,8 +6,8 @@ draft: false
 thumbnail: "/img/undraw/undraw_reading_list_4boi.png"
 keywords: []
 description: ""
-tags: []
-categories: []
+tags: ["booklist"]
+categories: ["note"]
 author: "政事堂pro"
 
 # You can also close(false) or open(true) something for this content.

@@ -7,7 +7,7 @@ keywords: []
 thumbnail: "/img/undraw/undraw_mobile_testing_reah.png"
 description: ""
 tags: ["测试"]
-categories: []
+categories: ["Tech"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

@@ -6,7 +6,7 @@ author: "瞿广"
 originallink: ""
 summary: "这里填写文章文章摘要。"
 tags: ["历史"]
-categories: ["read"]
+categories: ["note"]
 ---
 
 作为自己的世界史科普读物吧
