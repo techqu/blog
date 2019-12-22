@@ -6,7 +6,7 @@ draft: true
 keywords: []
 description: ""
 tags: []
-categories: ["opensource"]
+categories: []
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

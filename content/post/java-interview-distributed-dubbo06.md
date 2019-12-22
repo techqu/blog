@@ -5,8 +5,8 @@ lastmod: 2019-05-21T16:46:51+08:00
 draft: false
 keywords: []
 description: ""
-tags: []
-categories: ["java","dubbo"] 
+tags: ["dubbo"]
+categories: []
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

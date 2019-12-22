@@ -5,8 +5,7 @@ draft: false
 author: "瞿广"
 originallink: ""
 summary: "这里填写文章文章摘要。"
-tags:        ["java", "volatile","synchronized","多线程","并发"]
-categories:  ["Tech"]
+categories:  []
 
 # weight: 10
 contentCopyright: MIT

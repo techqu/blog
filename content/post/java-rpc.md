@@ -5,8 +5,8 @@ lastmod: 2019-02-15T11:10:56+08:00
 draft: false
 keywords: []
 description: ""
-tags: []
-categories: ["面试"]
+tags: ["面试"]
+categories: []
 author: "oschina-Hosee"
 
 # You can also close(false) or open(true) something for this content.

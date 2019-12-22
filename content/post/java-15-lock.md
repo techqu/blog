@@ -6,7 +6,7 @@ draft: false
 keywords: ["java","锁","并发"]
 description: ""
 tags: ["java","锁","并发"]
-categories: ["java并发实战","面试"]
+categories: []
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

@@ -6,7 +6,7 @@ draft: false
 keywords: []
 description: ""
 tags: ["书单"]
-categories: ["毕生目标"]
+categories: []
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

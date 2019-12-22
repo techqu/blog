@@ -5,8 +5,8 @@ lastmod: 2019-07-12T11:51:07+08:00
 draft: false
 keywords: []
 description: ""
-tags: []
-categories: ["spring","java"]
+tags: ["spring","java"]
+categories: []
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

@@ -5,8 +5,8 @@ lastmod: 2019-07-05T15:00:05+08:00
 draft: false
 keywords: []
 description: ""
-tags: []
-categories: ["设计模式","spring"]
+tags: ["设计模式","spring"]
+categories: []
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

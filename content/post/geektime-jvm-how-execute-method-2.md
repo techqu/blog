@@ -6,7 +6,7 @@ author: "瞿广"
 originallink: ""
 summary: "这里填写文章文章摘要。"
 tags: ["java"]
-categories: ["Tech","geektime"]
+categories: ["Tech"]
 ---
 《极客时间-深入拆解java虚拟机》笔记
 

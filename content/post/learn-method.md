@@ -6,7 +6,7 @@ author: "瞿广"
 originallink: ""
 summary: "这里填写文章文章摘要。"
 tags: ["java"]
-categories: ["学习方法"]
+categories: []
 # weight: 5
 menu: "main"
 ---

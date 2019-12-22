@@ -5,8 +5,8 @@ lastmod: 2019-03-07T16:54:30+08:00
 draft: false
 keywords: []
 description: ""
-tags: ["sort"]
-categories:  ["geektime","数据结构与算法"]
+tags: []
+categories:  []
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

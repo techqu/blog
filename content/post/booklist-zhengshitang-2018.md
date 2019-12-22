@@ -7,7 +7,7 @@ thumbnail: "/img/undraw/undraw_reading_list_4boi.png"
 keywords: []
 description: ""
 tags: []
-categories: ["毕生目标"]
+categories: []
 author: "政事堂pro"
 
 # You can also close(false) or open(true) something for this content.

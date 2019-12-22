@@ -5,8 +5,8 @@ lastmod: 2019-03-15T09:26:22+08:00
 draft: false
 keywords: []
 description: ""
-tags: []
-categories: ["geektime","MySQL"]
+tags: ["MySQL"]
+categories: []
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.
@@ -61,17 +61,17 @@ insert into t(id, k) values(1,1),(2,2);
 
 |事务A|事务B|事务C|
 | --- | --- | --- |
-|start transaction with consistent snapshot;||
-| | start transaction with consistent snapshot;||
+|start  with consistent snapshot;||
+| | start  with consistent snapshot;||
 |||update t set k=k+1 where id=1;|
 ||update t set k=k+1 where id=1; select k from t where id=1;||
 |select k from t where id=1; commit;|||
 ||commit;||
 
-`begin/start transaction`命令并不是一个事务的起点，在执行到它们之后的第一个操作 InnoDB 表的语句，事务才真正启动成功。 这时候你想要马上启动一个事务，可以使用 `start transaction with consistent snapshot` 这个命令。
+`begin/start `命令并不是一个事务的起点，在执行到它们之后的第一个操作 InnoDB 表的语句，事务才真正启动成功。 这时候你想要马上启动一个事务，可以使用 `start  with consistent snapshot` 这个命令。
 
 - 第一种启动方式，一致性视图是在执行第一个快照读语句时创建的;
-- 第二种启动方式，一致性视图在执行`start transaction with consistent snapshot`时创建的
+- 第二种启动方式，一致性视图在执行`start  with consistent snapshot`时创建的
 
 在这个例子里，事务C没有显式地使用`begin/commit`，表示这个update语句本身就是一个事务，语句完成的时候会自动提交。
 
@@ -111,9 +111,9 @@ mysql> select k from t where id=1 for update;
 
 |事务A|事务B|事务C'|
 | --- | --- | --- |
-|start transaction with consistent snapshot;||
-| | start transaction with consistent snapshot;||
-|||start transaction with consistent snapshot;update t set k=k+1 where id=1;|
+|start  with consistent snapshot;||
+| | start  with consistent snapshot;||
+|||start  with consistent snapshot;update t set k=k+1 where id=1;|
 ||update t set k=k+1 where id=1; select k from t where id=1;||
 |select k from t where id=1; commit;||commit;|
 ||commit;||

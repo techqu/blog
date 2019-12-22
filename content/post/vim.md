@@ -5,8 +5,8 @@ lastmod: 2019-07-20T17:15:57+08:00
 draft: false
 keywords: []
 description: ""
-tags: []
-categories: ["linux"]
+tags: ["linux"]
+categories: []
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.
@@ -74,6 +74,10 @@ t  T 之前   ; ,
 
 ### 4. 文本对象
 
+x = dl
+X = dh
+D = d$
+C = c$
 #### 分隔符文本对象
 
 ib 小括号
@@ -91,9 +95,13 @@ a>
 #### 范围文本对象
 
 iw word
+
 aw
+
+
 is sentence
 as
+
 ip part
 ap
 
@@ -149,9 +157,18 @@ ctrol f b \ d u
 切屏：ctrl+w+w
 
 ### 10.滑动屏幕
-zt
+zt(top)
 zz 滑动屏幕使当前行置于屏幕中央
-zb
+zb(bottom)
+
+ctrl+e  滑动一行
+ctrl+y  滑动一行
+
+ctrl+d  滑动半屏
+ctrl+u  滑动半屏
+
+ctrl+f  滑动一屏
+ctrl+b  滑动一屏
 
 ### 11.大小写
 ~

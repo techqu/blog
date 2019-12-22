@@ -5,8 +5,8 @@ lastmod: 2019-05-15T20:36:47+08:00
 draft: false
 keywords: []
 description: ""
-tags: []
-categories: ["面试","消息队列","MQ"]
+tags: ["面试","消息队列","MQ"]
+categories: []
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

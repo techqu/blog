@@ -6,8 +6,8 @@ draft: false
 keywords: []
 thumbnail: "/img/undraw/undraw_mobile_testing_reah.png"
 description: ""
-tags: []
-categories: ["测试","geektime"]
+tags: ["测试"]
+categories: []
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

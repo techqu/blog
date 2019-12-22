@@ -5,8 +5,8 @@ lastmod: 2019-07-27T17:31:24+08:00
 draft: false
 keywords: []
 description: ""
-tags: []
-categories: ["geektime","java并发实战"]
+tags: ["java并发实战"]
+categories: []
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

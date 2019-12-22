@@ -6,7 +6,7 @@ draft: false
 keywords: []
 description: ""
 tags:        ["数据结构","算法"]
-categories:  ["Tech","geektime","数据结构与算法"]
+categories:  ["Tech"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

@@ -5,8 +5,8 @@ lastmod: 2019-06-19T10:47:53+08:00
 draft: false
 keywords: []
 description: ""
-tags: []
-categories: ["DDD"]
+tags: ["domain-driven-design"]
+categories: []
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

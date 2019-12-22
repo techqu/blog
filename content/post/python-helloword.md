@@ -5,8 +5,8 @@ lastmod: 2019-03-19T20:04:31+08:00
 draft: false
 keywords: []
 description: ""
-tags: []
-categories: ["python"]
+tags: ["python"]
+categories: []
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

@@ -5,8 +5,8 @@ lastmod: 2019-02-25T08:00:23+08:00
 draft: false
 keywords: []
 description: ""
-tags: []
-categories: ["geektime","MySQL"]
+tags: ["MySQL"]
+categories: []
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.
@@ -70,13 +70,13 @@ create table db2.t like db1.t
 
 ```shell
 
-mysqldump -h$host -P$port -u$user --add-locks=0 --no-create-info --single-transaction  --set-gtid-purged=OFF db1 t --where="a>900" --result-file=/client_tmp/t.sql
+mysqldump -h$host -P$port -u$user --add-locks=0 --no-create-info --single-  --set-gtid-purged=OFF db1 t --where="a>900" --result-file=/client_tmp/t.sql
 
 ```
 
 这条命令中，主要参数含义如下：
 
-1. –single-transaction 的作用是，在导出数据的时候不需要对表 db1.t 加表锁，而是使用 `START TRANSACTION WITH CONSISTENT SNAPSHOT `的方法；
+1. –single- 的作用是，在导出数据的时候不需要对表 db1.t 加表锁，而是使用 `START  WITH CONSISTENT SNAPSHOT `的方法；
 2. –add-locks 设置为 0，表示在输出的文件结果里，不增加" LOCK TABLES 
 3. –no-create-info 的意思是，不需要导出表结构；
 4. –set-gtid-purged=off 表示的是，不输出跟 GTID 相关的信息；

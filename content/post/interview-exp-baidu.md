@@ -6,7 +6,7 @@ draft: false
 keywords: []
 description: ""
 tags: ["面试"]
-categories: ["面经"]
+categories: []
 author: "来源于网络"
 
 # You can also close(false) or open(true) something for this content.

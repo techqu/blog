@@ -5,8 +5,8 @@ lastmod: 2019-08-19T17:49:12+08:00
 draft: false
 keywords: []
 description: ""
-tags: []
-categories: ["jvm"]
+tags: ["jvm"]
+categories: []
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

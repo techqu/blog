@@ -6,7 +6,7 @@ draft: false
 keywords: []
 description: ""
 tags: ["面试"]
-categories: ["面经"]
+categories: []
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

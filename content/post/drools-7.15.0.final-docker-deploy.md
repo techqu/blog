@@ -5,8 +5,8 @@ lastmod: 2019-01-26T14:56:49+08:00
 draft: false
 keywords: ["Drools","docker","容器"]
 description: ""
-tags: ["docker"]
-categories: ["drools"]
+tags: ["drools"]
+categories: []
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

@@ -5,8 +5,8 @@ lastmod: 2019-02-14T15:04:47+08:00
 draft: false
 keywords: []
 description: ""
-tags: []
-categories: ["面试"]
+tags: ["面试"]
+categories: []
 author: "海子"
 
 # You can also close(false) or open(true) something for this content.

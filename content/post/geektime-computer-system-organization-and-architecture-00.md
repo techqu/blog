@@ -5,8 +5,8 @@ lastmod: 2019-08-08T14:50:26+08:00
 draft: false
 keywords: []
 description: ""
-tags: []
-categories: ["计算机组成原理"]
+tags: ["计算机组成原理"]
+categories: []
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

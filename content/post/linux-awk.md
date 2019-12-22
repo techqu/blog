@@ -5,8 +5,8 @@ lastmod: 2019-04-02T13:24:32+08:00
 draft: false
 keywords: []
 description: ""
-tags: []
-categories: ["linux"]
+tags: ["linux"]
+categories: []
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

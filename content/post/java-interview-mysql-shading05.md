@@ -5,8 +5,8 @@ lastmod: 2019-05-17T18:26:55+08:00
 draft: false
 keywords: []
 description: ""
-tags: []
-categories: ["面试","MySQL","读写分离"]
+tags: ["面试","MySQL"]
+categories: []
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

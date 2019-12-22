@@ -5,8 +5,8 @@ lastmod: 2019-05-09T18:43:28+08:00
 draft: false
 keywords: []
 description: ""
-tags: []
-categories: ["MySQL"]
+tags: ["MySQL"]
+categories: []
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

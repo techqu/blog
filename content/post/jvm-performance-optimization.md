@@ -6,7 +6,7 @@ author: "瞿广"
 originallink: ""
 summary: "这里填写文章文章摘要。"
 tags: ["java","JVM","虚拟机"]
-categories: ["JVM"]
+categories: []
 ---
 
  linux性能调优和年轻代大小选择和年老代大小的选择

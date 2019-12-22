@@ -5,8 +5,8 @@ lastmod: 2019-02-15T15:41:23+08:00
 draft: false
 keywords: []
 description: ""
-tags: []
-categories: ["dubbo"]
+tags: ["dubbo"]
+categories: []
 author: "CSDN-一杯就醉1929 "
 
 # You can also close(false) or open(true) something for this content.

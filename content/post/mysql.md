@@ -5,8 +5,8 @@ lastmod: 2019-05-22T22:27:38+08:00
 draft: false
 keywords: []
 description: ""
-tags: []
-categories: ["geektime","MySQL"]
+tags: ["MySQL"]
+categories: []
 author: "瞿广"
 # You can also close(false) or open(true) something for this content.
 # P.S. comment can only be closed

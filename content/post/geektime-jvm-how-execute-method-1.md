@@ -6,7 +6,7 @@ author: "瞿广"
 originallink: ""
 summary: "这里填写文章文章摘要。"
 tags: ["java","《深入拆解Java虚拟机》"]
-categories: ["Tech","geektime"]
+categories: ["Tech"]
 ---
 
 JVM是如何执行方法调用的？（上）

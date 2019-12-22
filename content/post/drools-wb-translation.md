@@ -5,8 +5,8 @@ lastmod: 2019-01-19T13:18:56+08:00
 draft: false
 keywords: []
 description: ""
-tags: ["doc"]
-categories: ["drools"]
+tags: ["drools"]
+categories: []
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

@@ -5,8 +5,8 @@ lastmod: 2019-08-04T20:34:10+08:00
 draft: false
 keywords: []
 description: ""
-tags: ["java"]
-categories: ["geektime","Java性能调优实战"]
+tags: ["Java性能调优实战"]
+categories: []
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

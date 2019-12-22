@@ -5,8 +5,8 @@ lastmod: 2019-01-15T10:53:02+08:00
 draft: false
 keywords: []
 description: ""
-tags: []
-categories: ["事务","分布式"]
+tags: ["分布式"]
+categories: []
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.
@@ -48,7 +48,7 @@ sequenceDiagrams:
 ## TCC 事务：最终一致性
 方案简介
 
->TCC（Try-Confirm-Cancel）的概念，最早是由 Pat Helland 于 2007 年发表的一篇名为《Life beyond Distributed Transactions:an Apostate’s Opinion》的论文提出。
+>TCC（Try-Confirm-Cancel）的概念，最早是由 Pat Helland 于 2007 年发表的一篇名为《Life beyond Distributed s:an Apostate’s Opinion》的论文提出。
 
 TCC事务机制相对于传统事务机制（X/Open XA Two-Phase-Commit），其特征在于它不依赖资源管理器(RM)对XA的支持，而是通过对（由业务系统提供的）业务逻辑的调度来实现分布式事务。
 

@@ -5,8 +5,8 @@ lastmod: 2019-04-19T15:23:49+08:00
 draft: false
 keywords: []
 description: ""
-tags: []
-categories: ["devops"]
+tags: ["devops"]
+categories: []
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.
