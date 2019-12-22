@@ -13,7 +13,7 @@ hasCJKLanguage = true
 home = ["HTML", "RSS", "Algolia"]
 
 [params]
-  header_image = "img/home-bg-jeep.jpg"
+  header_image = "img/bg-china.jpg"
   SEOTitle = "瞿广的博客 | quguang Blog"
   description = "瞿广，程序员, 开源爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。"
   keyword = "瞿广, quguang, , 瞿广的网络日志, 瞿广的博客, quguang Blog, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Istio, Kubernetes, 微服务, Microservice"
