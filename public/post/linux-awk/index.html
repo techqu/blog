@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Quguang&#39;s Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://quguang.wang/img/bg-china.jpg">
+    <meta property="twitter:image" content="https://quguang.wang/img/bg-china.jpg" />
+    
+
+    
+    <meta name="title" content="Linux三剑客之AWK学习" />
+    <meta property="og:title" content="Linux三剑客之AWK学习" />
+    <meta property="twitter:title" content="Linux三剑客之AWK学习" />
+    
+
+    
+    <meta name="description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。">
+    <meta property="og:description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。" />
+    <meta property="twitter:description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="瞿广, quguang, , 瞿广的网络日志, 瞿广的博客, quguang Blog, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Istio, Kubernetes, 微服务, Microservice">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>Linux三剑客之AWK学习-瞿广的博客 | quguang Blog</title>
+
+    <link rel="canonical" href="/post/linux-awk/">
+
+    <link rel="stylesheet" href="/css/iDisqus.min.css"/>
+	
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+    
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    
+    <script src="/js/jquery.min.js"></script>
+    
+    
+    <script src="/js/bootstrap.min.js"></script>
+    
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Quguang&#39;s Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/life">life</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/math">math</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/note">note</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/tech">tech</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/top/about/">ABOUT</a></li>
+                    
+
+                    
+		    <li>
+                        <a href="/search">SEARCH <img src="/img/search.png" height="15" style="cursor: pointer;" alt="Search"></a>
+		    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/bg-china.jpg')
+    }
+</style>
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/linux" title="linux">
+                            linux
+                        </a>
+                        
+                    </div>
+                    <h1>Linux三剑客之AWK学习</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 
+                        
+                            瞿广
+                         
+                        on 
+                        Tuesday, April 2, 2019
+                        
+                        
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <header>
+                    <h2>TOC</h2>
+                </header>
+                <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#调用awk">调用awk</a>
+<ul>
+<li><a href="#入门实例">入门实例</a></li>
+<li><a href="#awk内置变量">awk内置变量</a></li>
+</ul></li>
+<li><a href="#awk编程">awk编程</a>
+<ul>
+<li><a href="#变量和赋值">变量和赋值</a></li>
+<li><a href="#条件语句">条件语句</a></li>
+<li><a href="#循环语句">循环语句</a></li>
+<li><a href="#数组">数组</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+                
+                <p>awk是一个强大的文本分析工具，相对于grep的查找，sed的编辑，awk在其对数据分析并生成报告时，显得尤为强大。简单来说awk就是把文件逐行的读入，以空格为默认分隔符将每行切片，切开的部分再进行各种分析处理。</p>
+
+<p>awk有3个不同版本: awk、nawk和gawk，未作特别说明，一般指gawk，gawk 是 AWK 的 GNU 版本。</p>
+
+<p>awk其名称得自于它的创始人 Alfred Aho 、Peter Weinberger 和 Brian Kernighan 姓氏的首个字母。实际上 AWK 的确拥有自己的语言： AWK 程序设计语言 ， 三位创建者已将它正式定义为“样式扫描和处理语言”。它允许您创建简短的程序，这些程序读取输入文件、为数据排序、处理数据、对输入执行计算以及生成报表，还有无数其他的功能。</p>
+
+<p>使用方法</p>
+
+<p><code>awk '{pattern + action}' {filenames}</code></p>
+
+<p>尽管操作可能会很复杂，但语法总是这样，其中 pattern 表示 AWK 在数据中查找的内容，而 action 是在找到匹配内容时所执行的一系列命令。花括号（{}）不需要在程序中始终出现，但它们用于根据特定的模式对一系列指令进行分组。 pattern就是要表示的正则表达式，用斜杠括起来。</p>
+
+<p><strong>awk语言的最基本功能是在文件或者字符串中基于指定规则浏览和抽取信息</strong>，awk抽取信息后，才能进行其他文本操作。<strong>完整的awk脚本通常用来格式化文本文件中的信息。</strong></p>
+
+<p>通常，awk是以文件的一行为处理单位的。awk每接收文件的一行，然后执行相应的命令，来处理文本。</p>
+
+<blockquote>
+<p><strong>再次说明， awk 对输入文件中的每一行都执行这个脚本。</strong></p>
+</blockquote>
+
+<h2 id="调用awk">调用awk</h2>
+
+<p>有三种方式调用awk</p>
+
+<ol>
+<li><p>命令行方式。<code>awk [-F  field-separator]  'commands'  input-file(s)</code>。其中，<strong>commands 是真正awk命令，[-F域分隔符]是可选的。 input-file(s) 是待处理的文件。</strong>
+在awk中，文件的每一行中，由域分隔符分开的每一项称为一个域。通常，在不指名-F域分隔符的情况下，默认的域分隔符是空格。</p></li>
+
+<li><p>shell脚本方式
+将所有的awk命令插入一个文件，并使awk程序可执行，然后awk命令解释器作为脚本的首行，一遍通过键入脚本名称来调用。
+相当于shell脚本首行的：#!/bin/sh
+可以换成：#!/bin/awk</p></li>
+
+<li><p>将所有的awk命令插入一个单独文件，然后调用：<code>awk -f awk-script-file input-file(s)</code>
+其中，-f选项加载awk-script-file中的awk脚本，input-file(s)跟上面的是一样的。</p></li>
+</ol>
+
+<h3 id="入门实例">入门实例</h3>
+
+<p>假设last -n 5的输出如下</p>
+
+<pre><code class="language-shell">[root@www ~]# last -n 5 &lt;==仅取出前五行
+root     pts/1   192.168.1.100  Tue Feb 10 11:21   still logged in
+root     pts/1   192.168.1.100  Tue Feb 10 00:46 - 02:28  (01:41)
+root     pts/1   192.168.1.100  Mon Feb  9 11:41 - 18:30  (06:48)
+dmtsai   pts/1   192.168.1.100  Mon Feb  9 11:41 - 11:41  (00:00)
+root     tty1                   Fri Sep  5 14:09 - 14:10  (00:01)
+</code></pre>
+
+<p>1.如果只是显示最近登录的5个帐号</p>
+
+<pre><code class="language-shell">#last -n 5 | awk  '{print $1}'
+root
+root
+root
+dmtsai
+root
+</code></pre>
+
+<p><strong>awk工作流程是这样的：读入有&rsquo;\n&rsquo;换行符分割的一条记录，然后将记录按指定的域分隔符划分域，填充域，$0则表示所有域$1表示第一个域,$n表示第n个域。默认域分隔符是&rdquo;空白键&rdquo; 或 &ldquo;[tab]键&rdquo;,所以$1表示登录用户，$3表示登录用户ip,以此类推。</strong></p>
+
+<p>2.如果只是显示/etc/passwd的账户</p>
+
+<pre><code class="language-shell">#cat /etc/passwd |awk  -F ':'  '{print $1}'  
+root
+daemon
+bin
+sys
+</code></pre>
+
+<p>这种是awk+action的示例，每行都会执行<code>action{print $1}</code>。</p>
+
+<p>-F指定域分隔符为&rsquo;:&lsquo;。</p>
+
+<p>3.如果只是显示/etc/passwd的账户和账户对应的shell,而账户与shell之间以tab键分割</p>
+
+<pre><code class="language-shell">#cat /etc/passwd |awk  -F ':'  '{print $1&quot;\t&quot;$7}'
+root    /bin/bash
+daemon  /bin/sh
+bin     /bin/sh
+sys     /bin/sh
+</code></pre>
+
+<p>4.如果只是显示/etc/passwd的账户和账户对应的shell,而账户与shell之间以逗号分割,而且在所有行添加列名name,shell,在最后一行添加&rdquo;blue,/bin/nosh&rdquo;。</p>
+
+<pre><code class="language-shell">cat /etc/passwd |awk  -F ':'  'BEGIN {print &quot;name,shell&quot;}  {print $1&quot;,&quot;$7} END {print &quot;blue,/bin/nosh&quot;}'
+name,shell
+root,/bin/bash
+daemon,/bin/sh
+bin,/bin/sh
+sys,/bin/sh
+....
+blue,/bin/nosh
+</code></pre>
+
+<p>awk工作流程是这样的：先执行BEGING，然后读取文件，读入有/n换行符分割的一条记录，然后将记录按指定的域分隔符划分域，填充域，$0则表示所有域,$1表示第一个域,$n表示第n个域,随后开始执行模式所对应的动作action。接着开始读入第二条记录······直到所有的记录都读完，最后执行END操作。</p>
+
+<p>5.搜索/etc/passwd有root关键字的所有行</p>
+
+<pre><code class="language-shell">#awk -F: '/root/' /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+</code></pre>
+
+<p>这种是pattern的使用示例，匹配了pattern(这里是root)的行才会执行action(没有指定action，默认输出每行的内容)。</p>
+
+<p>搜索支持正则，例如找root开头的: <code>awk -F: '/^root/' /etc/passwd</code></p>
+
+<p>6.搜索/etc/passwd有root关键字的所有行，并显示对应的shell</p>
+
+<pre><code class="language-shell"># awk -F: '/root/{print $7}' /etc/passwd             
+/bin/bash
+ 这里指定了action{print $7}
+</code></pre>
+
+<h3 id="awk内置变量">awk内置变量</h3>
+
+<p>awk有许多内置变量用来设置环境信息，这些变量可以被改变，下面给出了最常用的一些变量。</p>
+
+<table>
+<thead>
+<tr>
+<th>变量名</th>
+<th>含义</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>ARGC</td>
+<td>命令行参数个数</td>
+</tr>
+
+<tr>
+<td>ARGV</td>
+<td>命令行参数排列</td>
+</tr>
+
+<tr>
+<td>ENVIRON</td>
+<td>支持队列中系统环境变量的使用</td>
+</tr>
+
+<tr>
+<td>FILENAME</td>
+<td>awk浏览的文件名</td>
+</tr>
+
+<tr>
+<td>FNR</td>
+<td>浏览文件的记录数</td>
+</tr>
+
+<tr>
+<td>FS</td>
+<td>设置输入域分隔符，等价于命令行 -F选项</td>
+</tr>
+
+<tr>
+<td>NF</td>
+<td>浏览记录的域的个数</td>
+</tr>
+
+<tr>
+<td>NR</td>
+<td>已读的记录数</td>
+</tr>
+
+<tr>
+<td>OFS</td>
+<td>输出域分隔符</td>
+</tr>
+
+<tr>
+<td>ORS</td>
+<td>输出记录分隔符</td>
+</tr>
+
+<tr>
+<td>RS</td>
+<td>控制记录分隔符</td>
+</tr>
+</tbody>
+</table>
+
+<p>此外,$0 变量是指整条记录。$1 表示当前行的第一个域,$2 表示当前行的第二个域,&hellip;&hellip;以此类推。</p>
+
+<p>7.统计/etc/passwd:文件名，每行的行号，每行的列数，对应的完整行内容:</p>
+
+<pre><code class="language-shell">#awk  -F ':'  '{print &quot;filename:&quot; FILENAME &quot;,linenumber:&quot; NR &quot;,columns:&quot; NF &quot;,linecontent:&quot;$0}' /etc/passwd
+filename:/etc/passwd,linenumber:1,columns:7,linecontent:root:x:0:0:root:/root:/bin/bash
+filename:/etc/passwd,linenumber:2,columns:7,linecontent:daemon:x:1:1:daemon:/usr/sbin:/bin/sh
+filename:/etc/passwd,linenumber:3,columns:7,linecontent:bin:x:2:2:bin:/bin:/bin/sh
+filename:/etc/passwd,linenumber:4,columns:7,linecontent:sys:x:3:3:sys:/dev:/bin/sh
+</code></pre>
+
+<p>8.使用printf替代print,可以让代码更加简洁，易读</p>
+
+<pre><code class="language-shell"> awk  -F ':'  '{printf(&quot;filename:%s,linenumber:%s,columns:%s,linecontent:%s\n&quot;,FILENAME,NR,NF,$0)}' /etc/passwd
+</code></pre>
+
+<p>print和printf
+awk中同时提供了print和printf两种打印输出的函数。</p>
+
+<p>其中print函数的参数可以是变量、数值或者字符串。字符串必须用双引号引用，参数用逗号分隔。如果没有逗号，参数就串联在一起而无法区分。这里，逗号的作用与输出文件的分隔符的作用是一样的，只是后者是空格而已。</p>
+
+<p>printf函数，其用法和c语言中printf基本相似,可以格式化字符串,输出复杂时，printf更加好用，代码更易懂。</p>
+
+<h2 id="awk编程">awk编程</h2>
+
+<h3 id="变量和赋值">变量和赋值</h3>
+
+<p>除了awk的内置变量，awk还可以自定义变量。</p>
+
+<p>9.下面统计/etc/passwd的账户人数</p>
+
+<pre><code class="language-shell">awk '{count++;print $0;} END{print &quot;user count is &quot;, count}' /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+......
+user count is  40
+</code></pre>
+
+<p>count是自定义变量。之前的<code>action{}</code>里都是只有一个print,其实print只是一个语句，而<code>action{}</code>可以有多个语句，以;号隔开。</p>
+
+<p>10.这里没有初始化count，虽然默认是0，但是妥当的做法还是初始化为0:</p>
+
+<pre><code class="language-shell">awk 'BEGIN {count=0;print &quot;[start]user count is &quot;, count} {count=count+1;print $0;} END{print &quot;[end]user count is &quot;, count}' /etc/passwd
+[start]user count is  0
+root:x:0:0:root:/root:/bin/bash
+...
+[end]user count is  40
+ 
+</code></pre>
+
+<p>11.统计某个文件夹下的文件占用的字节数</p>
+
+<pre><code class="language-shell">ls -l |awk 'BEGIN {size=0;} {size=size+$5;} END{print &quot;[end]size is &quot;, size}'
+[end]size is  8657198
+</code></pre>
+
+<p>12.如果以M为单位显示:</p>
+
+<pre><code class="language-shell">ls -l |awk 'BEGIN {size=0;} {size=size+$5;} END{print &quot;[end]size is &quot;, size/1024/1024,&quot;M&quot;}' 
+[end]size is  8.25889 M
+注意，统计不包括文件夹的子目录。
+</code></pre>
+
+<h3 id="条件语句">条件语句</h3>
+
+<p>awk中的条件语句是从C语言中借鉴来的，见如下声明方式：</p>
+
+<pre><code class="language-shell">if (expression) {
+    statement;
+    statement;
+    ... ...
+}
+
+if (expression) {
+    statement;
+} else {
+    statement2;
+}
+
+if (expression) {
+    statement1;
+} else if (expression1) {
+    statement2;
+} else {
+    statement3;
+}
+</code></pre>
+
+<p>13.统计某个文件夹下的文件占用的字节数,过滤4096大小的文件(一般都是文件夹):</p>
+
+<pre><code class="language-shell">ls -l |awk 'BEGIN {size=0;print &quot;[start]size is &quot;, size} {if($5!=4096){size=size+$5;}} END{print &quot;[end]size is &quot;, size/1024/1024,&quot;M&quot;}' 
+[end]size is  8.22339 M
+</code></pre>
+
+<h3 id="循环语句">循环语句</h3>
+
+<p>awk中的循环语句同样借鉴于C语言，支持while、do/while、for、break、continue，这些关键字的语义和C语言中的语义完全相同。</p>
+
+<h3 id="数组">数组</h3>
+
+<p>因为awk中数组的下标可以是数字和字母，数组的下标通常被称为关键字(key)。值和关键字都存储在内部的一张针对key/value应用hash的表格里。由于hash不是顺序存储，因此在显示数组内容时会发现，它们并不是按照你预料的顺序显示出来的。数组和变量一样，都是在使用时自动创建的，awk也同样会自动判断其存储的是数字还是字符串。一般而言，awk中的数组用来从记录中收集信息，可以用于计算总和、统计单词以及跟踪模板被匹配的次数等等。</p>
+
+<p>14.显示/etc/passwd的账户</p>
+
+<pre><code class="language-shell">awk -F ':' 'BEGIN {count=0;} {name[count] = $1;count++;}; END{for (i = 0; i &lt; NR; i++) print i, name[i]}' /etc/passwd
+0 root
+1 daemon
+2 bin
+3 sys
+4 sync
+5 games
+......
+</code></pre>
+
+<p>这里使用for循环遍历数组</p>
+
+<p>awk编程的内容极多，这里只罗列简单常用的用法，更多请参考 <a href="http://www.gnu.org/software/gawk/manual/gawk.html">http://www.gnu.org/software/gawk/manual/gawk.html</a></p>
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/mysql-question-03/" data-toggle="tooltip" data-placement="top" title="《MYSQL实战45讲》- Question 03">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/technology-routine/" data-toggle="tooltip" data-placement="top" title="技术路线的选择重要但不具有决定性">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+<div id="disqus-comment"></div>
+
+
+
+            </div>
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/devops" title="devops">
+                            devops
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/docker" title="docker">
+                            docker
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/domain-driven-design" title="domain-driven-design">
+                            domain-driven-design
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/drools" title="drools">
+                            drools
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/dubbo" title="dubbo">
+                            dubbo
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java" title="java">
+                            java
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java%E5%B9%B6%E5%8F%91%E5%AE%9E%E6%88%98" title="java并发实战">
+                            java并发实战
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E5%AE%9E%E6%88%98" title="java性能调优实战">
+                            java性能调优实战
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/jvm" title="jvm">
+                            jvm
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/kubernetes" title="kubernetes">
+                            kubernetes
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/linux" title="linux">
+                            linux
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/mq" title="mq">
+                            mq
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/mysql" title="mysql">
+                            mysql
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/mysql%E5%AE%9E%E6%88%9845%E8%AE%B2" title="mysql实战45讲">
+                            mysql实战45讲
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/redis" title="redis">
+                            redis
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/spring" title="spring">
+                            spring
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E4%B9%A6%E5%8D%95" title="书单">
+                            书单
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F" title="分布式">
+                            分布式
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E5%AE%B9%E5%99%A8" title="容器">
+                            容器
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8" title="工具使用">
+                            工具使用
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E5%B9%B6%E5%8F%91" title="并发">
+                            并发
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84" title="数据结构">
+                            数据结构
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E9%AB%98%E6%89%8B%E8%AF%BE" title="消息队列高手课">
+                            消息队列高手课
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E7%AE%97%E6%B3%95" title="算法">
+                            算法
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E7%BC%93%E5%AD%98" title="缓存">
+                            缓存
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE" title="网络协议">
+                            网络协议
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E8%B6%A3%E8%B0%88%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE" title="趣谈网络协议">
+                            趣谈网络协议
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%BE%8E" title="软件工程之美">
+                            软件工程之美
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E9%80%8F%E8%A7%86http%E5%8D%8F%E8%AE%AE" title="透视http协议">
+                            透视http协议
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E9%9D%A2%E8%AF%95" title="面试">
+                            面试
+                        </a>
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+                <section>
+                    <hr>
+                    <h5>FRIENDS</h5>
+                    <ul class="list-inline">
+                        
+                        <li><a target="_blank" href="https://servicemesher.com">servicemesher的博客</a></li>
+                        
+                    </ul>
+                </section>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                   
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="Quguang&#39;s Blog" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fa fa-circle fa-stack-2x"></i>
+                               <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+                   
+                    
+                    <li>
+                        <a href="mailto:quguang1011@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    
+
+                    
+
+		    
+                    
+                    <li>
+                        <a target="_blank" href="/your%20wechat%20qr%20code%20image">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-wechat fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/techqu">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/yourlinkedinid">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://medium.com/@quguang1011">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-medium fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+            
+                    
+                    <li>
+                        <a target="_blank" href="https://stackoverflow.com/users/yourstackoverflowid">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+            
+                    
+                    
+                    
+            
+            
+            
+                </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Quguang&#39;s Blog 2020
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+</body>
+</html>

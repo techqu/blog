@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Quguang&#39;s Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://quguang.wang/img/bg-china.jpg">
+    <meta property="twitter:image" content="https://quguang.wang/img/bg-china.jpg" />
+    
+
+    
+    <meta name="title" content="全面理解Java内存模型" />
+    <meta property="og:title" content="全面理解Java内存模型" />
+    <meta property="twitter:title" content="全面理解Java内存模型" />
+    
+
+    
+    <meta name="description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。">
+    <meta property="og:description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。" />
+    <meta property="twitter:description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="瞿广, quguang, , 瞿广的网络日志, 瞿广的博客, quguang Blog, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Istio, Kubernetes, 微服务, Microservice">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>全面理解Java内存模型-瞿广的博客 | quguang Blog</title>
+
+    <link rel="canonical" href="/post/jmm-java/">
+
+    <link rel="stylesheet" href="/css/iDisqus.min.css"/>
+	
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+    
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    
+    <script src="/js/jquery.min.js"></script>
+    
+    
+    <script src="/js/bootstrap.min.js"></script>
+    
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Quguang&#39;s Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/life">life</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/math">math</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/note">note</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/tech">tech</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/top/about/">ABOUT</a></li>
+                    
+
+                    
+		    <li>
+                        <a href="/search">SEARCH <img src="/img/search.png" height="15" style="cursor: pointer;" alt="Search"></a>
+		    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/bg-china.jpg')
+    }
+</style>
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/%E9%9D%A2%E8%AF%95" title="面试">
+                            面试
+                        </a>
+                        
+                    </div>
+                    <h1>全面理解Java内存模型</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 
+                        
+                            瞿广
+                         
+                        on 
+                        Thursday, February 14, 2019
+                        
+                        
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <header>
+                    <h2>TOC</h2>
+                </header>
+                <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#关于并发编程">关于并发编程</a>
+<ul>
+<li><a href="#线程之间的通信">线程之间的通信</a></li>
+<li><a href="#线程之间的同步">线程之间的同步</a></li>
+</ul></li>
+<li><a href="#java内存模型">Java内存模型</a></li>
+<li><a href="#jvm对java内存模型的实现">JVM对Java内存模型的实现</a></li>
+<li><a href="#硬件内存架构">硬件内存架构</a></li>
+<li><a href="#java内存模型和硬件架构之间的桥接">Java内存模型和硬件架构之间的桥接</a>
+<ul>
+<li><a href="#共享对象的可见性">共享对象的可见性</a></li>
+<li><a href="#竞争现象">竞争现象</a>
+<ul>
+<li><a href="#volatile和-synchronized区别">volatile和 synchronized区别</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#支撑java内存模型的基础原理">支撑Java内存模型的基础原理</a>
+<ul>
+<li><a href="#指令重排序">指令重排序</a></li>
+<li><a href="#数据依赖性">数据依赖性</a></li>
+<li><a href="#as-if-serial">as-if-serial</a></li>
+<li><a href="#内存屏障-memory-barrier">内存屏障（Memory Barrier ）</a></li>
+<li><a href="#happens-before">happens-before</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+                
+                <p>Java内存模型即Java Memory Model，简称JMM。</p>
+
+<p>JMM定义了Java 虚拟机(JVM)在计算机内存(RAM)中的工作方式。JVM是整个计算机虚拟模型，所以JMM是隶属于JVM的。</p>
+
+<p>如果我们要想深入了解Java并发编程，就要先理解好Java内存模型。Java内存模型定义了<strong>多线程之间共享变量的可见性以及如何在需要的时候对共享变量进行同步</strong>。原始的Java内存模型效率并不是很理想，因此Java1.5版本对其进行了重构，现在的Java8仍沿用了Java1.5的版本。</p>
+
+<h2 id="关于并发编程">关于并发编程</h2>
+
+<p>在并发编程领域，有两个关键问题：线程之间的通信和同步。</p>
+
+<h3 id="线程之间的通信">线程之间的通信</h3>
+
+<p>线程的通信是指线程之间以何种机制来交换信息。在命令式编程中，线程之间的通信机制有两种共享内存和消息传递。</p>
+
+<p>在共享内存的并发模型里，线程之间共享程序的公共状态，线程之间通过写-读内存中的公共状态来隐式进行通信，典型的共享内存通信方式就是通过共享对象进行通信。</p>
+
+<p>在消息传递的并发模型里，线程之间没有公共状态，线程之间必须通过明确的发送消息来显式进行通信，在java中典型的消息传递方式就是 wait() 和 notify()。</p>
+
+<p>关于Java线程之间的通信，可以参考<a href="https://blog.csdn.net/suifeng3051/article/details/%EF%BC%9Ahttp://blog.csdn.net/suifeng3051/article/details/51863010?locationNum=2">线程之间的通信（thread signal）</a>。</p>
+
+<h3 id="线程之间的同步">线程之间的同步</h3>
+
+<p>同步是指程序用于控制不同线程之间操作发生相对顺序的机制。</p>
+
+<p>在共享内存并发模型里，同步是显式进行的。程序员必须显式指定某个方法或某段代码需要在线程之间互斥执行。</p>
+
+<p>在消息传递的并发模型里，由于消息的发送必须在消息的接收之前，因此同步是隐式进行的。</p>
+
+<p>Java的并发采用的是共享内存模型
+Java线程之间的通信总是隐式进行，整个通信过程对程序员完全透明。如果编写多线程程序的Java程序员不理解隐式进行的线程之间通信的工作机制，很可能会遇到各种奇怪的内存可见性问题。</p>
+
+<h2 id="java内存模型">Java内存模型</h2>
+
+<p>上面讲到了Java线程之间的通信采用的是过共享内存模型，这里提到的共享内存模型指的就是Java内存模型(简称JMM)，JMM决定一个线程对共享变量的写入何时对另一个线程可见。从抽象的角度来看，JMM定义了线程和主内存之间的抽象关系：线程之间的共享变量存储在主内存（main memory）中，每个线程都有一个私有的本地内存（local memory），本地内存中存储了该线程以读/写共享变量的副本。本地内存是JMM的一个抽象概念，并不真实存在。它涵盖了缓存，写缓冲区，寄存器以及其他的硬件和编译器优化。</p>
+
+<p><img src="/img/jmm-01.png" alt="jmm-01" /></p>
+
+<p>从上图来看，线程A与线程B之间如要通信的话，必须要经历下面2个步骤：</p>
+
+<ol>
+<li>首先，线程A把本地内存A中更新过的共享变量刷新到主内存中去。</li>
+<li>然后，线程B到主内存中去读取线程A之前已更新过的共享变量。</li>
+</ol>
+
+<p>下面通过示意图来说明这两个步骤：</p>
+
+<p><img src="/img/jmm-02.png" alt="jmm-02" /></p>
+
+<p>如上图所示，本地内存A和B有主内存中共享变量x的副本。假设初始时，这三个内存中的x值都为0。</p>
+
+<ol>
+<li>线程A在执行时，把更新后的x值（假设值为1）临时存放在自己的本地内存A中。</li>
+<li>当线程A和线程B需要通信时，线程A首先会把自己本地内存中修改后的x值刷新到主内存中，此时主内存中的x值变为了1。</li>
+<li>随后，线程B到主内存中去读取线程A更新后的x值，此时线程B的本地内存的x值也变为了1。</li>
+</ol>
+
+<p>从整体来看，这两个步骤实质上是线程A在向线程B发送消息，而且这个通信过程必须要经过主内存。JMM通过控制主内存与每个线程的本地内存之间的交互，来为java程序员提供内存可见性保证。</p>
+
+<p>上面也说到了，Java内存模型只是一个抽象概念，那么它在Java中具体是怎么工作的呢？为了更好的理解上Java内存模型工作方式，下面就JVM对Java内存模型的实现、硬件内存模型及它们之间的桥接做详细介绍。</p>
+
+<h2 id="jvm对java内存模型的实现">JVM对Java内存模型的实现</h2>
+
+<p>在JVM内部，Java内存模型把内存分成了两部分：线程栈区和堆区，下图展示了Java内存模型在JVM中的逻辑视图：</p>
+
+<p><img src="/img/jmm-03.png" alt="jmm-03" /></p>
+
+<p>JVM中运行的每个线程都拥有自己的线程栈，线程栈包含了当前线程执行的方法调用相关信息，我们也把它称作调用栈。随着代码的不断执行，调用栈会不断变化。</p>
+
+<p>线程栈还包含了当前方法的所有本地变量信息。一个线程只能读取自己的线程栈，也就是说，线程中的本地变量对其它线程是不可见的。即使两个线程执行的是同一段代码，它们也会各自在自己的线程栈中创建本地变量，因此，每个线程中的本地变量都会有自己的版本。</p>
+
+<p>所有原始类型(boolean,byte,short,char,int,long,float,double)的本地变量都直接保存在线程栈当中，对于它们的值各个线程之间都是独立的。对于原始类型的本地变量，一个线程可以传递一个副本给另一个线程，当它们之间是无法共享的。</p>
+
+<p>堆区包含了Java应用创建的所有对象信息，不管对象是哪个线程创建的，其中的对象包括原始类型的封装类（如Byte、Integer、Long等等）。不管对象是属于一个成员变量还是方法中的本地变量，它都会被存储在堆区。</p>
+
+<p>下图展示了调用栈和本地变量都存储在栈区，对象都存储在堆区：</p>
+
+<p><img src="/img/jmm-04.png" alt="jmm-04" /></p>
+
+<p>一个本地变量如果是原始类型，那么它会被完全存储到栈区。
+一个本地变量也有可能是一个对象的引用，这种情况下，这个本地引用会被存储到栈中，但是对象本身仍然存储在堆区。</p>
+
+<p>对于一个对象的成员方法，这些方法中包含本地变量，仍需要存储在栈区，即使它们所属的对象在堆区。
+对于一个对象的成员变量，不管它是原始类型还是包装类型，都会被存储到堆区。</p>
+
+<p>Static类型的变量以及类本身相关信息都会随着类本身存储在堆区。</p>
+
+<p>堆中的对象可以被多线程共享。如果一个线程获得一个对象的应用，它便可访问这个对象的成员变量。如果两个线程同时调用了同一个对象的同一个方法，那么这两个线程便可同时访问这个对象的成员变量，但是对于本地变量，每个线程都会拷贝一份到自己的线程栈中。</p>
+
+<p>下图展示了上面描述的过程:</p>
+
+<p><img src="/img/jmm-04.png" alt="jmm-04" /></p>
+
+<h2 id="硬件内存架构">硬件内存架构</h2>
+
+<p>不管是什么内存模型，最终还是运行在计算机硬件上的，所以我们有必要了解计算机硬件内存架构，下图就简单描述了当代计算机硬件内存架构：</p>
+
+<p><img src="/img/jmm-cpu.png" alt="jmm-cpu" /></p>
+
+<p>现代计算机一般都有2个以上CPU，而且每个CPU还有可能包含多个核心。因此，如果我们的应用是多线程的话，这些线程可能会在各个CPU核心中并行运行。</p>
+
+<p>在CPU内部有一组CPU寄存器，也就是CPU的储存器。CPU操作寄存器的速度要比操作计算机主存快的多。在主存和CPU寄存器之间还存在一个CPU缓存，CPU操作CPU缓存的速度快于主存但慢于CPU寄存器。某些CPU可能有多个缓存层（一级缓存和二级缓存）。计算机的主存也称作RAM，所有的CPU都能够访问主存，而且主存比上面提到的缓存和寄存器大很多。</p>
+
+<p>当一个CPU需要访问主存时，会先读取一部分主存数据到CPU缓存，进而在读取CPU缓存到寄存器。当CPU需要写数据到主存时，同样会先flush寄存器到CPU缓存，然后再在某些节点把缓存数据flush到主存。</p>
+
+<h2 id="java内存模型和硬件架构之间的桥接">Java内存模型和硬件架构之间的桥接</h2>
+
+<p>正如上面讲到的，Java内存模型和硬件内存架构并不一致。硬件内存架构中并没有区分栈和堆，从硬件上看，不管是栈还是堆，大部分数据都会存到主存中，当然一部分栈和堆的数据也有可能会存到CPU寄存器中，如下图所示，Java内存模型和计算机硬件内存架构是一个交叉关系：</p>
+
+<p><img src="/img/jmm-jvm-cpu.png" alt="jmm-jvm-cpu" /></p>
+
+<p>当对象和变量存储到计算机的各个内存区域时，必然会面临一些问题，其中最主要的两个问题是：</p>
+
+<ol>
+<li>共享对象对各个线程的可见性</li>
+<li>共享对象的竞争现象</li>
+</ol>
+
+<h3 id="共享对象的可见性">共享对象的可见性</h3>
+
+<p>当多个线程同时操作同一个共享对象时，如果没有合理的使用volatile和synchronization关键字，一个线程对共享对象的更新有可能导致其它线程不可见。</p>
+
+<p>想象一下我们的共享对象存储在主存，一个CPU中的线程读取主存数据到CPU缓存，然后对共享对象做了更改，但CPU缓存中的更改后的对象还没有flush到主存，此时线程对共享对象的更改对其它CPU中的线程是不可见的。最终就是每个线程最终都会拷贝共享对象，而且拷贝的对象位于不同的CPU缓存中。</p>
+
+<p>下图展示了上面描述的过程。左边CPU中运行的线程从主存中拷贝共享对象obj到它的CPU缓存，把对象obj的count变量改为2。但这个变更对运行在右边CPU中的线程不可见，因为这个更改还没有flush到主存中：</p>
+
+<p><img src="/img/jmm-cpu-02.png" alt="jmm-cpu-02" /></p>
+
+<p>要解决共享对象可见性这个问题，我们可以使用java volatile关键字。 Java’s volatile keyword. volatile 关键字可以保证变量会直接从主存读取，而对变量的更新也会直接写到主存。volatile原理是基于CPU内存屏障指令实现的，后面会讲到。</p>
+
+<h3 id="竞争现象">竞争现象</h3>
+
+<p>如果多个线程共享一个对象，如果它们同时修改这个共享对象，这就产生了竞争现象。</p>
+
+<p>如下图所示，线程A和线程B共享一个对象obj。假设线程A从主存读取Obj.count变量到自己的CPU缓存，同时，线程B也读取了Obj.count变量到它的CPU缓存，并且这两个线程都对Obj.count做了加1操作。此时，Obj.count加 1 操作被执行了两次，不过都在不同的CPU缓存中。</p>
+
+<p>如果这两个加 1 操作是串行执行的，那么Obj.count变量便会在原始值上加 2，最终主存中的Obj.count的值会是 3。然而下图中两个加1操作是并行的，不管是线程A还是线程B先flush计算结果到主存，最终主存中的Obj.count只会增加 1 次变成 2 ，尽管一共有两次加 1 操作。</p>
+
+<p><img src="/img/jmm-cpu-03.png" alt="jmm-cpu-03" /></p>
+
+<p>要解决上面的问题我们可以使用java synchronized代码块。synchronized代码块可以保证同一个时刻只能有一个线程进入代码竞争区，synchronized代码块也能保证代码块中所有变量都将会从主存中读，当线程退出代码块时，对所有变量的更新将会flush到主存，不管这些变量是不是volatile类型的。</p>
+
+<h4 id="volatile和-synchronized区别">volatile和 synchronized区别</h4>
+
+<p>详细请见 <a href="http://blog.csdn.net/suifeng3051/article/details/52611233">volatile和synchronized的区别</a></p>
+
+<h2 id="支撑java内存模型的基础原理">支撑Java内存模型的基础原理</h2>
+
+<h3 id="指令重排序">指令重排序</h3>
+
+<p>在执行程序时，为了提高性能，编译器和处理器会对指令做重排序。但是，JMM确保在不同的编译器和不同的处理器平台之上，通过插入特定类型的Memory Barrier来禁止特定类型的编译器重排序和处理器重排序，为上层提供一致的内存可见性保证。</p>
+
+<ol>
+<li>编译器优化重排序：编译器在不改变单线程程序语义的前提下，可以重新安排语句的执行顺序。</li>
+<li>指令级并行的重排序：如果不存l在数据依赖性，处理器可以改变语句对应机器指令的执行顺序。</li>
+<li>内存系统的重排序：处理器使用缓存和读写缓冲区，这使得加载和存储操作看上去可能是在乱序执行。</li>
+</ol>
+
+<h3 id="数据依赖性">数据依赖性</h3>
+
+<p>如果两个操作访问同一个变量，其中一个为写操作，此时这两个操作之间存在数据依赖性。
+编译器和处理器不会改变存在数据依赖性关系的两个操作的执行顺序，即不会重排序。</p>
+
+<h3 id="as-if-serial">as-if-serial</h3>
+
+<p>不管怎么重排序，单线程下的执行结果不能被改变，编译器、runtime和处理器都必须遵守as-if-serial语义。</p>
+
+<h3 id="内存屏障-memory-barrier">内存屏障（Memory Barrier ）</h3>
+
+<p>上面讲到了，通过内存屏障可以禁止特定类型处理器的重排序，从而让程序按我们预想的流程去执行。内存屏障，又称内存栅栏，是一个CPU指令，基本上它是一条这样的指令：</p>
+
+<ul>
+<li>保证特定操作的执行顺序。</li>
+<li>影响某些数据（或则是某条指令的执行结果）的内存可见性。</li>
+<li>编译器和CPU能够重排序指令，保证最终相同的结果，尝试优化性能。插入一条Memory Barrier会告诉编译器和CPU：不管什么指令都不能和这条Memory Barrier指令重排序。</li>
+</ul>
+
+<p>Memory Barrier所做的另外一件事是强制刷出各种CPU cache，如一个<code>Write-Barrier</code>（写入屏障）将刷出所有在Barrier之前写入 cache 的数据，因此，任何CPU上的线程都能读取到这些数据的最新版本。</p>
+
+<p>这和java有什么关系？<strong>上面java内存模型中讲到的volatile是基于Memory Barrier实现的</strong>。</p>
+
+<p>如果一个变量是volatile修饰的，JMM会在写入这个字段之后插进一个<code>Write-Barrier</code>指令，并在读这个字段之前插入一个<code>Read-Barrier</code>指令。这意味着，如果写入一个volatile变量，就可以保证：</p>
+
+<blockquote>
+<p>一个线程写入变量a后，任何线程访问该变量都会拿到最新值。
+在写入变量a之前的写入操作，其更新的数据对于其他线程也是可见的。因为Memory Barrier会刷出cache中的所有先前的写入。</p>
+</blockquote>
+
+<h3 id="happens-before">happens-before</h3>
+
+<p>从jdk5开始，java使用新的JSR-133内存模型，基于happens-before的概念来阐述操作之间的内存可见性。</p>
+
+<p>在JMM中，如果一个操作的执行结果需要对另一个操作可见，那么这两个操作之间必须要存在happens-before关系，这个的两个操作既可以在同一个线程，也可以在不同的两个线程中。</p>
+
+<p>与程序员密切相关的happens-before规则如下：</p>
+
+<ol>
+<li>程序顺序规则：一个线程中的每个操作，happens-before于该线程中任意的后续操作。</li>
+<li>监视器锁规则：对一个锁的解锁操作，happens-before于随后对这个锁的加锁操作。</li>
+<li>volatile域规则：对一个volatile域的写操作，happens-before于任意线程后续对这个volatile域的读。</li>
+<li>传递性规则：如果 A happens-before B，且 B happens-before C，那么A happens-before C。</li>
+</ol>
+
+<p><strong>注意：两个操作之间具有happens-before关系，并不意味前一个操作必须要在后一个操作之前执行！仅仅要求前一个操作的执行结果，对于后一个操作是可见的，且前一个操作按顺序排在后一个操作之前。</strong></p>
+
+<p>参考文档 :</p>
+
+<ol>
+<li><a href="http://www.infoq.com/cn/articles/java-memory-model-1">http://www.infoq.com/cn/articles/java-memory-model-1</a></li>
+<li><a href="http://www.jianshu.com/p/d3fda02d4cae">http://www.jianshu.com/p/d3fda02d4cae</a></li>
+<li><a href="https://blog.csdn.net/suifeng3051/article/details/52611310">https://blog.csdn.net/suifeng3051/article/details/52611310</a></li>
+</ol>
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/interview-exp-pdd/" data-toggle="tooltip" data-placement="top" title="最新拼多多技术部面试题：幻读&#43;分段锁&#43;死锁&#43;Spring Cloud&#43;秒杀">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/java-thread-pool/" data-toggle="tooltip" data-placement="top" title="Java并发编程：线程池的使用">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+<div id="disqus-comment"></div>
+
+
+
+            </div>
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/devops" title="devops">
+                            devops
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/docker" title="docker">
+                            docker
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/domain-driven-design" title="domain-driven-design">
+                            domain-driven-design
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/drools" title="drools">
+                            drools
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/dubbo" title="dubbo">
+                            dubbo
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java" title="java">
+                            java
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java%E5%B9%B6%E5%8F%91%E5%AE%9E%E6%88%98" title="java并发实战">
+                            java并发实战
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E5%AE%9E%E6%88%98" title="java性能调优实战">
+                            java性能调优实战
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/jvm" title="jvm">
+                            jvm
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/kubernetes" title="kubernetes">
+                            kubernetes
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/linux" title="linux">
+                            linux
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/mq" title="mq">
+                            mq
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/mysql" title="mysql">
+                            mysql
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/mysql%E5%AE%9E%E6%88%9845%E8%AE%B2" title="mysql实战45讲">
+                            mysql实战45讲
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/redis" title="redis">
+                            redis
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/spring" title="spring">
+                            spring
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E4%B9%A6%E5%8D%95" title="书单">
+                            书单
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F" title="分布式">
+                            分布式
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E5%AE%B9%E5%99%A8" title="容器">
+                            容器
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8" title="工具使用">
+                            工具使用
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E5%B9%B6%E5%8F%91" title="并发">
+                            并发
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84" title="数据结构">
+                            数据结构
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E9%AB%98%E6%89%8B%E8%AF%BE" title="消息队列高手课">
+                            消息队列高手课
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E7%AE%97%E6%B3%95" title="算法">
+                            算法
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E7%BC%93%E5%AD%98" title="缓存">
+                            缓存
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE" title="网络协议">
+                            网络协议
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E8%B6%A3%E8%B0%88%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE" title="趣谈网络协议">
+                            趣谈网络协议
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%BE%8E" title="软件工程之美">
+                            软件工程之美
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E9%80%8F%E8%A7%86http%E5%8D%8F%E8%AE%AE" title="透视http协议">
+                            透视http协议
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E9%9D%A2%E8%AF%95" title="面试">
+                            面试
+                        </a>
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+                <section>
+                    <hr>
+                    <h5>FRIENDS</h5>
+                    <ul class="list-inline">
+                        
+                        <li><a target="_blank" href="https://servicemesher.com">servicemesher的博客</a></li>
+                        
+                    </ul>
+                </section>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                   
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="Quguang&#39;s Blog" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fa fa-circle fa-stack-2x"></i>
+                               <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+                   
+                    
+                    <li>
+                        <a href="mailto:quguang1011@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    
+
+                    
+
+		    
+                    
+                    <li>
+                        <a target="_blank" href="/your%20wechat%20qr%20code%20image">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-wechat fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/techqu">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/yourlinkedinid">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://medium.com/@quguang1011">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-medium fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+            
+                    
+                    <li>
+                        <a target="_blank" href="https://stackoverflow.com/users/yourstackoverflowid">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+            
+                    
+                    
+                    
+            
+            
+            
+                </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Quguang&#39;s Blog 2020
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Quguang&#39;s Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://quguang.wang/img/bg-china.jpg">
+    <meta property="twitter:image" content="https://quguang.wang/img/bg-china.jpg" />
+    
+
+    
+    <meta name="title" content="Drools Documentation" />
+    <meta property="og:title" content="Drools Documentation" />
+    <meta property="twitter:title" content="Drools Documentation" />
+    
+
+    
+    <meta name="description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。">
+    <meta property="og:description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。" />
+    <meta property="twitter:description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="瞿广, quguang, , 瞿广的网络日志, 瞿广的博客, quguang Blog, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Istio, Kubernetes, 微服务, Microservice">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>Drools Documentation-瞿广的博客 | quguang Blog</title>
+
+    <link rel="canonical" href="/post/drools-wb-translation/">
+
+    <link rel="stylesheet" href="/css/iDisqus.min.css"/>
+	
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+    
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    
+    <script src="/js/jquery.min.js"></script>
+    
+    
+    <script src="/js/bootstrap.min.js"></script>
+    
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Quguang&#39;s Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/life">life</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/math">math</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/note">note</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/tech">tech</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/top/about/">ABOUT</a></li>
+                    
+
+                    
+		    <li>
+                        <a href="/search">SEARCH <img src="/img/search.png" height="15" style="cursor: pointer;" alt="Search"></a>
+		    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/bg-china.jpg')
+    }
+</style>
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/drools" title="drools">
+                            drools
+                        </a>
+                        
+                    </div>
+                    <h1>Drools Documentation</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 
+                        
+                            瞿广
+                         
+                        on 
+                        Saturday, January 19, 2019
+                        
+                        
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <header>
+                    <h2>TOC</h2>
+                </header>
+                <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#drools语法-language">Drools语法-Language</a>
+<ul>
+<li><a href="#关键词">关键词</a></li>
+<li><a href="#注释">注释</a></li>
+<li><a href="#pakage">Pakage</a></li>
+<li><a href="#function">Function</a></li>
+<li><a href="#query">Query</a></li>
+<li><a href="#rule">Rule</a>
+<ul>
+<li><a href="#属性部分-attributes">属性部分-Attributes</a></li>
+<li><a href="#条件部分-lhs">条件部分-LHS</a></li>
+<li><a href="#结果部分-rhs">结果部分-RHS</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#drools应用">Drools应用</a>
+<ul>
+<li><a href="#动态规则">动态规则</a>
+<ul>
+<li><a href="#动态获取kiesession">动态获取KieSession</a></li>
+<li><a href="#激活规则">激活规则</a></li>
+</ul></li>
+<li><a href="#决策表">决策表</a>
+<ul>
+<li><a href="#将文件翻译为drl文件">将文件翻译为drl文件</a></li>
+<li><a href="#将文件流翻译为drl文件">将文件流翻译为drl文件</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#drools-example">Drools-Example</a>
+<ul>
+<li><a href="#mingdrink">MingDrink</a></li>
+<li><a href="#worldproblem">WorldProblem</a></li>
+<li><a href="#golferproblem">GolferProblem</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+                
+                <blockquote>
+<p>转载自：<a href="https://github.com/MyHerux/drools-springboot">MyHerux/drools-springboot</a></p>
+</blockquote>
+
+<h2 id="drools语法-language">Drools语法-Language</h2>
+
+<h3 id="关键词">关键词</h3>
+
+<ul>
+<li><p>Hard keywords(Cannot use any):</p>
+
+<p><code>true,false,null</code></p></li>
+
+<li><p>Soft keywords(avoid use)</p>
+
+<p><code>lock-on-active date-effective date-expires no-loop auto-focus activation-group agenda-group ruleflow-group entry-point duration package import dialect salience enabled attributes rule extend when then template query declare function global eval not in or and exists forall accumulate collect from action reverse result end over init</code></p></li>
+</ul>
+
+<h3 id="注释">注释</h3>
+
+<ul>
+<li><p>单行注释</p>
+
+<pre><code>rule &quot;Testing Comments&quot;
+when
+    // this is a single line comment
+    eval( true ) // this is a comment in the same line of a pattern
+then
+    // this is a comment inside a semantic code block
+end
+</code></pre></li>
+
+<li><p>多行注释</p>
+
+<pre><code>rule &quot;Test Multi-line Comments&quot;
+when
+    /* this is a multi-line comment
+    in the left hand side of a rule */
+eval( true )
+then
+    /* and this is a multi-line comment
+    in the right hand side of a rule */
+end
+</code></pre></li>
+</ul>
+
+<h3 id="pakage">Pakage</h3>
+
+<ul>
+<li><p>package</p>
+
+<p><code>package</code>表示一个命名空间.package是必须定义的，必须放在规则文件第一行.</p></li>
+
+<li><p>import</p>
+
+<p><code>import</code>语句的工作方式类似于Java中的import语句。您需要为要在规则中使用的任何对象指定完全限定路径和类型名称。</p></li>
+
+<li><p>global</p>
+
+<p><code>global</code>用于定义全局变量。</p>
+
+<p>Rules:</p>
+
+<pre><code>global java.util.List myGlobalList;
+
+rule &quot;Using a global&quot;
+when
+  eval( true )
+then
+  myGlobalList.add( &quot;Hello World&quot; );
+end
+</code></pre>
+
+<p>Set the global value:</p>
+
+<pre><code>List list = new ArrayList();
+KieSession kieSession = kiebase.newKieSession();
+kieSession.setGlobal( &quot;myGlobalList&quot;, list );
+</code></pre></li>
+</ul>
+
+<h3 id="function">Function</h3>
+
+<ul>
+<li><p>function</p>
+
+<p><code>function</code>是一种将语义代码放置在规则源文件中的方法，而不是普通的Java类</p>
+
+<pre><code>function String hello(String name) {
+  return &quot;Hello &quot;+name+&quot;!&quot;;
+}
+import function my.package.Foo.hello
+rule &quot;using a static function&quot;
+when
+  eval( true )
+then
+  System.out.println( hello( &quot;Bob&quot; ) );
+end
+</code></pre></li>
+</ul>
+
+<h3 id="query">Query</h3>
+
+<ul>
+<li>query</li>
+</ul>
+
+<p><code>query</code>是一种搜索工作内存中与指定条件匹配的事实的简单方法.</p>
+
+<pre><code>  对所有30岁以上的人的简单查询
+  query &quot;people over the age of 30&quot;
+      person : Person( age &gt; 30 )
+  end
+
+  查询超过x岁的人，以及居住在y的人
+  query &quot;people over the age of x&quot;  (int x, String y)
+      person : Person( age &gt; x, location == y )
+  end
+
+  QueryResults results = ksession.getQueryResults( &quot;people over the age of 30&quot; );
+  System.out.println( &quot;we have &quot; + results.size() + &quot; people over the age  of 30&quot; );
+
+  System.out.println( &quot;These people are are over 30:&quot; );
+
+  for ( QueryResultsRow row : results ) {
+      Person person = ( Person ) row.get( &quot;person&quot; );
+      System.out.println( person.getName() + &quot;\n&quot; );
+  }
+</code></pre>
+
+<h3 id="rule">Rule</h3>
+
+<p><code>rule</code>定义规则。<code>rule &quot;ruleName&quot;</code>。</p>
+
+<p>一个规则可以包含三个部分：属性部分,条件部分：即<code>LHS</code>,结果部分：即<code>RHS</code>.
+  <img src="http://of0qa2hzs.bkt.clouddn.com/rule.jpg" alt="" /></p>
+
+<h4 id="属性部分-attributes">属性部分-Attributes</h4>
+
+<p>定义当前规则执行的一些属性等，比如是否可被重复执行、过期时间、生效时间等。
+    <code>activation-group</code> <code>agenda-group</code> <code>auto-focus</code> <code>date-effective</code> <code>date-expires</code> <code>dialect</code> <code>duration</code> <code>duration-value</code> <code>enabled</code> <code>lock-on-active</code> <code>no-loop</code> <code>ruleflow-group</code> <code>salience</code></p>
+
+<p><img src="http://of0qa2hzs.bkt.clouddn.com/1484118982%281%29.jpg" alt="" /></p>
+
+<ul>
+<li><p>no-loop</p>
+
+<p>默认值：false</p>
+
+<p>类型：Boolean</p>
+
+<p>在一个规则当中如果条件满足就对<code>Working Memory</code>当中的某个Fact对象进行了修改，比如使用update 将其更新到当前的<code>Working Memory</code>当中，这时引擎会再次检查所有的规则是否满足条件，如果满足会再次执行.</p></li>
+
+<li><p>ruleflow-group</p>
+
+<p>默认值：N/A</p>
+
+<p>类型：String</p>
+
+<p><code>Ruleflow</code>是一个Drools功能，可让您控制规则的触发。由相同的规则流组标识汇编的规则仅在其组处于活动状态时触发。将规则划分为一个个的组，然后在规则流当中通过使用<code>ruleflow-group</code>属性的值，从而使用对应的规则。</p></li>
+
+<li><p>lock-on-active</p>
+
+<p>默认值：false</p>
+
+<p>类型：Boolean</p>
+
+<p>当在规则上使用<code>ruleflow-group</code> 属性或<code>agenda-group</code> 属性的时候，将<code>lock-on-action</code> 属性的值设置为true，可能避免因某些Fact 对象被修改而使已经执行过的规则再次被激活执行。可以看出该属性与<code>no-loop</code> 属性有相似之处，<code>no-loop</code> 属性是为了避免Fact 修改或调用了<code>insert</code>、<code>retract</code>、<code>update</code> 之类而导致规则再次激活执行，这里的<code>lock-on-action</code> 属性也是起这个作用，<code>lock-on-active</code> 是<code>no-loop</code> 的增强版属性，它主要作用在使用<code>ruleflow-group</code> 属性或<code>agenda-group</code> 属性的时候，lock-on-active属性默认值为false。与no-loop不同的是lock-on-active可以避免其他规则修改FACT对象导致规则的重新执行。</p></li>
+
+<li><p>salience</p>
+
+<p>默认值：0</p>
+
+<p>类型：integer</p>
+
+<p>设置规则执行的优先级，<code>salience</code> 属性的值是一个数字，数字越大执行优先级越高，同时它的值可以是一个负数.
+  规则的<code>salience</code> 默认值为0，所以如果我们不手动设置规则的<code>salience</code> 属性，那么它的执行顺序是随机的.</p></li>
+
+<li><p>agenda-group</p>
+
+<p>默认值：MAIN</p>
+
+<p>类型：String</p>
+
+<p>规则的调用与执行是通过<code>StatelessSession</code> 或<code>StatefulSession</code> 来实现的，一般的顺序是创建一个<code>StatelessSession</code> 或<code>StatefulSession</code>，将各种经过编译的规则的package 添加到session当中，接下来将规则当中可能用到的Global对象和Fact对象插入到Session 当中，最后调用fireAllRules 方法来触发、执行规则。在没有调用最后一步<code>fireAllRules</code>方法之前，所有的规则及插入的<code>Fact</code>对象都存放在一个名叫<code>Agenda</code>表的对象当中，这个<code>Agenda</code>表中每一个规则及与其匹配相关业务数据叫做<code>Activation</code>，在调用<code>fireAllRules</code>方法后，这些Activation 会依次执行，这些位于Agenda 表中的Activation 的执行顺序在没有设置相关用来控制顺序的属性时（比如salience 属性），它的执行顺序是随机的，不确定的。<code>Agenda Group</code> 是用来在Agenda 的基础之上，对现在的规则进行再次分组，具体的分组方法可以采用为规则添加<code>agenda-group</code>属性来实现。<code>agenda-group</code> 属性的值也是一个字符串，通过这个字符串，可以将规则分为若干个<code>Agenda Group</code>，默认情况下，引擎在调用这些设置了<code>agenda-group</code> 属性的规则的时候需要显示的指定某个<code>Agenda Group</code> 得到<code>Focus</code>（焦点），这样位于该<code>Agenda Group</code> 当中的规则才会触发执行，否则将不执行。</p></li>
+
+<li><p>auto-focus</p>
+
+<p>默认值：false</p>
+
+<p>类型：Boolean</p>
+
+<p>用来在已设置了<code>agenda-group</code>的规则上设置该规则是否可以自动独取<code>Focus</code>，如果该属性设置为true，那么在引擎执行时，就不需要显示的为某个<code>Agenda Group</code>设置<code>Focus</code>，否则需要。对于规则的执行的控制，还可以使用<code>Agenda Filter</code> 来实现。在Drools 当中，提供了一个名为<code>org.drools.runtime.rule.AgendaFilter 的Agenda Filter</code> 接口，用户可以实现该接口，通过规则当中的某些属性来控制规则要不要执行。<code>org.drools.runtime.rule.AgendaFilter</code> 接口只有一个方法需要实现，方法体如下： <code>public boolean accept(Activation activation);</code>  在该方法当中提供了一个<code>Activation</code> 参数，通过该参数我们可以得到当前正在执行的规则对象或其它一些属性，该方法要返回一个布尔值，该布尔值就决定了要不要执行当前这个规则，返回true 就执行规则，否则就不执行。</p></li>
+
+<li><p>activation-group</p>
+
+<p>默认值：N/A</p>
+
+<p>类型：String</p>
+
+<p>该属性的作用是将若干个规则划分成一个组，用一个字符串来给这个组命名，这样在执行的时候，具有相同<code>activation-group</code>属性的规则中只要有一个会被执行，其它的规则都将不再执行。也就是说，在一组具有相同<code>activation-group</code>属性的规则当中，只有一个规则会被执行，其它规则都将不会被执行。当然对于具有相同<code>activation-group</code>属性的规则当中究竟哪一个会先执行，则可以用类似<code>salience</code>之类属性来实现。</p></li>
+
+<li><p>dialect</p>
+
+<p>默认值： 根据package指定</p>
+
+<p>类型：String，&rdquo;java&rdquo; or &ldquo;mvel&rdquo;</p>
+
+<p><code>dialect</code>种类是用于LHS或RHS代码块中的任何代码表达式的语言。目前有两种<code>dialect</code>，<code>Java</code>和<code>MVEL</code>。虽然<code>dialect</code>可以在包级别指定，但此属性允许为规则覆盖包定义。</p></li>
+
+<li><p>date-effective</p>
+
+<p>默认值：N/A</p>
+
+<p>类型：字符串，包含日期和时间定义。格式：<code>dd-MMM-yyyy</code>(25-Sep-2009).</p>
+
+<p>仅当当前日期和时间在日期有效属性后面时，才能激活规则。</p></li>
+
+<li><p>date-expires</p>
+
+<p>默认值：N/A</p>
+
+<p>类型：字符串，包含日期和时间定义。格式：<code>dd-MMM-yyyy</code>(25-Sep-2009).</p>
+
+<p>如果当前日期和时间在<code>date-expires</code>属性之后，则无法激活规则.</p></li>
+
+<li><p>enabled</p>
+
+<p>默认值：false</p>
+
+<p>类型：String</p>
+
+<p>表示规则是可用的，如果手工为一个规则添加一个<code>enabled</code>属性，并且设置其<code>enabled</code>属性值为false，那么引擎就不会执行该规则.</p></li>
+
+<li><p>duration</p>
+
+<p>默认值：无</p>
+
+<p>类型：long</p>
+
+<p>持续时间指示规则将在指定的持续时间之后触发，如果它仍然是true.</p></li>
+</ul>
+
+<h4 id="条件部分-lhs">条件部分-LHS</h4>
+
+<p>定义当前规则的条件，如<code>when Message()</code>; 判断当前workingMemory中是否存在Message对象。</p>
+
+<p><code>Left Hand Side</code>（<code>LHS</code>）是规则的条件部分的公共名称。它由零个或多个条件元素组成。
+  如果LHS为空，它将被认为是一个条件元素，它总是为真，并且当创建一个新的WorkingMemory会话时，它将被激活一次。</p>
+
+<pre><code>      Conditions / LHS —匹配模式（Patterns）
+
+      没有字段约束的Pattern
+      Person()
+
+      有文本字段约束的Pattern
+      Person( name == “bob” )
+
+      字段绑定的Pattern
+      Person( $name : name == “bob” )
+      变量名称可以是任何合法的java变量，$是可选的，可由于区分字段和变量
+
+      Fact绑定的Pattern
+      $bob : Person( name == “bob” )字段绑定的Pattern
+
+      变量约束的Pattern
+      Person( name == $name )
+</code></pre>
+
+<p>Drools提供了十二种类型比较操作符:
+      <code>&gt;</code>  <code>&gt;=</code>  <code>&lt;</code>  <code>&lt;=</code>  <code>==</code>  <code>!=</code>  <code>contains</code>  <code>not contains</code>  <code>memberOf</code>  <code>not memberOf</code> <code>matches</code> <code>not matches</code></p>
+
+<ul>
+<li><p>contains</p>
+
+<p>运算符<code>contains</code>用于检查作为Collection或elements的字段是否包含指定的值.</p>
+
+<pre><code>  Cheese( name contains &quot;tilto&quot; )
+  Person( fullName contains &quot;Jr&quot; )
+  String( this contains &quot;foo&quot; )
+</code></pre></li>
+
+<li><p>not contains</p>
+
+<p>和<code>contains</code>相反</p></li>
+
+<li><p>memberOf</p>
+
+<p>运算符<code>memberOf</code>用于检查字段是否是集合的成员或元素;该集合必须是一个变量。</p>
+
+<pre><code>  CheeseCounter( cheese memberOf $matureCheeses )
+</code></pre></li>
+
+<li><p>not memberOf</p>
+
+<p>和<code>memberOf</code>相反</p></li>
+
+<li><p>matches</p>
+
+<p>正则表达式匹配，与java不同的是，不用考虑&rsquo;/&lsquo;的转义问题</p>
+
+<pre><code>  Cheese( type matches &quot;(Buffalo)?\\S*Mozarella&quot; )
+</code></pre></li>
+
+<li><p>not matches</p>
+
+<p>和<code>matches</code>相反</p></li>
+</ul>
+
+<p>其他条件元素：
+  - exists</p>
+
+<pre><code>存在。检查Working Memory是否存在某物。使用模式`exists`，则规则将只激活最多一次，而不管在工作存储器中存在与存在模式中的条件匹配的数据量
+</code></pre>
+
+<ul>
+<li><p>not</p>
+
+<p>不存在，检查工作存储器中是否存在某物。认为“<code>not</code>”意味着“<code>there must be none of...</code>”。</p></li>
+</ul>
+
+<h4 id="结果部分-rhs">结果部分-RHS</h4>
+
+<p>这里可以写普通java代码，即当前规则条件满足后执行的操作，可以直接调用Fact对象的方法来操作应用。</p>
+
+<p><code>Right Hand Side</code>（<code>RHS</code>）是规则的结果或动作部分的通用名称;此部分应包含要执行的操作的列表。在规则的RHS中使用命令式或条件式代码是不好的做法;作为一个规则应该是<code>原子</code>的性质 - “<code>when this, then do this</code>”，而不是“<code>when this, maybe do this</code>”。规则的RHS部分也应该保持较小，从而保持声明性和可读性。如果你发现你需要在RHS中的命令式和/或条件代码，那么也许你应该把这个规则分成多个规则。 <code>RHS</code>的主要目的是插入，删除或修改工作存储器数据。为了协助，有一些方便的方法可以用来修改工作记忆;而不必首先引用工作内存实例。</p>
+
+<ul>
+<li><p>update</p>
+
+<p>更新，告诉引擎对象已经改变（已经绑定到LHS上的某个东西），并且规则可能需要重新考虑。</p></li>
+
+<li><p>insert(new Something())</p>
+
+<p>插入，往当前<code>workingMemory</code>中插入一个新的Fact对象，会触发规则的再次执行，除非使用<code>no-loop</code>限定；</p></li>
+
+<li><p>insertLogical(new Something())</p>
+
+<p>类似于<code>insert</code>，但是当没有更多的facts支持当前触发规则的真实性时，对象将被自动删除。</p></li>
+
+<li><p>modify</p>
+
+<p>修改，与<code>update</code>语法不同，结果都是更新操作。该语言扩展提供了一种结构化的方法来更新事实。它将更新操作与一些setter调用相结合来更改对象的字段。</p></li>
+
+<li><p>retract</p>
+
+<p>删除</p></li>
+</ul>
+
+<p>一些内置的method。</p>
+
+<ul>
+<li><p>drools.halt()</p>
+
+<p>调用<code>drools.halt（）</code>立即终止规则执行。这是需要将控制权返回到当前会话使用<code>fireUntilHalt（）</code>的点。</p></li>
+
+<li><p>drools.getWorkingMemory()</p>
+
+<p>返回WorkingMemory对象.</p></li>
+
+<li><p>drools.setFocus( String s)</p>
+
+<p>将焦点设置为指定的<code>agenda group</code>.</p></li>
+
+<li><p>drools.getRule().getName()</p>
+
+<p>从规则的RHS调用，返回规则的名称。</p></li>
+
+<li><p>drools.getTuple()</p>
+
+<p>返回与当前执行的规则匹配的<code>Tuple</code>，而drools.getActivation（）传递相应的激活。</p></li>
+</ul>
+
+<h2 id="drools应用">Drools应用</h2>
+
+<h3 id="动态规则">动态规则</h3>
+
+<h4 id="动态获取kiesession">动态获取KieSession</h4>
+
+<pre><code class="language-java">    public KieSession getKieSession(String rules) {
+        KieServices kieServices = KieServices.Factory.get();
+        KieFileSystem kfs = kieServices.newKieFileSystem();
+        kfs.write(&quot;src/main/resources/rules/rules.drl&quot;, rules.getBytes());
+        KieBuilder kieBuilder = kieServices.newKieBuilder(kfs).buildAll();
+        Results results = kieBuilder.getResults();
+        if (results.hasMessages(org.kie.api.builder.Message.Level.ERROR)) {
+            System.out.println(results.getMessages());
+            throw new BusinessException(300003,results.getMessages().toString(),4);
+        }
+        KieContainer kieContainer = kieServices.newKieContainer(kieServices.getRepository().getDefaultReleaseId());
+        KieBase kieBase = kieContainer.getKieBase();
+
+        return kieBase.newKieSession();
+    }
+</code></pre>
+
+<h4 id="激活规则">激活规则</h4>
+
+<pre><code>    KieSession kieSession = rulesService.getKieSession(rule);
+    Gson gson = new Gson();
+    Person person = gson.fromJson(json, Person.class);
+    kieSession.insert(person);
+    kieSession.fireAllRules();
+    kieSession.dispose();
+</code></pre>
+
+<h3 id="决策表">决策表</h3>
+
+<h4 id="将文件翻译为drl文件">将文件翻译为drl文件</h4>
+
+<pre><code>    public String getRuleTable() {
+        //把excel翻译成drl文件
+        SpreadsheetCompiler compiler = new SpreadsheetCompiler();
+        String rules = compiler.compile(ResourceFactory.newClassPathResource(RULES_PATH + File.separator + &quot;rule.xlsx&quot;, &quot;UTF-8&quot;), &quot;rule-table&quot;);
+        System.out.println(rules);
+        return rules;
+    }
+</code></pre>
+
+<h4 id="将文件流翻译为drl文件">将文件流翻译为drl文件</h4>
+
+<pre><code>    public String getRuleTable(InputStream inputStream) {
+        //把excel翻译成drl文件
+        SpreadsheetCompiler compiler = new SpreadsheetCompiler();
+        String rules = compiler.compile(ResourceFactory.newInputStreamResource(inputStream, &quot;UTF-8&quot;), &quot;rule-table&quot;);
+        logger.info(&quot;get rule from xls:&quot; + rules);
+        return rules;
+    }
+</code></pre>
+
+<h2 id="drools-example">Drools-Example</h2>
+
+<p>使用Drools来解决一些复杂的逻辑问题。</p>
+
+<h3 id="mingdrink">MingDrink</h3>
+
+<ul>
+<li><p>problem</p>
+
+<p>小明喝汽水问题:</p>
+
+<p>1元钱一瓶汽水，喝完后两个空瓶换一瓶汽水，问：小明有20元钱，最多可以喝到几瓶汽水？</p></li>
+
+<li><p>rule</p>
+
+<pre><code>    package com.xu.drools
+
+    import com.xu.drools.bean.XiaoMing;
+
+
+    // 小明喝汽水问题
+    // 1元钱一瓶汽水，喝完后两个空瓶换一瓶汽水，问：小明有20元钱，最多可以喝到几瓶汽水？
+    // 规则1：1元钱一瓶汽水
+    // 规则2：两个空瓶换一瓶汽水
+
+    //规则1：1元钱一瓶汽水。有钱就买水，空瓶+1，钱-1，喝水+1；
+    rule &quot;rule1&quot;
+        salience 3
+        when
+            $m:XiaoMing(money&gt;0);
+        then
+            System.out.println(&quot;有钱即可喝水，钱：&quot;+$m.getMoney());
+            $m.setBottle($m.getBottle()+1);
+            $m.setMoney($m.getMoney()-1);
+            $m.setDrink($m.getDrink()+1);
+            update($m)
+    end
+
+    //规则2：两个空瓶换一瓶汽水。有空瓶就换钱，空瓶-2，钱+1；
+    rule &quot;rule2&quot;
+        salience 2
+        when
+            $m:XiaoMing(bottle&gt;=2);
+        then
+            System.out.println(&quot;有瓶子就换钱，瓶子：&quot;+$m.getBottle());
+            $m.setBottle($m.getBottle()-2);
+            $m.setMoney($m.getMoney()+1);
+            update($m)
+    end
+
+    //规则3，打印已经喝掉的数量
+    rule &quot;rule3&quot;
+        salience 1
+        when
+            $m:XiaoMing();
+        then
+            System.out.println(&quot;总共喝掉：&quot;+$m.getDrink());
+    end
+</code></pre></li>
+</ul>
+
+<h3 id="worldproblem">WorldProblem</h3>
+
+<ul>
+<li><p>problem</p>
+
+<p>猜对错问题:
+在一次数学竞赛中，获得前三名的同学是A，B，C. 老师对他们说：“祝贺你们，请你们猜一猜名次。”</p>
+
+<ul>
+<li>甲：“A是第二，C是第三.”</li>
+<li>乙：“A是第一，B是第三.”</li>
+<li>丙：“B是第二，A是第三.”</li>
+</ul>
+
+<p><code>感觉有更好的方法，但是写不出规则来0.0</code></p></li>
+
+<li><p>rule</p>
+
+<pre><code>    package com.xu.drools
+
+    import com.xu.drools.bean.Student;
+    import com.xu.drools.bean.World
+
+    rule &quot;find jia1&quot;
+        salience 2
+    when
+            $jia1 : Student(name == &quot;jia&quot;,word1==&quot;A&quot;,word2==&quot;C&quot;,desc1==&quot;2&quot;,desc2!=&quot;3&quot;)
+        then
+            insert( new World($jia1.getDesc1(),0,$jia1.getDesc2()) );
+    end
+
+    rule &quot;find jia2&quot;
+        salience 2
+        when
+            $jia2 : Student(name == &quot;jia&quot;,word1==&quot;A&quot;,word2==&quot;C&quot;,desc1!=&quot;2&quot;,desc2==&quot;3&quot;)
+        then
+            insert( new World($jia2.getDesc1(),0,$jia2.getDesc2()) );
+    end
+
+    rule &quot;find yi1&quot;
+        salience 3
+        when
+            $yi1 : Student(name == &quot;yi&quot;,word1==&quot;A&quot;,word2==&quot;B&quot;,desc1==&quot;1&quot;,desc2!=&quot;3&quot;);
+            $w : World(a==$yi1.getDesc1())
+        then
+            $w.setB($yi1.getDesc2());
+            update($w)
+    end
+
+    rule &quot;find yi2&quot;
+        salience 3
+        when
+            $yi2 : Student(name == &quot;yi&quot;,word1==&quot;A&quot;,word2==&quot;B&quot;,desc1==&quot;1&quot;,desc2!=&quot;3&quot;)
+            $w : World(a==$yi2.getDesc1())
+        then
+            $w.setB($yi2.getDesc2());
+            update($w)
+    end
+
+
+    rule &quot;find bing1&quot;
+        salience 4
+        when
+            $bing1 : Student(name == &quot;bing&quot;,word1==&quot;A&quot;,word2==&quot;B&quot;,desc1==&quot;3&quot;,desc2!=&quot;2&quot;)
+            $w : World(a==$bing1.getDesc1(),b==$bing1.getDesc2())
+        then
+            System.out.println(&quot;-------&quot;+$w.toString());
+    end
+
+
+    rule &quot;find bing2&quot;
+        salience 4
+        when
+            $bing2 : Student(name == &quot;bing&quot;,word1==&quot;A&quot;,word2==&quot;B&quot;,desc1!=&quot;3&quot;,desc2==&quot;2&quot;)
+            $w : World(a==$bing2.getDesc1(),b==$bing2.getDesc2())
+        then
+            System.out.println(&quot;-------&quot;+$w.toString());
+    end
+</code></pre></li>
+</ul>
+
+<h3 id="golferproblem">GolferProblem</h3>
+
+<ul>
+<li><p>problem</p>
+
+<p>高尔夫球员站位问题:</p>
+
+<p>已知有四个高尔夫球员，他们的名字是Fred,Joe,Bob,Tom;</p>
+
+<ul>
+<li>今天他们分别穿着红色，蓝色，橙色，以及格子衣服，并且他们按照从左往右的顺序站成一排。</li>
+<li>我们将最左边的位置定为1，最右边的位置定为4，中间依次是2,3位置。</li>
+<li>现在我们了解的情况是：</li>
+<li>1.高尔夫球员Fred,目前不知道他的位置和衣服颜色</li>
+<li>2.Fred右边紧挨着的球员穿蓝色衣服</li>
+<li>3.Joe排在第2个位置</li>
+<li>4.Bob穿着格子短裤</li>
+<li>5.Tom没有排在第1位或第4位，也没有穿橙色衣服</li>
+<li>请问,这四名球员的位置和衣服颜色。</li>
+</ul></li>
+
+<li><p>rule</p>
+
+<pre><code>    package com.xu.drools
+
+    import com.xu.drools.bean.Golfer;
+
+    rule &quot;find solution&quot;
+        when
+            //1.高尔夫球员Fred,目前不知道他的位置和衣服颜色
+            $fred : Golfer( name == &quot;Fred&quot; )
+
+            //3.Joe排在第2个位置
+            $joe : Golfer( name == &quot;Joe&quot;,
+                    position == 2,
+                    position != $fred.position,
+                    color != $fred.color )
+
+            //4.Bob穿着格子短裤
+            $bob : Golfer( name == &quot;Bob&quot;,
+                    position != $fred.position,
+                    position != $joe.position,
+                    color == &quot;plaid&quot;,
+                    color != $fred.color,
+                    color != $joe.color )
+
+            //5.Tom没有排在第1位或第4位，也没有穿橙色衣服
+            $tom : Golfer( name == &quot;Tom&quot;,
+                    position != 1,
+                    position != 4,
+                    position != $fred.position,
+                    position != $joe.position,
+                    position != $bob.position,
+                    color != &quot;orange&quot;,
+                    color != $fred.color,
+                    color != $joe.color,
+                    color != $bob.color )
+
+            //2.Fred右边紧挨着的球员穿蓝色衣服
+            Golfer( position == ( $fred.position + 1 ),
+                        color == &quot;blue&quot;,
+                        this in ( $joe, $bob, $tom ) )
+
+        then
+            System.out.println( &quot;Fred &quot; + $fred.getPosition() + &quot; &quot; + $fred.getColor() );
+            System.out.println( &quot;Joe &quot; + $joe.getPosition() + &quot; &quot; + $joe.getColor() );
+            System.out.println( &quot;Bob &quot; + $bob.getPosition() + &quot; &quot; + $bob.getColor() );
+            System.out.println( &quot;Tom &quot; + $tom.getPosition() + &quot; &quot; + $tom.getColor() );
+    end
+</code></pre></li>
+</ul>
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/java-15-lock/" data-toggle="tooltip" data-placement="top" title="Java 中15种锁的介绍：公平锁，可重入锁等等……">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/booklist-zhengshitang-2018/" data-toggle="tooltip" data-placement="top" title="政事堂书单 2018">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+<div id="disqus-comment"></div>
+
+
+
+            </div>
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/devops" title="devops">
+                            devops
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/docker" title="docker">
+                            docker
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/domain-driven-design" title="domain-driven-design">
+                            domain-driven-design
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/drools" title="drools">
+                            drools
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/dubbo" title="dubbo">
+                            dubbo
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java" title="java">
+                            java
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java%E5%B9%B6%E5%8F%91%E5%AE%9E%E6%88%98" title="java并发实战">
+                            java并发实战
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E5%AE%9E%E6%88%98" title="java性能调优实战">
+                            java性能调优实战
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/jvm" title="jvm">
+                            jvm
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/kubernetes" title="kubernetes">
+                            kubernetes
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/linux" title="linux">
+                            linux
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/mq" title="mq">
+                            mq
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/mysql" title="mysql">
+                            mysql
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/mysql%E5%AE%9E%E6%88%9845%E8%AE%B2" title="mysql实战45讲">
+                            mysql实战45讲
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/redis" title="redis">
+                            redis
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/spring" title="spring">
+                            spring
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E4%B9%A6%E5%8D%95" title="书单">
+                            书单
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F" title="分布式">
+                            分布式
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E5%AE%B9%E5%99%A8" title="容器">
+                            容器
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8" title="工具使用">
+                            工具使用
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E5%B9%B6%E5%8F%91" title="并发">
+                            并发
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84" title="数据结构">
+                            数据结构
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E9%AB%98%E6%89%8B%E8%AF%BE" title="消息队列高手课">
+                            消息队列高手课
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E7%AE%97%E6%B3%95" title="算法">
+                            算法
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E7%BC%93%E5%AD%98" title="缓存">
+                            缓存
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE" title="网络协议">
+                            网络协议
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E8%B6%A3%E8%B0%88%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE" title="趣谈网络协议">
+                            趣谈网络协议
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%BE%8E" title="软件工程之美">
+                            软件工程之美
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E9%80%8F%E8%A7%86http%E5%8D%8F%E8%AE%AE" title="透视http协议">
+                            透视http协议
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E9%9D%A2%E8%AF%95" title="面试">
+                            面试
+                        </a>
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+                <section>
+                    <hr>
+                    <h5>FRIENDS</h5>
+                    <ul class="list-inline">
+                        
+                        <li><a target="_blank" href="https://servicemesher.com">servicemesher的博客</a></li>
+                        
+                    </ul>
+                </section>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                   
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="Quguang&#39;s Blog" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fa fa-circle fa-stack-2x"></i>
+                               <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+                   
+                    
+                    <li>
+                        <a href="mailto:quguang1011@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    
+
+                    
+
+		    
+                    
+                    <li>
+                        <a target="_blank" href="/your%20wechat%20qr%20code%20image">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-wechat fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/techqu">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/yourlinkedinid">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://medium.com/@quguang1011">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-medium fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+            
+                    
+                    <li>
+                        <a target="_blank" href="https://stackoverflow.com/users/yourstackoverflowid">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+            
+                    
+                    
+                    
+            
+            
+            
+                </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Quguang&#39;s Blog 2020
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+</body>
+</html>

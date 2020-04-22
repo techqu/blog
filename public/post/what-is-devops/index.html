@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Quguang&#39;s Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://quguang.wang/img/bg-china.jpg">
+    <meta property="twitter:image" content="https://quguang.wang/img/bg-china.jpg" />
+    
+
+    
+    <meta name="title" content="什么是Devops？" />
+    <meta property="og:title" content="什么是Devops？" />
+    <meta property="twitter:title" content="什么是Devops？" />
+    
+
+    
+    <meta name="description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。">
+    <meta property="og:description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。" />
+    <meta property="twitter:description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。" />
+    
+
+    
+    <meta property="twitter:card" content="这里填写文章文章摘要。" />
+    
+    
+
+    <meta name="keyword"  content="瞿广, quguang, , 瞿广的网络日志, 瞿广的博客, quguang Blog, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Istio, Kubernetes, 微服务, Microservice">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>什么是Devops？-瞿广的博客 | quguang Blog</title>
+
+    <link rel="canonical" href="/post/what-is-devops/">
+
+    <link rel="stylesheet" href="/css/iDisqus.min.css"/>
+	
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+    
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    
+    <script src="/js/jquery.min.js"></script>
+    
+    
+    <script src="/js/bootstrap.min.js"></script>
+    
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Quguang&#39;s Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/life">life</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/math">math</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/note">note</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/tech">tech</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/top/about/">ABOUT</a></li>
+                    
+
+                    
+		    <li>
+                        <a href="/search">SEARCH <img src="/img/search.png" height="15" style="cursor: pointer;" alt="Search"></a>
+		    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/bg-china.jpg')
+    }
+</style>
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/java" title="java">
+                            java
+                        </a>
+                        
+                    </div>
+                    <h1>什么是Devops？</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 
+                        
+                            瞿广
+                         
+                        on 
+                        Sunday, January 13, 2019
+                        
+                        
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <header>
+                    <h2>TOC</h2>
+                </header>
+                <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#devops不是什么">DevOps不是什么？ </a></li>
+<li><a href="#什么驱动了devops的产生">什么驱动了devops的产生？</a>
+<ul>
+<li><a href="#概览">概览</a></li>
+<li><a href="#参考">参考：</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+                
+                <blockquote>
+<p>DevOps是人员，流程和产品的结合，可以为最终用户持续的提供价值。</p>
+</blockquote>
+
+<p>它不仅仅是流程，它不仅仅是产品或工具，它完全是人员，流程和工具，共同努力实现目标。最终以小增量单位实现价值，持续交付给终端用户，我认为这非常重要。</p>
+
+<p>当我们谈论DevOps时，<strong>我们不只是在谈论构建和推进测试环境。我们正在谈论一种让我们能够迅速投入生产的文化。</strong> 它强调四件事情。</p>
+
+<ol>
+<li><p>首先是文化。 DevOps不仅仅是一套工具，人员和实践，还是一种文化，它从组织内部成长起来，并且可以在组织中变化。而且，您会发现具有强烈文化背景的组织，专注于交付，专注于生产，能够非常迅速和高效地发展DevOps文化。</p></li>
+
+<li><p>第二，是一种衡量文化，我们正在进入并理解我们正在做什么。这不仅仅是获取日志文件，尽管这是它的重要组成部分。但它理解所发生的一切，AB测试。</p></li>
+
+<li><p>第三种是自动化，如果没有强大的自动化功能，您就无法进入DevOps。这是使用工具来自动化您的业务流程的部署，构建，测试，所有这些事情。</p></li>
+
+<li><p>最后，这是合作。这是开发和运营之间的合作，还有DevOps，但更重要的是，它超越了它，它需要引入项目经理。它需要引入收集需求的人员，引入维护应用程序的人员，并引入客户服务。这不仅仅是开发和运维，我们也会在整个课程中强调这一点。</p></li>
+</ol>
+
+<h2 id="devops不是什么">DevOps不是什么？ </h2>
+
+<ul>
+<li>这不是一个产品。 </li>
+<li>这不是任何地方的规范。 </li>
+<li>这不是集中的。 </li>
+<li>它没有商标。 </li>
+</ul>
+
+<p>多诺万布朗的描述：你不能购买DevOps并安装它。 DevOps不仅仅是代码自动化或基础设施。 DevOps是人员，遵循由产品支持的流程，为我们的最终用户提供价值。 这回到我们最初开始的定义。 我喜欢它，因为我们需要专注于人，产品和将它们联系在一起的过程。 这就是我们对DevOps的定义。</p>
+
+<h2 id="什么驱动了devops的产生">什么驱动了devops的产生？</h2>
+
+<p><img src="/img/what-driving-devops.png" alt="Alt text" /></p>
+
+<ul>
+<li>敏捷方法论加速了软件开发过程</li>
+<li>传统的运维方法论使发布和运维的流程更加可靠，但是并不敏捷</li>
+<li>当发生问题时，开发和运维之间断层会导致出错和增加MTTR（平均恢复时间）</li>
+<li>根据收获反馈确定下一组的目标;</li>
+</ul>
+
+<h3 id="概览">概览</h3>
+
+<ul>
+<li>它的要求，版本控制，测试用例管理，错误跟踪。</li>
+<li>它是测试，集成测试，单元测试。</li>
+<li>它是部署，定义环境，供应，配置，以及部署到这些环境的所有这些，</li>
+<li>它是应用程序配置，它监视生产中的应用程序。</li>
+</ul>
+
+<p>所以，这些是我们必须做的一些技术性的事情，为什么我要强调这一点？ 因为有时候行业会看看并说，这里是我们的工具，我们是一个DevOps工具，购买这个工具，并且您已经拥有了您需要的一切。 这是错误的，这是一种文化，它是人，它是流程，它不仅仅是一种工具。 有时候这些工具供应商会遇到这样一个小区域。 例如，它可能只是最后一英里，连续交付管道，或者它可能只是预先的ALM (application lifecycle management，应用生命周期管理)工具。 我们说的是<strong>整个工具集以及人员和流程</strong>。</p>
+
+<p><img src="/img/7-devops-habits.png" alt="Alt text" /></p>
+
+<ul>
+<li>团队自治和企业一致;</li>
+<li>严格管理技术性债务;</li>
+<li>专注于客户价值的流动;</li>
+<li>假设驱动的发展;</li>
+<li>生产中收集的证据;</li>
+<li>生产中收集;</li>
+<li>将基础设施作为灵活资源进行管理</li>
+</ul>
+
+<p><img src="/img/7-devops-practices.png" alt="Alt text" /></p>
+
+<h3 id="参考">参考：</h3>
+
+<p>本文内容来自EDX上的devops课程：<a href="https://courses.edx.org/courses/course-v1%3AMicrosoft%2BDEV212x%2B2T2016/">Microsoft.DEV212x.2T2016</a></p>
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/devops-in-action/" data-toggle="tooltip" data-placement="top" title="Devops实践">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/transaction-3pc/" data-toggle="tooltip" data-placement="top" title="分布式事务-3PC(三阶段提交)">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+<div id="disqus-comment"></div>
+
+
+
+            </div>
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/devops" title="devops">
+                            devops
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/docker" title="docker">
+                            docker
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/domain-driven-design" title="domain-driven-design">
+                            domain-driven-design
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/drools" title="drools">
+                            drools
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/dubbo" title="dubbo">
+                            dubbo
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java" title="java">
+                            java
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java%E5%B9%B6%E5%8F%91%E5%AE%9E%E6%88%98" title="java并发实战">
+                            java并发实战
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E5%AE%9E%E6%88%98" title="java性能调优实战">
+                            java性能调优实战
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/jvm" title="jvm">
+                            jvm
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/kubernetes" title="kubernetes">
+                            kubernetes
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/linux" title="linux">
+                            linux
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/mq" title="mq">
+                            mq
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/mysql" title="mysql">
+                            mysql
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/mysql%E5%AE%9E%E6%88%9845%E8%AE%B2" title="mysql实战45讲">
+                            mysql实战45讲
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/redis" title="redis">
+                            redis
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/spring" title="spring">
+                            spring
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E4%B9%A6%E5%8D%95" title="书单">
+                            书单
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F" title="分布式">
+                            分布式
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E5%AE%B9%E5%99%A8" title="容器">
+                            容器
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8" title="工具使用">
+                            工具使用
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E5%B9%B6%E5%8F%91" title="并发">
+                            并发
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84" title="数据结构">
+                            数据结构
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E9%AB%98%E6%89%8B%E8%AF%BE" title="消息队列高手课">
+                            消息队列高手课
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E7%AE%97%E6%B3%95" title="算法">
+                            算法
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E7%BC%93%E5%AD%98" title="缓存">
+                            缓存
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE" title="网络协议">
+                            网络协议
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E8%B6%A3%E8%B0%88%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE" title="趣谈网络协议">
+                            趣谈网络协议
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%BE%8E" title="软件工程之美">
+                            软件工程之美
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E9%80%8F%E8%A7%86http%E5%8D%8F%E8%AE%AE" title="透视http协议">
+                            透视http协议
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E9%9D%A2%E8%AF%95" title="面试">
+                            面试
+                        </a>
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+                <section>
+                    <hr>
+                    <h5>FRIENDS</h5>
+                    <ul class="list-inline">
+                        
+                        <li><a target="_blank" href="https://servicemesher.com">servicemesher的博客</a></li>
+                        
+                    </ul>
+                </section>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                   
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="Quguang&#39;s Blog" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fa fa-circle fa-stack-2x"></i>
+                               <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+                   
+                    
+                    <li>
+                        <a href="mailto:quguang1011@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    
+
+                    
+
+		    
+                    
+                    <li>
+                        <a target="_blank" href="/your%20wechat%20qr%20code%20image">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-wechat fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/techqu">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/yourlinkedinid">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://medium.com/@quguang1011">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-medium fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+            
+                    
+                    <li>
+                        <a target="_blank" href="https://stackoverflow.com/users/yourstackoverflowid">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+            
+                    
+                    
+                    
+            
+            
+            
+                </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Quguang&#39;s Blog 2020
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+</body>
+</html>

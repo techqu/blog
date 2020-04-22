@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Quguang&#39;s Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://quguang.wang/img/bg-china.jpg">
+    <meta property="twitter:image" content="https://quguang.wang/img/bg-china.jpg" />
+    
+
+    
+    <meta name="title" content="java内存溢出分析工具：jmap使用实战" />
+    <meta property="og:title" content="java内存溢出分析工具：jmap使用实战" />
+    <meta property="twitter:title" content="java内存溢出分析工具：jmap使用实战" />
+    
+
+    
+    <meta name="description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。">
+    <meta property="og:description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。" />
+    <meta property="twitter:description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="瞿广, quguang, , 瞿广的网络日志, 瞿广的博客, quguang Blog, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Istio, Kubernetes, 微服务, Microservice">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>java内存溢出分析工具：jmap使用实战-瞿广的博客 | quguang Blog</title>
+
+    <link rel="canonical" href="/post/java-jvm-jmap/">
+
+    <link rel="stylesheet" href="/css/iDisqus.min.css"/>
+	
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+    
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    
+    <script src="/js/jquery.min.js"></script>
+    
+    
+    <script src="/js/bootstrap.min.js"></script>
+    
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Quguang&#39;s Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/life">life</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/math">math</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/note">note</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/tech">tech</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/top/about/">ABOUT</a></li>
+                    
+
+                    
+		    <li>
+                        <a href="/search">SEARCH <img src="/img/search.png" height="15" style="cursor: pointer;" alt="Search"></a>
+		    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/bg-china.jpg')
+    }
+</style>
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/jvm" title="jvm">
+                            jvm
+                        </a>
+                        
+                    </div>
+                    <h1>java内存溢出分析工具：jmap使用实战</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 
+                        
+                            瞿广
+                         
+                        on 
+                        Monday, August 19, 2019
+                        
+                        
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <header>
+                    <h2>TOC</h2>
+                </header>
+                <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#案例二">案例二</a></li>
+</ul></li>
+</ul>
+</nav>
+                
+                <p>java内存溢出分析工具：jmap使用实战</p>
+
+<p>在一次解决系统tomcat老是内存撑到头，然后崩溃的问题时，使用到了jmap。
+1. 使用命令</p>
+
+<p>在环境是linux+jdk1.5以上，这个工具是自带的，路径在<code>JDK_HOME/bin/</code>下</p>
+
+<pre><code>jmap -histo pid&gt;a.log
+</code></pre>
+
+<ol>
+<li><p>输出结果摘要</p>
+
+<pre><code>Size    Count   Class description 
+------------------------------------------------------- 
+353371288       9652324 char[] 
+230711112       9612963 java.lang.String 
+139347160       114865  byte[] 
+76128096        3172004 java.util.Hashtable$Entry 
+75782280        3157595 com.test.util.IPSeeker$IPLocation 
+25724272        9115    java.util.Hashtable$Entry[] 
+9319968 166428  org.apache.tomcat.util.buf.MessageBytes 
+8533856 32889   int[] 
+</code></pre></li>
+</ol>
+
+<p>发现有大量的String和自定义对象<code>com.test.util.IPSeeker$IPLocation</code>存在，检查程序发现此处果然存在内存溢出。修改程序上线后再次用jmap抓取内存数据：</p>
+
+<pre><code>146881712   207163  byte[] 
+98976352    354285  char[] 
+42595272    53558   int[] 
+11515632    479818  java.util.HashMap$Entry 
+9521896 59808   java.util.HashMap$Entry[] 
+8887392 370308  com.test.bean.UnionIPEntry 
+8704808 155443  org.apache.tomcat.util.buf.MessageBytes 
+8066880 336120  java.lang.String 
+</code></pre>
+
+<p>内存溢出问题消除。
+注意：这个jmap使用的时候jvm是处在假死状态的，只能在服务瘫痪的时候为了解决问题来使用，否则会造成服务中断。</p>
+
+<p>其中：
+[C is a char[]
+[S is a short[]
+[I is a int[]
+[B is a byte[]
+[[I is a int[][]</p>
+
+<h2 id="案例二">案例二</h2>
+
+<p>jmap命令可以获得运行中的jvm的堆的快照，从而可以离线分析堆，以检查内存泄漏，检查一些严重影响性能的大对象的创建，检查系统中什么对象最多，各种对象所占内存的大小等等</p>
+
+<p>jmap （linux下特有，也是很常用的一个命令）</p>
+
+<p>观察运行中的jvm物理内存的占用情况。</p>
+
+<p>参数如下：</p>
+
+<ul>
+<li>-heap ：打印jvm heap的情况</li>
+<li>-histo： 打印jvm heap的直方图。其输出信息包括类名，对象数量，对象占用大小。</li>
+<li>-histo：live ： 同上，但是只答应存活对象的情况</li>
+<li>-permstat： 打印permanent generation heap情况</li>
+</ul>
+
+<p>命令使用：</p>
+
+<p><code>jmap -heap 3409</code></p>
+
+<p>可以观察到New Generation（Eden Space，From Space，To Space）,tenured generation,Perm Generation的内存使用情况</p>
+
+<p>输出内容：</p>
+
+<p><code>jmap -histo 3409 | jmap -histo:live 3409</code></p>
+
+<p>可以观察heap中所有对象的情况（heap中所有生存的对象的情况）。包括对象数量和所占空间大小。</p>
+
+<p>输出内容：</p>
+
+<p>写个脚本，可以很快把占用heap最大的对象找出来，对付内存泄漏特别有效。</p>
+
+<p>如果结果很多，可以用以下命令输出到文本文件。</p>
+
+<p><code>jmap -histo 3409 | jmap -histo:live 3409 &amp;gt; a.txt</code></p>
+
+<p>常用选项：</p>
+
+<pre><code>-dump:format=b,file=&lt;filename&gt; pid    # dump堆到文件,format指定输出格式，live指明是活着的对象,file指定文件名
+-finalizerinfo  # 打印等待回收对象的信息
+-heap           # 打印heap的概要信息，GC使用的算法，heap的配置及wise heap的使用情况,可以用此来判断内存目前的使用情况以及垃圾回收情况
+-histo[:live]   # 打印堆的对象统计，包括对象数、内存大小等等 （因为在dump:live前会进行full gc，因此不加live的堆大小要大于加live堆的大小 ）
+-permstat       # 打印classload类装载器和 jvm heap长久层的信息. 包含包括每个装载器的名字，活跃，地址，父装载器，和其总共加载的类大小。另外,内部String的数量和占用内存数也会打印出来. 
+-F              # 强制，强迫.在pid没有相应的时候使用-dump或者-histo参数. 在这个模式下,live子参数无效.  
+-J              # 传递参数给jmap启动的jvm. ，如：-J-Xms256m
+</code></pre>
+
+<p>实例：
+Jmap</p>
+
+<p><code>[root@tomcat01 ~]# jmap 13614</code></p>
+
+<pre><code>Attaching to process ID 13614, please wait...
+Debugger attached successfully.
+Server compiler detected.
+JVM version is 24.55-b03
+0x0000000000400000      7K      /aliyun/java-1.7.0/bin/java
+0x0000003666400000      91K     /lib64/libgcc_s-4.4.7-20120601.so.1
+0x0000003d7e400000      153K    /lib64/ld-2.12.so
+0x0000003d7ec00000      1881K   /lib64/libc-2.12.so
+0x0000003d7f000000      142K    /lib64/libpthread-2.12.so
+0x0000003d7f400000      22K     /lib64/libdl-2.12.so
+0x0000003d7f800000      46K     /lib64/librt-2.12.so
+0x0000003d7fc00000      585K    /lib64/libm-2.12.so
+0x0000003d80c00000      111K    /lib64/libresolv-2.12.so
+0x0000003d82000000      461K    /lib64/libfreebl3.so
+0x0000003d83000000      42K     /lib64/libcrypt-2.12.so
+0x00007f42de29b000      257K    /aliyun/java-1.7.0/jre/lib/amd64/libjpeg.so
+0x00007f42de4d6000      477K    /aliyun/java-1.7.0/jre/lib/amd64/libt2k.so
+0x00007f42de755000      512K    /aliyun/java-1.7.0/jre/lib/amd64/libfontmanager.so
+0x00007f42de9ce000      36K     /aliyun/java-1.7.0/jre/lib/amd64/headless/libmawt.so
+0x00007f42debd5000      755K    /aliyun/java-1.7.0/jre/lib/amd64/libawt.so
+0x00007f43047d4000      26K     /lib64/libnss_dns-2.12.so
+0x00007f4304f2b000      250K    /aliyun/java-1.7.0/jre/lib/amd64/libsunec.so
+0x00007f4305172000      774K    /aliyun/apr/lib/libapr-1.so.0.5.0
+0x00007f43053a4000      658K    /usr/local/apr/lib/libtcnative-1.so.0.1.34
+0x00007f43055bc000      44K     /aliyun/java-1.7.0/jre/lib/amd64/libmanagement.so
+0x00007f4305ac4000      112K    /aliyun/java-1.7.0/jre/lib/amd64/libnet.so
+0x00007f4305cdb000      89K     /aliyun/java-1.7.0/jre/lib/amd64/libnio.so
+0x00007f432840d000      120K    /aliyun/java-1.7.0/jre/lib/amd64/libzip.so
+0x00007f4328628000      64K     /lib64/libnss_files-2.12.so
+0x00007f432883e000      214K    /aliyun/java-1.7.0/jre/lib/amd64/libjava.so
+0x00007f4328a69000      63K     /aliyun/java-1.7.0/jre/lib/amd64/libverify.so
+0x00007f4328cf8000      14786K  /aliyun/java-1.7.0/jre/lib/amd64/server/libjvm.so
+0x00007f4329b61000      103K    /aliyun/java-1.7.0/lib/amd64/jli/libjli.so
+</code></pre>
+
+<p>jhat也可以监控jvm</p>
+
+<p>可以参考如下博文：</p>
+
+<p><a href="https://www.cnblogs.com/myna/p/7590620.html">https://www.cnblogs.com/myna/p/7590620.html</a></p>
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/java-sort-01/" data-toggle="tooltip" data-placement="top" title="Java排序算法">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/interview-exp-from-wx-01/" data-toggle="tooltip" data-placement="top" title="我用50W&#43;年薪的独角兽offer，犒劳自己一年的卧薪尝胆！不服输，你就不会输">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+<div id="disqus-comment"></div>
+
+
+
+            </div>
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/devops" title="devops">
+                            devops
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/docker" title="docker">
+                            docker
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/domain-driven-design" title="domain-driven-design">
+                            domain-driven-design
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/drools" title="drools">
+                            drools
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/dubbo" title="dubbo">
+                            dubbo
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java" title="java">
+                            java
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java%E5%B9%B6%E5%8F%91%E5%AE%9E%E6%88%98" title="java并发实战">
+                            java并发实战
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E5%AE%9E%E6%88%98" title="java性能调优实战">
+                            java性能调优实战
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/jvm" title="jvm">
+                            jvm
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/kubernetes" title="kubernetes">
+                            kubernetes
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/linux" title="linux">
+                            linux
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/mq" title="mq">
+                            mq
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/mysql" title="mysql">
+                            mysql
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/mysql%E5%AE%9E%E6%88%9845%E8%AE%B2" title="mysql实战45讲">
+                            mysql实战45讲
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/redis" title="redis">
+                            redis
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/spring" title="spring">
+                            spring
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E4%B9%A6%E5%8D%95" title="书单">
+                            书单
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F" title="分布式">
+                            分布式
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E5%AE%B9%E5%99%A8" title="容器">
+                            容器
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8" title="工具使用">
+                            工具使用
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E5%B9%B6%E5%8F%91" title="并发">
+                            并发
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84" title="数据结构">
+                            数据结构
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E9%AB%98%E6%89%8B%E8%AF%BE" title="消息队列高手课">
+                            消息队列高手课
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E7%AE%97%E6%B3%95" title="算法">
+                            算法
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E7%BC%93%E5%AD%98" title="缓存">
+                            缓存
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE" title="网络协议">
+                            网络协议
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E8%B6%A3%E8%B0%88%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE" title="趣谈网络协议">
+                            趣谈网络协议
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%BE%8E" title="软件工程之美">
+                            软件工程之美
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E9%80%8F%E8%A7%86http%E5%8D%8F%E8%AE%AE" title="透视http协议">
+                            透视http协议
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E9%9D%A2%E8%AF%95" title="面试">
+                            面试
+                        </a>
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+                <section>
+                    <hr>
+                    <h5>FRIENDS</h5>
+                    <ul class="list-inline">
+                        
+                        <li><a target="_blank" href="https://servicemesher.com">servicemesher的博客</a></li>
+                        
+                    </ul>
+                </section>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                   
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="Quguang&#39;s Blog" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fa fa-circle fa-stack-2x"></i>
+                               <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+                   
+                    
+                    <li>
+                        <a href="mailto:quguang1011@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    
+
+                    
+
+		    
+                    
+                    <li>
+                        <a target="_blank" href="/your%20wechat%20qr%20code%20image">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-wechat fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/techqu">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/yourlinkedinid">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://medium.com/@quguang1011">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-medium fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+            
+                    
+                    <li>
+                        <a target="_blank" href="https://stackoverflow.com/users/yourstackoverflowid">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+            
+                    
+                    
+                    
+            
+            
+            
+                </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Quguang&#39;s Blog 2020
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+</body>
+</html>

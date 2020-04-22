@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Quguang&#39;s Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://quguang.wang/img/bg-china.jpg">
+    <meta property="twitter:image" content="https://quguang.wang/img/bg-china.jpg" />
+    
+
+    
+    <meta name="title" content="理解GC日志" />
+    <meta property="og:title" content="理解GC日志" />
+    <meta property="twitter:title" content="理解GC日志" />
+    
+
+    
+    <meta name="description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。">
+    <meta property="og:description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。" />
+    <meta property="twitter:description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。" />
+    
+
+    
+    <meta property="twitter:card" content="这里填写文章文章摘要。" />
+    
+    
+
+    <meta name="keyword"  content="瞿广, quguang, , 瞿广的网络日志, 瞿广的博客, quguang Blog, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Istio, Kubernetes, 微服务, Microservice">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>理解GC日志-瞿广的博客 | quguang Blog</title>
+
+    <link rel="canonical" href="/post/jvm-understand-gc-log/">
+
+    <link rel="stylesheet" href="/css/iDisqus.min.css"/>
+	
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+    
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    
+    <script src="/js/jquery.min.js"></script>
+    
+    
+    <script src="/js/bootstrap.min.js"></script>
+    
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Quguang&#39;s Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/life">life</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/math">math</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/note">note</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/tech">tech</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/top/about/">ABOUT</a></li>
+                    
+
+                    
+		    <li>
+                        <a href="/search">SEARCH <img src="/img/search.png" height="15" style="cursor: pointer;" alt="Search"></a>
+		    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/bg-china.jpg')
+    }
+</style>
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/java" title="java">
+                            java
+                        </a>
+                        
+                        <a class="tag" href="/tags/jvm" title="JVM">
+                            JVM
+                        </a>
+                        
+                    </div>
+                    <h1>理解GC日志</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 
+                        
+                            瞿广
+                         
+                        on 
+                        Monday, December 24, 2018
+                        
+                        
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <header>
+                    <h2>TOC</h2>
+                </header>
+                <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#gc日志查看">GC日志查看</a></li>
+<li><a href="#gc-堆">GC 堆</a></li>
+<li><a href="#gc-日志1">GC 日志1</a></li>
+<li><a href="#gc-日志2">GC 日志2</a></li>
+<li><a href="#gc-日志3">GC 日志3</a></li>
+</ul></li>
+</ul>
+</nav>
+                
+                <p>理解GC日志，基于jdk1.7,一步步看懂GC日志</p>
+
+<h2 id="gc日志查看">GC日志查看</h2>
+
+<p>可以通过在java命令种加入参数来指定对应的gc类型，打印gc日志信息并输出至文件等策略。</p>
+
+<p>GC的日志是以替换的方式(&gt;)写入的，而不是追加(&gt;&gt;)，如果下次写入到同一个文件中的话，以前的GC内容会被清空。</p>
+
+<p>对应的参数列表</p>
+
+<pre><code>-XX:+PrintGC 输出GC日志  
+-XX:+PrintGCDetails 输出GC的详细日志  
+-XX:+PrintGCTimeStamps 输出GC的时间戳（以基准时间的形式）  
+-XX:+PrintGCDateStamps 输出GC的时间戳（以日期的形式，如 2013-05-04T21:53:59.234+0800）  
+-XX:+PrintHeapAtGC 在进行GC的前后打印出堆的信息  
+-Xloggc:../logs/gc.log 日志文件的输出路径  
+</code></pre>
+
+<p>这里使用如下的参数来进行日志的打印：</p>
+
+<pre><code>-XX:+PrintGCDateStamps -XX:+PrintGCDetails -Xloggc:./gclogs  
+</code></pre>
+
+<p>对于新生代回收的一行日志，其基本内容如下：</p>
+
+<pre><code>2014-07-18T16:02:17.606+0800: 611.633: [GC 611.633: [DefNew: 843458K-&gt;2K(948864K), 0.0059180 secs] 2186589K-&gt;1343132K(3057292K), 0.0059490 secs] [Times: user=0.00 sys=0.00, real=0.00 secs]  
+</code></pre>
+
+<p>其含义大概如下：</p>
+
+<p>2014-07-18T16:02:17.606+0800（当前时间戳）: 611.633（时间戳）: [GC（表示Young GC） 611.633: [DefNew（单线程Serial年轻代GC）: 843458K（年轻代垃圾回收前的大小）-&gt;2K（年轻代回收后的大小）(948864K（年轻代总大小）), 0.0059180 secs（本次回收的时间）] 2186589K（整个堆回收前的大小）-&gt;1343132K（整个堆回收后的大小）(3057292K（堆总大小）), 0.0059490 secs（回收时间）] [Times: user=0.00（用户耗时） sys=0.00（系统耗时）, real=0.00 secs（实际耗时）]</p>
+
+<p>老年代回收的日志如下：</p>
+
+<p>Java代码  收藏代码
+2014-07-18T16:19:16.794+0800: 1630.821: [GC 1630.821: [DefNew: 1005567K-&gt;111679K(1005568K), 0.9152360 secs]1631.736: [Tenured:<br />
+2573912K-&gt;1340650K(2574068K), 1.8511050 secs] 3122548K-&gt;1340650K(3579636K), [Perm : 17882K-&gt;17882K(21248K)], 2.7854350 secs] [Times: user=2.57 sys=0.22, real=2.79 secs]</p>
+
+<p>gc日志中的最后貌似是系统运行完成前的快照：</p>
+
+<pre><code>Heap  
+ def new generation   total 1005568K, used 111158K [0x00000006fae00000, 0x000000073f110000, 0x0000000750350000)  
+  eden space 893888K,  12% used [0x00000006fae00000, 0x0000000701710e90, 0x00000007316f0000)  
+  from space 111680K,   3% used [0x0000000738400000, 0x000000073877c9b0, 0x000000073f110000)  
+  to   space 111680K,   0% used [0x00000007316f0000, 0x00000007316f0000, 0x0000000738400000)  
+ tenured generation   total 2234420K, used 1347671K [0x0000000750350000, 0x00000007d895d000, 0x00000007fae00000)  
+   the space 2234420K,  60% used [0x0000000750350000, 0x00000007a2765cb8, 0x00000007a2765e00, 0x00000007d895d000)  
+ compacting perm gen  total 21248K, used 17994K [0x00000007fae00000, 0x00000007fc2c0000, 0x0000000800000000)  
+   the space 21248K,  84% used [0x00000007fae00000, 0x00000007fbf92a50, 0x00000007fbf92c00, 0x00000007fc2c0000)  
+No shared spaces configured.  
+ 
+</code></pre>
+
+<p>GC日志的离线分析</p>
+
+<p>可以使用一些离线的工具来对GC日志进行分析，比如sun的gchisto(<a href="https://java.net/projects/gchisto)，gcviewer（https://github.com/chewiebug/GCViewer">https://java.net/projects/gchisto)，gcviewer（https://github.com/chewiebug/GCViewer</a> ），这些都是开源的工具，用户可以直接通过版本控制工具下载其源码，进行离线分析</p>
+
+<h2 id="gc-堆">GC 堆</h2>
+
+<p>1、GC 分为两种：Minor GC、Full GC ( 或称为 Major GC )。</p>
+
+<p>2、Minor GC 是发生在新生代中的垃圾收集动作，所采用的是复制算法。</p>
+
+<pre><code>a、新生代几乎是所有 Java 对象出生的地方，即 Java 对象申请的内存以及存放都是在这个地方。
+b、Java 中的大部分对象通常不需长久存活，具有朝生夕灭的性质。
+c、当一个对象被判定为 “死亡” 的时候，GC 就有责任来回收掉这部分对象的内存空间。
+d、新生代是 GC 收集垃圾的频繁区域。
+e、当对象在 Eden（+from） 出生后，在经过一次 Minor GC 后，如果对象还存活，并且能够被另外一块 Survivor 区域        
+    所容纳( 这里应为 to 区域 )，则使用复制算法将这些仍然还存活的对象复制到另外一块 Survivor 区域 ( 即 to 区域 ) 中，
+f、 然后清理所使用过的 Eden 以及 Survivor 区域 ( 即 from 区域 )，并且将这些对象的年龄设置为1，
+g、以后对象在 Survivor 区每熬过一次 Minor GC，就将对象的年龄 + 1，
+h、当对象的年龄达到某个值时 ( 默认是 15 岁，可以通过参数 -XX:MaxTenuringThreshold 来设定 )，这些对象就会成为    
+        老年代。
+j、但这也不是一定的，对于一些较大的对象 ( 即需要分配一块较大的连续内存空间 ) 则是直接进入到老年代。
+</code></pre>
+
+<p>3、Full GC 是发生在老年代的垃圾收集动作，所采用的是标记-清除算法。</p>
+
+<ol>
+<li>老年代里面的对象几乎个个都是在 Survivor 区域中熬过来的，它们是不会那么容易就 “死掉” 了的。</li>
+<li>Full GC 发生的次数不会有 Minor GC 那么频繁，并且做一次 Full GC 要比进行一次 Minor GC 的时间更长。</li>
+<li>标记-清除算法收集垃圾的时候会产生许多的内存碎片 ( 即不连续的内存空间 )，</li>
+<li>此后需要为较大的对象分配内存空间时，若无法找到足够的连续的内存空间，就会提前触发一次 GC 的收集动作。</li>
+</ol>
+
+<h2 id="gc-日志1">GC 日志1</h2>
+
+<p><img src="/img/gc-log1.png" alt="gc-log" /></p>
+
+<p>1、“33.125：”和“100.667：”代表了GC发生的时间，这个数字的含义是从Java虚拟机启动以来经过的秒数。</p>
+
+<p>2、“[GC”和“[Full GC”说明了这次垃圾收集的停顿类型，而不是用来区分新生代GC还是老年代GC的。
+    “Full”，说明这次GC是发生了Stop-The-World的，例如下面这段新生代收集器ParNew的日志也会出
+现“[Full GC”（这一般是因为出现了分配担保失败之类的问题，所以才导致STW）。如果是调用System.gc（）方
+法所触发的收集，那么在这里将显示“[Full GC（System）”。[Full GC 283.736：[ParNew：261599K-＞261599K（261952K），0.0000288 secs]</p>
+
+<p>3、DefNew”、“Tenured”、“Perm”表示GC发生的区域，这里显示的区域名称与使用的GC收集器
+是密切相关的，</p>
+
+<ul>
+<li>“DefNew”：Serial收集器中的新生代名为“Default New Generation”</li>
+<li>“ParNew”：ParNew收集器，新生代，意为“Parallel New Generation”。</li>
+<li>“PSYoungGen”： Parallel Scavenge收集器</li>
+<li>老年代和永久代同理，名称也是由收集器决定的。Tenured表示老年代</li>
+</ul>
+
+<p>4、“3324K-＞152K（3712K）”是“GC前该内存区域已使用容量-＞GC后该内存区域已使用容量（该内存区域总容量）”。</p>
+
+<p>5、方括号之外“3324K-＞152K（11904K）”表示“GC前Java堆已使用容量-＞GC后Java堆已使用容量（Java堆总容量）”。</p>
+
+<p>6、“0.0025925 secs”表示该内存区域GC所占用的时间，单位是秒。</p>
+
+<p>7、“[Times：user=0.01 sys=0.00，real=0.02 secs]”</p>
+
+<ul>
+<li>user：用户态消耗的CPU时间</li>
+<li>sys：内核态消耗的CPU时间</li>
+<li>real：操作从开始到结束所经过的墙钟时间（Wall Clock Time）
+CPU时间与墙钟时间的区别是，墙钟时间包括各种非运算的等待耗时，例如等待磁盘I/O、等待线程阻塞，而CPU时间不包括这些耗时，但当系统有多CPU或者多核的话，多线程操作会叠加这些CPU时间，所以读者看到user或sys时间超过real时间是完全正常的。</li>
+</ul>
+
+<h2 id="gc-日志2">GC 日志2</h2>
+
+<pre><code class="language-java">public static void main(String[] args) {   
+     Object obj = new Object();   
+     System.gc();  
+     System.out.println(); 
+     obj = new Object();   
+     obj = new Object();   
+     System.gc();  
+     System.out.println();
+}
+</code></pre>
+
+<blockquote>
+<p>设置 JVM 参数为 -XX:+PrintGCDetails，使得控制台能够显示 GC 相关的日志信息，执行上面代码，下面是其中一次执行的结果。</p>
+</blockquote>
+
+<p><img src="/img/gc-log2-1.png" alt="gc-log" />
+<img src="/img/gc-log2-2.png" alt="gc-log" /></p>
+
+<h2 id="gc-日志3">GC 日志3</h2>
+
+<pre><code class="language-java">/** 
+  -Xms60m 
+  -Xmx60m 
+  -Xmn20m 
+  -XX:NewRatio=2 ( 若 Xms = Xmx, 并且设定了 Xmn, 那么该项配置就不需要配置了 ) 
+  -XX:SurvivorRatio=8 
+  -XX:PermSize=30m  (PermSize=30m; support was removed in 8.0)
+  -XX:MaxPermSize=30m (MaxPermSize=30m; support was removed in 8.0)
+  -XX:+PrintGCDetails
+  */
+public static void main(String[] args) {
+     newTest().doTest();
+}
+
+public void doTest(){
+     Integer M = new Integer(1024* 1024* 1);  //单位, 兆(M)
+     byte[] bytes = new byte[1* M]; //申请 1M 大小的内存空间
+     bytes = null;  //断开引用链
+     System.gc();   //通知 GC 收集垃圾
+     System.out.println();
+     bytes = new byte[1* M];  //重新申请 1M 大小的内存空间
+     bytes = new byte[1* M];  //再次申请 1M 大小的内存空间
+     System.gc();
+     System.out.println();
+}
+</code></pre>
+
+<p>按上面代码中注释的信息设定 jvm 相关的参数项，并执行程序，下面是一次执行完成控制台打印的结果：</p>
+
+<pre><code>[ GC [ PSYoungGen:  1351K -&gt; 288K (18432K) ]  1351K -&gt; 288K (59392K), 0.0012389 secs ]  [ Times: user=0.00 sys=0.00, real=0.00 secs ]
+[ Full GC (System)  [ PSYoungGen:  288K -&gt; 0K (18432K) ]  [ PSOldGen:  0K -&gt; 160K (40960K) ]  288K -&gt; 160K (59392K)  [ PSPermGen:  2942K -&gt; 2942K (30720K) ],  0.0057649 secs ] [ Times:  user=0.00  sys=0.00,  real=0.01 secs ] 
+[ GC [ PSYoungGen:  2703K -&gt; 1056K (18432K) ]  2863K -&gt; 1216K(59392K),  0.0008206 secs ]  [ Times: user=0.00 sys=0.00, real=0.00 secs ]
+[ Full GC (System)  [ PSYoungGen:  1056K -&gt; 0K (18432K) ]  [ PSOldGen:  160K -&gt; 1184K (40960K) ]  1216K -&gt; 1184K (59392K)  [ PSPermGen:  2951K -&gt; 2951K (30720K) ], 0.0052445 secs ]  [ Times: user=0.02 sys=0.00, real=0.01 secs ] 
+Heap PSYoungGen     
+ total 18432K, used 327K [0x00000000fec00000, 0x0000000100000000, 0x0000000100000000)  
+ eden space 16384K, 2% used [0x00000000fec00000,0x00000000fec51f58,0x00000000ffc00000)  
+ from space 2048K, 0% used [0x00000000ffe00000,0x00000000ffe00000,0x0000000100000000)  
+ to   space 2048K, 0% used [0x00000000ffc00000,0x00000000ffc00000,0x00000000ffe00000) 
+ PSOldGen        total 40960K, used 1184K [0x00000000fc400000, 0x00000000fec00000, 0x00000000fec00000)  
+   object space 40960K, 2% used [0x00000000fc400000,0x00000000fc5281f8,0x00000000fec00000) 
+ PSPermGen       total 30720K, used 2959K [0x00000000fa600000, 0x00000000fc400000, 0x00000000fc400000)  
+   object space 30720K, 9% used [0x00000000fa600000,0x00000000fa8e3ce0,0x00000000fc400000)
+</code></pre>
+
+<ol>
+<li><p>堆中新生代的内存空间为 18432K ( 约 18M )，eden 的内存空间为 16384K ( 约 16M)，from / to survivor 的内存空间为 2048K ( 约 2M)。</p></li>
+
+<li><p>新生代 = eden + from + to = 16 + 2 + 2 = 20M，可见新生代的内存空间确实是按 Xmn 参数分配得到的。</p></li>
+
+<li><p>SurvivorRatio = 8，因此，eden = <sup>8</sup>&frasl;<sub>10</sub> 的新生代空间 = <sup>8</sup>&frasl;<sub>10</sub> * 20 = 16M。from = to = <sup>1</sup>&frasl;<sub>10</sub> 的新生代空间 = <sup>1</sup>&frasl;<sub>10</sub> * 20 = 2M。</p></li>
+
+<li><p>堆信息中新生代的 total 18432K 是这样来的： eden + 1 个 survivor = 16384K + 2048K = 18432K，即约为 18M。因为 jvm 每次只是用新生代中的 eden 和 一个 survivor，因此新生代实际的可用内存空间大小为所指定的 90%。因此可以知道，这里新生代的内存空间指的是新生代可用的总的内存空间，而不是指整个新生代的空间大小。</p></li>
+
+<li><p>另外，可以看出老年代的内存空间为 40960K ( 约 40M )，堆大小 = 新生代 + 老年代。因此在这里，老年代 = 堆大小 – 新生代 = 60 – 20 = 40M。</p></li>
+
+<li><p>最后，这里还指定了 PermSize = 30m，PermGen 即永久代 ( 方法区 )，它还有一个名字，叫非堆，主要用来存储由 jvm 加载的类文件信息、常量、静态变量等。</p></li>
+
+<li><p>回到 doTest() 方法中，可以看到代码在第 17、21、22 这三行中分别申请了一块 1M 大小的内存空间，并在 19 和 23 这两行中分别显式的调用了 System.gc()。从控制台打印的信息来看，每次调 System.gc()，是先进行 Minor GC，然后再进行 Full GC。</p></li>
+
+<li><p>第 19 行触发的 Minor GC 收集分析：
+从信息 PSYoungGen :  1351K -&gt; 288K，可以知道，在第 17 行为 bytes 分配的内存空间已经被回收完成。
+引起 GC 回收这 1M 内存空间的因素是第 18 行的 bytes = null;   bytes 为 null 表明之前申请的那 1M 大小的内存空间现在已经没有任何引用变量在使用它了，
+并且在内存中它处于一种不可到达状态 ( 即没有任何引用链与 GC Roots 相连 )。那么，当 Minor GC 发生的时候，GC 就会来回收掉这部分的内存空间。</p></li>
+
+<li><p>第 19 行触发的 Full GC 收集分析：
+在 Minor GC 的时候，信息显示 PSYoungGen :  1351K -&gt; 288K，再看看 Full GC 中显示的 PSYoungGen :  288K -&gt; 0K，可以看出，Full GC 后，新生代的内存使用变成0K 了
+刚刚说到 Full GC 后，新生代的内存使用从 288K 变成 0K 了，那么这 288K 到底哪去了 ? 难道都被 GC 当成垃圾回收掉了 ? 当然不是了。我还特意在 main 方法中 new 了一个 Test 类的实例，这里的 Test 类的实例属于小对象，它应该被分配到新生代内存当中，现在还在调用这个实例的 doTest 方法呢，GC 不可能在这个时候来回收它的。
+接着往下看 Full GC 的信息，会发现一个很有趣的现象，PSOldGen:  0K  -&gt; 160K，可以看到，Full GC 后，老年代的内存使用从 0K 变成了 160K，想必你已经猜到大概是怎么回事了。<strong>当 Full GC 进行的时候，默认的方式是尽量清空新生代 ( YoungGen )，因此在调 System.gc() 时，新生代 ( YoungGen ) 中存活的对象会提前进入老年代。</strong></p></li>
+
+<li><p>第 23 行触发的 Minor GC 收集分析：
+从信息 PSYoungGen :  2703K -&gt; 1056K，可以知道，在第 21 行创建的，大小为 1M 的数组被 GC 回收了。在第 22 行创建的，大小也为 1M 的数组由于 bytes 引用变量还在引用它，因此，它暂时未被 GC 回收。</p></li>
+
+<li><p>第 23 行触发的 Full GC 收集分析：
+在 Minor GC 的时候，信息显示 PSYoungGen :  2703K -&gt; 1056K，Full GC 中显示的 PSYoungGen :  1056K -&gt; 0K，以及 PSOldGen:  160K -&gt; 1184K，可以知道，新生代 ( YoungGen ) 中存活的对象又提前进入老年代了。</p></li>
+</ol>
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/jvm-performance-optimization/" data-toggle="tooltip" data-placement="top" title="JVM性能调优">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/geektime-jvm-how-execute-method-1/" data-toggle="tooltip" data-placement="top" title="《深入拆解Java虚拟机》-JVM是如何执行方法调用的？（上）">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+<div id="disqus-comment"></div>
+
+
+
+            </div>
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/devops" title="devops">
+                            devops
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/docker" title="docker">
+                            docker
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/domain-driven-design" title="domain-driven-design">
+                            domain-driven-design
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/drools" title="drools">
+                            drools
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/dubbo" title="dubbo">
+                            dubbo
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java" title="java">
+                            java
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java%E5%B9%B6%E5%8F%91%E5%AE%9E%E6%88%98" title="java并发实战">
+                            java并发实战
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E5%AE%9E%E6%88%98" title="java性能调优实战">
+                            java性能调优实战
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/jvm" title="jvm">
+                            jvm
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/kubernetes" title="kubernetes">
+                            kubernetes
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/linux" title="linux">
+                            linux
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/mq" title="mq">
+                            mq
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/mysql" title="mysql">
+                            mysql
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/mysql%E5%AE%9E%E6%88%9845%E8%AE%B2" title="mysql实战45讲">
+                            mysql实战45讲
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/redis" title="redis">
+                            redis
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/spring" title="spring">
+                            spring
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E4%B9%A6%E5%8D%95" title="书单">
+                            书单
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F" title="分布式">
+                            分布式
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E5%AE%B9%E5%99%A8" title="容器">
+                            容器
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8" title="工具使用">
+                            工具使用
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E5%B9%B6%E5%8F%91" title="并发">
+                            并发
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84" title="数据结构">
+                            数据结构
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E9%AB%98%E6%89%8B%E8%AF%BE" title="消息队列高手课">
+                            消息队列高手课
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E7%AE%97%E6%B3%95" title="算法">
+                            算法
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E7%BC%93%E5%AD%98" title="缓存">
+                            缓存
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE" title="网络协议">
+                            网络协议
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E8%B6%A3%E8%B0%88%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE" title="趣谈网络协议">
+                            趣谈网络协议
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%BE%8E" title="软件工程之美">
+                            软件工程之美
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E9%80%8F%E8%A7%86http%E5%8D%8F%E8%AE%AE" title="透视http协议">
+                            透视http协议
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E9%9D%A2%E8%AF%95" title="面试">
+                            面试
+                        </a>
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+                <section>
+                    <hr>
+                    <h5>FRIENDS</h5>
+                    <ul class="list-inline">
+                        
+                        <li><a target="_blank" href="https://servicemesher.com">servicemesher的博客</a></li>
+                        
+                    </ul>
+                </section>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                   
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="Quguang&#39;s Blog" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fa fa-circle fa-stack-2x"></i>
+                               <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+                   
+                    
+                    <li>
+                        <a href="mailto:quguang1011@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    
+
+                    
+
+		    
+                    
+                    <li>
+                        <a target="_blank" href="/your%20wechat%20qr%20code%20image">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-wechat fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/techqu">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/yourlinkedinid">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://medium.com/@quguang1011">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-medium fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+            
+                    
+                    <li>
+                        <a target="_blank" href="https://stackoverflow.com/users/yourstackoverflowid">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+            
+                    
+                    
+                    
+            
+            
+            
+                </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Quguang&#39;s Blog 2020
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Quguang&#39;s Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://quguang.wang/img/bg-china.jpg">
+    <meta property="twitter:image" content="https://quguang.wang/img/bg-china.jpg" />
+    
+
+    
+    <meta name="title" content="Java工程师成神之路（2018修订版）" />
+    <meta property="og:title" content="Java工程师成神之路（2018修订版）" />
+    <meta property="twitter:title" content="Java工程师成神之路（2018修订版）" />
+    
+
+    
+    <meta name="description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。">
+    <meta property="og:description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。" />
+    <meta property="twitter:description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。" />
+    
+
+    
+    <meta property="twitter:card" content="这里填写文章文章摘要。" />
+    
+    
+
+    <meta name="keyword"  content="瞿广, quguang, , 瞿广的网络日志, 瞿广的博客, quguang Blog, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Istio, Kubernetes, 微服务, Microservice">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>Java工程师成神之路（2018修订版）-瞿广的博客 | quguang Blog</title>
+
+    <link rel="canonical" href="/post/roadmap/">
+
+    <link rel="stylesheet" href="/css/iDisqus.min.css"/>
+	
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+    
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    
+    <script src="/js/jquery.min.js"></script>
+    
+    
+    <script src="/js/bootstrap.min.js"></script>
+    
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Quguang&#39;s Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/life">life</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/math">math</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/note">note</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/tech">tech</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/top/about/">ABOUT</a></li>
+                    
+
+                    
+		    <li>
+                        <a href="/search">SEARCH <img src="/img/search.png" height="15" style="cursor: pointer;" alt="Search"></a>
+		    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/bg-china.jpg')
+    }
+</style>
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/java" title="java">
+                            java
+                        </a>
+                        
+                    </div>
+                    <h1>Java工程师成神之路（2018修订版）</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 
+                        
+                            瞿广
+                         
+                        on 
+                        Thursday, December 20, 2018
+                        
+                        
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <header>
+                    <h2>TOC</h2>
+                </header>
+                <nav id="TableOfContents">
+<ul>
+<li><a href="#一-基础篇">一、基础篇</a>
+<ul>
+<li><a href="#jvm">JVM</a>
+<ul>
+<li>
+<ul>
+<li><a href="#jvm内存结构">JVM内存结构</a></li>
+<li><a href="#java内存模型">Java内存模型</a></li>
+<li><a href="#垃圾回收">垃圾回收</a></li>
+<li><a href="#jvm参数及调优">JVM参数及调优</a></li>
+<li><a href="#hotspot">HotSpot</a></li>
+<li><a href="#类加载机制">类加载机制</a></li>
+<li><a href="#虚拟机性能监控与故障处理工具">虚拟机性能监控与故障处理工具</a></li>
+<li><a href="#编译与反编译">编译与反编译</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#java基础知识">Java基础知识</a>
+<ul>
+<li><a href="#阅读源代码">阅读源代码</a></li>
+<li><a href="#java中各种变量类型">Java中各种变量类型</a>
+<ul>
+<li><a href="#熟悉java-string的使用-熟悉string的各种函数">熟悉Java String的使用，熟悉String的各种函数</a></li>
+<li><a href="#字符串的不可变性">字符串的不可变性</a></li>
+<li><a href="#自动拆装箱">自动拆装箱</a></li>
+<li><a href="#熟悉java中各种关键字">熟悉Java中各种关键字</a></li>
+<li><a href="#集合类">集合类</a></li>
+<li><a href="#枚举">枚举</a></li>
+<li><a href="#java-io-java-nio-并学会使用">Java IO&amp;Java NIO，并学会使用</a></li>
+<li><a href="#java反射与javassist">Java反射与javassist</a></li>
+<li><a href="#java序列化">Java序列化</a></li>
+<li><a href="#注解">注解</a></li>
+<li><a href="#jms">JMS</a></li>
+<li><a href="#jmx">JMX</a></li>
+<li><a href="#泛型">泛型</a></li>
+<li><a href="#单元测试">单元测试</a></li>
+<li><a href="#正则表达式">正则表达式</a></li>
+<li><a href="#常用的java工具库">常用的Java工具库</a></li>
+<li><a href="#什么是api-spi">什么是API&amp;SPI</a></li>
+<li><a href="#时间处理">时间处理</a></li>
+<li><a href="#编码方式">编码方式</a></li>
+<li><a href="#语法糖">语法糖</a></li>
+<li><a href="#java并发编程">Java并发编程</a></li>
+<li><a href="#线程池">线程池</a></li>
+<li><a href="#线程安全">线程安全</a></li>
+<li><a href="#锁">锁</a></li>
+<li><a href="#volatile">volatile</a></li>
+<li><a href="#synchronized">synchronized</a></li>
+<li><a href="#sleep-和-wait">sleep 和 wait</a></li>
+<li><a href="#wait-和-notify">wait 和 notify</a></li>
+<li><a href="#notify-和-notifyall">notify 和 notifyAll</a></li>
+<li><a href="#threadlocal">ThreadLocal</a></li>
+<li><a href="#写一个死锁的程序">写一个死锁的程序</a></li>
+<li><a href="#写代码来解决生产者消费者问题">写代码来解决生产者消费者问题</a></li>
+<li><a href="#守护线程">守护线程</a></li>
+<li><a href="#守护线程和非守护线程的区别以及用法">守护线程和非守护线程的区别以及用法</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#二-进阶篇">二、 进阶篇</a>
+<ul>
+<li><a href="#java底层知识">Java底层知识</a></li>
+</ul></li>
+<li><a href="#三-高级篇">三、 高级篇</a></li>
+<li><a href="#四-架构篇">四、架构篇</a></li>
+<li><a href="#五-扩展篇">五、 扩展篇</a></li>
+<li><a href="#六-推荐书籍">六、 推荐书籍</a></li>
+</ul></li>
+</ul>
+</nav>
+                
+                <p>网罗了比较全面的java技术栈。</p>
+
+<p>本文基于微信公众号文章基础上添加，原文链接：
+<a href="https://mp.weixin.qq.com/s/UKwZkwYmDSVTbj62ACuapg">https://mp.weixin.qq.com/s/UKwZkwYmDSVTbj62ACuapg</a></p>
+
+<h1 id="一-基础篇">一、基础篇</h1>
+
+<h2 id="jvm">JVM</h2>
+
+<h4 id="jvm内存结构">JVM内存结构</h4>
+
+<p>堆、栈、方法区、直接内存、堆和栈区别</p>
+
+<h4 id="java内存模型">Java内存模型</h4>
+
+<p>内存可见性、重排序、顺序一致性、volatile、锁、final</p>
+
+<h4 id="垃圾回收">垃圾回收</h4>
+
+<p>内存分配策略、垃圾收集器（G1）、GC算法、GC参数、对象存活的判定</p>
+
+<h4 id="jvm参数及调优">JVM参数及调优</h4>
+
+<p>Java对象模型
+oop-klass、对象头</p>
+
+<h4 id="hotspot">HotSpot</h4>
+
+<p>即时编译器、编译优化</p>
+
+<h4 id="类加载机制">类加载机制</h4>
+
+<p>classLoader、类加载过程、双亲委派（破坏双亲委派）、模块化（jboss modules、osgi、jigsaw）</p>
+
+<h4 id="虚拟机性能监控与故障处理工具">虚拟机性能监控与故障处理工具</h4>
+
+<p>jps, jstack, jmap、jstat, jconsole, jinfo, jhat, javap, btrace、TProfiler</p>
+
+<h4 id="编译与反编译">编译与反编译</h4>
+
+<p>javac 、javap 、jad 、CRF</p>
+
+<h2 id="java基础知识">Java基础知识</h2>
+
+<h3 id="阅读源代码">阅读源代码</h3>
+
+<p>String、Integer、Long、Enum、BigDecimal、ThreadLocal、ClassLoader &amp; URLClassLoader、ArrayList &amp; LinkedList、 HashMap &amp; LinkedHashMap &amp; TreeMap &amp; CouncurrentHashMap、HashSet &amp; LinkedHashSet &amp; TreeSet</p>
+
+<h3 id="java中各种变量类型">Java中各种变量类型</h3>
+
+<h4 id="熟悉java-string的使用-熟悉string的各种函数">熟悉Java String的使用，熟悉String的各种函数</h4>
+
+<p>JDK 6和JDK 7中substring的原理及区别、</p>
+
+<p>replaceFirst、replaceAll、replace区别、</p>
+
+<p>String对“+”的重载、</p>
+
+<p>String.valueOf和Integer.toString的区别、</p>
+
+<h4 id="字符串的不可变性">字符串的不可变性</h4>
+
+<h4 id="自动拆装箱">自动拆装箱</h4>
+
+<p>Integer的缓存机制</p>
+
+<h4 id="熟悉java中各种关键字">熟悉Java中各种关键字</h4>
+
+<p>transient、instanceof、volatile、synchronized、final、static、const 原理及用法。</p>
+
+<h4 id="集合类">集合类</h4>
+
+<p>常用集合类的使用</p>
+
+<p>ArrayList和LinkedList和Vector的区别</p>
+
+<p>SynchronizedList和Vector的区别</p>
+
+<p>HashMap、HashTable、ConcurrentHashMap区别</p>
+
+<p>Java 8中stream相关用法</p>
+
+<p>apache集合处理工具类的使用</p>
+
+<p>不同版本的JDK中HashMap的实现的区别以及原因</p>
+
+<h4 id="枚举">枚举</h4>
+
+<p>枚举的用法、枚举与单例、Enum类</p>
+
+<h4 id="java-io-java-nio-并学会使用">Java IO&amp;Java NIO，并学会使用</h4>
+
+<p>bio、nio和aio的区别、三种IO的用法与原理、netty</p>
+
+<h4 id="java反射与javassist">Java反射与javassist</h4>
+
+<p>反射与工厂模式、 java.lang.reflect.*</p>
+
+<h4 id="java序列化">Java序列化</h4>
+
+<p>什么是序列化与反序列化、为什么序列化</p>
+
+<p>序列化底层原理</p>
+
+<p>序列化与单例模式</p>
+
+<p>protobuf</p>
+
+<p>为什么说序列化并不安全</p>
+
+<h4 id="注解">注解</h4>
+
+<p>元注解、自定义注解、Java中常用注解使用、注解与反射的结合</p>
+
+<h4 id="jms">JMS</h4>
+
+<p>什么是Java消息服务、JMS消息传送模型</p>
+
+<h4 id="jmx">JMX</h4>
+
+<p>java.lang.management.<em>、 javax.management.</em></p>
+
+<h4 id="泛型">泛型</h4>
+
+<p>泛型与继承</p>
+
+<p>类型擦除</p>
+
+<p>泛型中K T V E</p>
+
+<p>object等的含义、泛型各种用法</p>
+
+<h4 id="单元测试">单元测试</h4>
+
+<p>junit、mock、mockito、内存数据库（h2）</p>
+
+<h4 id="正则表达式">正则表达式</h4>
+
+<p>java.lang.util.regex.*</p>
+
+<h4 id="常用的java工具库">常用的Java工具库</h4>
+
+<p>commons.lang, commons.*&hellip; guava-libraries netty</p>
+
+<h4 id="什么是api-spi">什么是API&amp;SPI</h4>
+
+<p>异常
+异常类型、正确处理异常、自定义异常</p>
+
+<h4 id="时间处理">时间处理</h4>
+
+<p>时区、时令、Java中时间API</p>
+
+<h4 id="编码方式">编码方式</h4>
+
+<p>解决乱码问题、常用编码方式</p>
+
+<h4 id="语法糖">语法糖</h4>
+
+<p>Java中语法糖原理、解语法糖</p>
+
+<h4 id="java并发编程">Java并发编程</h4>
+
+<p>什么是线程，与进程的区别
+阅读源代码，并学会使用
+Thread、Runnable、Callable、ReentrantLock、ReentrantReadWriteLock、Atomic*、Semaphore、CountDownLatch、、ConcurrentHashMap、Executors</p>
+
+<h4 id="线程池">线程池</h4>
+
+<p>自己设计线程池、submit() 和 execute()</p>
+
+<h4 id="线程安全">线程安全</h4>
+
+<p>死锁、死锁如何排查、Java线程调度、线程安全和内存模型的关系</p>
+
+<h4 id="锁">锁</h4>
+
+<p>CAS、乐观锁与悲观锁、数据库相关锁机制、分布式锁、偏向锁、轻量级锁、重量级锁、monitor、锁优化、锁消除、锁粗化、自旋锁、可重入锁、阻塞锁、死锁</p>
+
+<p>死锁</p>
+
+<h4 id="volatile">volatile</h4>
+
+<p>happens-before、编译器指令重排和CPU指令重</p>
+
+<h4 id="synchronized">synchronized</h4>
+
+<p>synchronized是如何实现的？</p>
+
+<p>synchronized和lock之间关系</p>
+
+<p>不使用synchronized如何实现一个线程安全的单例</p>
+
+<h4 id="sleep-和-wait">sleep 和 wait</h4>
+
+<h4 id="wait-和-notify">wait 和 notify</h4>
+
+<h4 id="notify-和-notifyall">notify 和 notifyAll</h4>
+
+<h4 id="threadlocal">ThreadLocal</h4>
+
+<h4 id="写一个死锁的程序">写一个死锁的程序</h4>
+
+<h4 id="写代码来解决生产者消费者问题">写代码来解决生产者消费者问题</h4>
+
+<h4 id="守护线程">守护线程</h4>
+
+<h4 id="守护线程和非守护线程的区别以及用法">守护线程和非守护线程的区别以及用法</h4>
+
+<h2 id="二-进阶篇">二、 进阶篇</h2>
+
+<h3 id="java底层知识">Java底层知识</h3>
+
+<p>字节码、class文件格式
+CPU缓存，L1，L2，L3和伪共享
+尾递归
+位运算
+用位运算实现加、减、乘、除、取余</p>
+
+<p>设计模式
+了解23种设计模式
+会使用常用设计模式
+单例、策略、工厂、适配器、责任链。</p>
+
+<p>实现AOP
+实现IOC
+不用synchronized和lock，实现线程安全的单例模式
+nio和reactor设计模式
+网络编程
+tcp、udp、http、https等常用协议
+三次握手与四次关闭、流量控制和拥塞控制、OSI七层模型、tcp粘包与拆包</p>
+
+<p>http/1.0 http/1.1 http/2之前的区别
+Java RMI，Socket，HttpClient
+cookie 与 session
+cookie被禁用，如何实现session</p>
+
+<p>用Java写一个简单的静态文件的HTTP服务器
+实现客户端缓存功能，支持返回304 实现可并发下载一个文件 使用线程池处理客户端请求 使用nio处理客户端请求 支持简单的rewrite规则 上述功能在实现的时候需要满足“开闭原则”</p>
+
+<p>了解nginx和apache服务器的特性并搭建一个对应的服务器
+用Java实现FTP、SMTP协议
+进程间通讯的方式
+什么是CDN？如果实现？
+什么是DNS？
+反向代理
+框架知识
+Servlet线程安全问题
+Servlet中的filter和listener
+Hibernate的缓存机制
+Hiberate的懒加载
+Spring Bean的初始化
+Spring的AOP原理
+自己实现Spring的IOC
+Spring MVC
+Spring Boot2.0
+Spring Boot的starter原理，自己实现一个starter</p>
+
+<p>Spring Security
+应用服务器
+JBoss
+tomcat
+jetty
+Weblogic
+工具
+git &amp; svn
+maven &amp; gradle</p>
+
+<h2 id="三-高级篇">三、 高级篇</h2>
+
+<p>新技术
+Java 8
+lambda表达式、Stream API、</p>
+
+<p>Java 9
+Jigsaw、Jshell、Reactive Streams</p>
+
+<p>Java 10
+局部变量类型推断、G1的并行Full GC、ThreadLocal握手机制</p>
+
+<p>Spring 5
+响应式编程</p>
+
+<p>Spring Boot 2.0
+性能优化
+使用单例、使用Future模式、使用线程池、选择就绪、减少上下文切换、减少锁粒度、数据压缩、结果缓存</p>
+
+<p>线上问题分析
+dump获取
+线程Dump、内存Dump、gc情况</p>
+
+<p>dump分析
+分析死锁、分析内存泄露</p>
+
+<p>自己编写各种outofmemory，stackoverflow程序
+HeapOutOfMemory、 Young OutOfMemory、MethodArea OutOfMemory、ConstantPool OutOfMemory、DirectMemory OutOfMemory、Stack OutOfMemory Stack OverFlow</p>
+
+<p>常见问题解决思路
+内存溢出、线程死锁、类加载冲突</p>
+
+<p>使用工具尝试解决以下问题，并写下总结
+当一个Java程序响应很慢时如何查找问题、</p>
+
+<p>当一个Java程序频繁FullGC时如何解决问题、</p>
+
+<p>如何查看垃圾回收日志、</p>
+
+<p>当一个Java应用发生OutOfMemory时该如何解决、</p>
+
+<p>如何判断是否出现死锁、</p>
+
+<p>如何判断是否存在内存泄露</p>
+
+<p>编译原理知识
+编译与反编译
+Java代码的编译与反编译
+Java的反编译工具
+词法分析，语法分析（LL算法，递归下降算法，LR算法），语义分析，运行时环境，中间代码，代码生成，代码优化
+操作系统知识
+Linux的常用命令
+进程同步
+缓冲区溢出
+分段和分页
+虚拟内存与主存
+数据库知识
+MySql 执行引擎
+MySQL 执行计划
+如何查看执行计划，如何根据执行计划进行SQL优化</p>
+
+<p>SQL优化
+事务
+事务的隔离级别、事务能不能实现锁的功能</p>
+
+<p>数据库锁
+行锁、表锁、使用数据库锁实现乐观锁、</p>
+
+<p>数据库主备搭建
+binlog
+内存数据库
+h2</p>
+
+<p>常用的nosql数据库
+redis、memcached</p>
+
+<p>分别使用数据库锁、NoSql实现分布式锁
+性能调优
+数据结构与算法知识
+简单的数据结构
+栈、队列、链表、数组、哈希表、</p>
+
+<p>树
+二叉树、字典树、平衡树、排序树、B树、B+树、R树、多路树、红黑树</p>
+
+<p>排序算法
+各种排序算法和时间复杂度 深度优先和广度优先搜索 全排列、贪心算法、KMP算法、hash算法、海量数据处理</p>
+
+<p>大数据知识
+Zookeeper
+基本概念、常见用法</p>
+
+<p>Solr，Lucene，ElasticSearch
+在linux上部署solr，solrcloud，，新增、删除、查询索引</p>
+
+<p>Storm，流式计算，了解Spark，S4
+在linux上部署storm，用zookeeper做协调，运行storm hello world，local和remote模式运行调试storm topology。</p>
+
+<p>Hadoop，离线计算
+HDFS、MapReduce</p>
+
+<p>分布式日志收集flume，kafka，logstash
+数据挖掘，mahout
+网络安全知识
+什么是XSS
+XSS的防御</p>
+
+<p>什么是CSRF
+什么是注入攻击
+SQL注入、XML注入、CRLF注入</p>
+
+<p>什么是文件上传漏洞
+加密与解密
+MD5，SHA1、DES、AES、RSA、DSA</p>
+
+<p>什么是DOS攻击和DDOS攻击
+memcached为什么可以导致DDos攻击、什么是反射型DDoS</p>
+
+<p>SSL、TLS，HTTPS
+如何通过Hash碰撞进行DOS攻击
+用openssl签一个证书部署到apache或nginx</p>
+
+<h2 id="四-架构篇">四、架构篇</h2>
+
+<p>分布式
+数据一致性、服务治理、服务降级</p>
+
+<p>分布式事务
+2PC、3PC、CAP、BASE、 可靠消息最终一致性、最大努力通知、TCC</p>
+
+<p>Dubbo
+服务注册、服务发现，服务治理</p>
+
+<p>分布式数据库
+怎样打造一个分布式数据库、什么时候需要分布式数据库、mycat、otter、HBase</p>
+
+<p>分布式文件系统
+mfs、fastdfs</p>
+
+<p>分布式缓存
+缓存一致性、缓存命中率、缓存冗余</p>
+
+<p>微服务
+SOA、康威定律</p>
+
+<p>ServiceMesh
+Docker &amp; Kubernets
+Spring Boot
+Spring Cloud
+高并发
+分库分表
+CDN技术
+消息队列
+ActiveMQ</p>
+
+<p>监控
+监控什么
+CPU、内存、磁盘I/O、网络I/O等</p>
+
+<p>监控手段
+进程监控、语义监控、机器资源监控、数据波动</p>
+
+<p>监控数据采集
+日志、埋点</p>
+
+<p>Dapper
+负载均衡
+tomcat负载均衡、Nginx负载均衡</p>
+
+<p>DNS
+DNS原理、DNS的设计</p>
+
+<p>CDN
+数据一致性</p>
+
+<h2 id="五-扩展篇">五、 扩展篇</h2>
+
+<p>云计算
+IaaS、SaaS、PaaS、虚拟化技术、openstack、Serverlsess</p>
+
+<p>搜索引擎
+Solr、Lucene、Nutch、Elasticsearch</p>
+
+<p>权限管理
+Shiro</p>
+
+<p>区块链
+哈希算法、Merkle树、公钥密码算法、共识算法、Raft协议、Paxos 算法与 Raft 算法、拜占庭问题与算法、消息认证码与数字签名</p>
+
+<p>比特币
+挖矿、共识机制、闪电网络、侧链、热点问题、分叉</p>
+
+<p>以太坊
+超级账本
+人工智能
+数学基础、机器学习、人工神经网络、深度学习、应用场景。</p>
+
+<p>常用框架
+TensorFlow、DeepLearning4J</p>
+
+<p>其他语言
+Groovy、Python、Go、NodeJs、Swift、Rust</p>
+
+<h2 id="六-推荐书籍">六、 推荐书籍</h2>
+
+<p>《深入理解Java虚拟机》</p>
+
+<p>《Effective Java》</p>
+
+<p>《深入分析Java Web技术内幕》</p>
+
+<p>《大型网站技术架构》</p>
+
+<p>《代码整洁之道》</p>
+
+<p>《Head First设计模式》</p>
+
+<p>《maven实战》</p>
+
+<p>《区块链原理、设计与应用》</p>
+
+<p>《Java并发编程实战》</p>
+
+<p>《鸟哥的Linux私房菜》</p>
+
+<p>《从Paxos到Zookeeper》</p>
+
+<p>《架构即未来》</p>
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/markdown/" data-toggle="tooltip" data-placement="top" title="markdown语法示例">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/geektime-jvm-load-java-class/" data-toggle="tooltip" data-placement="top" title="Java虚拟机是如何加载Java类的?">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+<div id="disqus-comment"></div>
+
+
+
+            </div>
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/devops" title="devops">
+                            devops
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/docker" title="docker">
+                            docker
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/domain-driven-design" title="domain-driven-design">
+                            domain-driven-design
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/drools" title="drools">
+                            drools
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/dubbo" title="dubbo">
+                            dubbo
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java" title="java">
+                            java
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java%E5%B9%B6%E5%8F%91%E5%AE%9E%E6%88%98" title="java并发实战">
+                            java并发实战
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E5%AE%9E%E6%88%98" title="java性能调优实战">
+                            java性能调优实战
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/jvm" title="jvm">
+                            jvm
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/kubernetes" title="kubernetes">
+                            kubernetes
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/linux" title="linux">
+                            linux
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/mq" title="mq">
+                            mq
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/mysql" title="mysql">
+                            mysql
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/mysql%E5%AE%9E%E6%88%9845%E8%AE%B2" title="mysql实战45讲">
+                            mysql实战45讲
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/redis" title="redis">
+                            redis
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/spring" title="spring">
+                            spring
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E4%B9%A6%E5%8D%95" title="书单">
+                            书单
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F" title="分布式">
+                            分布式
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E5%AE%B9%E5%99%A8" title="容器">
+                            容器
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8" title="工具使用">
+                            工具使用
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E5%B9%B6%E5%8F%91" title="并发">
+                            并发
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84" title="数据结构">
+                            数据结构
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E9%AB%98%E6%89%8B%E8%AF%BE" title="消息队列高手课">
+                            消息队列高手课
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E7%AE%97%E6%B3%95" title="算法">
+                            算法
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E7%BC%93%E5%AD%98" title="缓存">
+                            缓存
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE" title="网络协议">
+                            网络协议
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E8%B6%A3%E8%B0%88%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE" title="趣谈网络协议">
+                            趣谈网络协议
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%BE%8E" title="软件工程之美">
+                            软件工程之美
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E9%80%8F%E8%A7%86http%E5%8D%8F%E8%AE%AE" title="透视http协议">
+                            透视http协议
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E9%9D%A2%E8%AF%95" title="面试">
+                            面试
+                        </a>
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+                <section>
+                    <hr>
+                    <h5>FRIENDS</h5>
+                    <ul class="list-inline">
+                        
+                        <li><a target="_blank" href="https://servicemesher.com">servicemesher的博客</a></li>
+                        
+                    </ul>
+                </section>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                   
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="Quguang&#39;s Blog" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fa fa-circle fa-stack-2x"></i>
+                               <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+                   
+                    
+                    <li>
+                        <a href="mailto:quguang1011@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    
+
+                    
+
+		    
+                    
+                    <li>
+                        <a target="_blank" href="/your%20wechat%20qr%20code%20image">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-wechat fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/techqu">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/yourlinkedinid">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://medium.com/@quguang1011">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-medium fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+            
+                    
+                    <li>
+                        <a target="_blank" href="https://stackoverflow.com/users/yourstackoverflowid">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+            
+                    
+                    
+                    
+            
+            
+            
+                </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Quguang&#39;s Blog 2020
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+</body>
+</html>

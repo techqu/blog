@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>life on Quguang&#39;s Blog</title>
+    <link>https://quguang.wang/categories/life/</link>
+    <description>Recent content in life on Quguang&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 24 Dec 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://quguang.wang/categories/life/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>告别伪勤奋</title>
+      <link>https://quguang.wang/post/life-say-goodbye-to-fake-workhard/</link>
+      <pubDate>Tue, 24 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://quguang.wang/post/life-say-goodbye-to-fake-workhard/</guid>
+      <description>&lt;p&gt;伪勤奋的几种常见情形，以及解决方法:&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2020考研计划</title>
+      <link>https://quguang.wang/post/kaoyan-plan-2020/</link>
+      <pubDate>Sat, 06 Apr 2019 10:22:26 +0800</pubDate>
+      
+      <guid>https://quguang.wang/post/kaoyan-plan-2020/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>991“数据结构与C语言程序设计”考试大纲（2019版）</title>
+      <link>https://quguang.wang/post/beihang-991-2019/</link>
+      <pubDate>Fri, 05 Apr 2019 17:35:47 +0800</pubDate>
+      
+      <guid>https://quguang.wang/post/beihang-991-2019/</guid>
+      <description>&lt;p&gt;2019年“数据结构与C语言程序设计”考试内容包括“数据结构”与“C语言程序设计”两门课程的内容，各占比例50%。试卷满分为150分。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2018总结-2019计划</title>
+      <link>https://quguang.wang/post/2018-2019/</link>
+      <pubDate>Wed, 16 Jan 2019 10:42:50 +0800</pubDate>
+      
+      <guid>https://quguang.wang/post/2018-2019/</guid>
+      <description>&lt;p&gt;个人2019年，年度目标&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>learn method</title>
+      <link>https://quguang.wang/post/learn-method-2019/</link>
+      <pubDate>Sat, 12 Jan 2019 11:59:01 +0800</pubDate>
+      
+      <guid>https://quguang.wang/post/learn-method-2019/</guid>
+      <description>&lt;p&gt;首先明确的是，学习是件反人性的事，需要刻意练习的，是需要持之以恒的。&lt;/p&gt;
+
+&lt;p&gt;很多事情能做到什么程度，其实在思想的源头就被决定了，因为它会绝大程度地受到思考问题的出发点、思维方式、格局观、价值观等因素影响。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

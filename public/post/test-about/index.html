@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Quguang&#39;s Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://quguang.wang/img/undraw/undraw_mobile_testing_reah.png">
+    <meta property="twitter:image" content="https://quguang.wang/img/undraw/undraw_mobile_testing_reah.png" />
+    
+
+    
+    <meta name="title" content="《软件测试52讲》-谈谈测试" />
+    <meta property="og:title" content="《软件测试52讲》-谈谈测试" />
+    <meta property="twitter:title" content="《软件测试52讲》-谈谈测试" />
+    
+
+    
+    <meta name="description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。">
+    <meta property="og:description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。" />
+    <meta property="twitter:description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="瞿广, quguang, , 瞿广的网络日志, 瞿广的博客, quguang Blog, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Istio, Kubernetes, 微服务, Microservice">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>《软件测试52讲》-谈谈测试-瞿广的博客 | quguang Blog</title>
+
+    <link rel="canonical" href="/post/test-about/">
+
+    <link rel="stylesheet" href="/css/iDisqus.min.css"/>
+	
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+    
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    
+    <script src="/js/jquery.min.js"></script>
+    
+    
+    <script src="/js/bootstrap.min.js"></script>
+    
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Quguang&#39;s Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/life">life</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/math">math</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/note">note</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/tech">tech</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/top/about/">ABOUT</a></li>
+                    
+
+                    
+		    <li>
+                        <a href="/search">SEARCH <img src="/img/search.png" height="15" style="cursor: pointer;" alt="Search"></a>
+		    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/bg-china.jpg')
+    }
+</style>
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/%E6%B5%8B%E8%AF%95" title="测试">
+                            测试
+                        </a>
+                        
+                    </div>
+                    <h1>《软件测试52讲》-谈谈测试</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 
+                        
+                            瞿广
+                         
+                        on 
+                        Thursday, January 31, 2019
+                        
+                        
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <header>
+                    <h2>TOC</h2>
+                </header>
+                <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#单元测试">单元测试</a>
+<ul>
+<li><a href="#如何做好单元测试">如何做好单元测试？</a></li>
+<li><a href="#实际项目中如何开展单元测试">实际项目中如何开展单元测试？</a></li>
+<li><a href="#现状">现状</a></li>
+</ul></li>
+<li><a href="#gui测试">GUI测试</a>
+<ul>
+<li><a href="#现状-1">现状</a></li>
+<li><a href="#web基于-selenium-搭建">WEB基于 Selenium 搭建</a></li>
+<li><a href="#移动测试-appium">移动测试 Appium</a></li>
+<li><a href="#小程序自动化测试-https-www-cnblogs-com-test-xiaobai-p-9066331-html"><a href="https://www.cnblogs.com/Test-xiaobai/p/9066331.html">小程序自动化测试</a></a></li>
+</ul></li>
+<li><a href="#api测试">API测试</a>
+<ul>
+<li><a href="#基于-postman-和-newman-的-api-测试">基于 Postman 和 Newman 的 API 测试</a></li>
+<li><a href="#基于代码的-api-测试">基于代码的 API 测试</a></li>
+</ul></li>
+<li><a href="#性能测试">性能测试</a>
+<ul>
+<li><a href="#后端性能测试工具的原理是什么">后端性能测试工具的原理是什么？</a></li>
+<li><a href="#后端性能测试场景设计是什么意思-具体会涉及哪些内容">后端性能测试场景设计是什么意思，具体会涉及哪些内容？</a></li>
+<li><a href="#业内主流的后端性能测试工具有哪些">业内主流的后端性能测试工具有哪些？</a></li>
+</ul></li>
+<li><a href="#关于测试计划">关于测试计划</a>
+<ul>
+<li><a href="#现状-2">现状</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+                
+                <p>简单聊下我所了解的测试,测试基础知识、GUI 自动化测试、API 自动化测试、代码级测试、性能测试、测试数据准备、测试基础架构、测试新技术，测试覆盖率、软件缺陷报告、测试计划</p>
+
+<h2 id="单元测试">单元测试</h2>
+
+<p>关于什么是单元测试，以及重要性就不再赘述了。</p>
+
+<h3 id="如何做好单元测试">如何做好单元测试？</h3>
+
+<p>要做好单元测试，你首先必须弄清楚单元测试的对象是代码，以及代码的基本特征和产生错误的原因，然后你必须掌握单元测试的基本方法和主要技术手段，比如什么是驱动代码、桩代码和 Mock 代码等。</p>
+
+<p>驱动代码，桩代码和 Mock 代码，是单元测试中最常出现的三个名词。驱动代码是用来调用被测函数的，而桩代码和 Mock 代码是用来代替被测函数调用的真实代码的。</p>
+
+<p><strong>驱动代码（Driver）指调用被测函数的代码</strong>，在单元测试过程中，驱动模块通常包括调用被测函数前的数据准备、调用被测函数以及验证相关结果三个步骤。驱动代码的结构，通常由单元测试的框架决定。</p>
+
+<p><strong>桩代码（Stub）是用来代替真实代码的临时代码</strong>。 比如，某个函数 A 的内部实现中调用了一个尚未实现的函数 B，为了对函数 A 的逻辑进行测试，那么就需要模拟一个函数 B，这个模拟的函数 B 的实现就是所谓的桩代码。
+Mock 代码和桩代码非常类似，都是用来代替真实代码的临时代码，起到隔离和补齐的作用。但是很多人，甚至是具有多年单元测试经验的开发工程师，也很难说清这二者的区别。</p>
+
+<p>在我看来，Mock 代码和桩代码的本质区别是：测试期待结果的验证（Assert and Expectiation）。</p>
+
+<p>对于 Mock 代码来说，我们的关注点是 Mock 方法有没有被调用，以什么样的参数被调用，被调用的次数，以及多个 Mock 函数的先后调用顺序。所以，在使用 Mock 代码的测试中，对于结果的验证（也就是 assert），通常出现在 Mock 函数中。</p>
+
+<p>对于桩代码来说，我们的关注点是利用 Stub 来控制被测函数的执行路径，不会去关注 Stub 是否被调用以及怎么样被调用。所以，你在使用 Stub 的测试中，对于结果的验证（也就是 assert），通常出现在驱动代码中。</p>
+
+<p>在这里，我只想让你理解两者的本质区别以确保你知识结构的完整性，如果你想深入比较，可以参考马丁·福勒（Martin Fowler）的著名文章<a href="https://martinfowler.com/articles/mocksArentStubs.html">《Mock 代码不是桩代码》（Mocks Aren’t Stubs）</a></p>
+
+<h3 id="实际项目中如何开展单元测试">实际项目中如何开展单元测试？</h3>
+
+<ol>
+<li><p>并不是所有的代码都要进行单元测试，通常只有底层模块或者核心模块的测试中才会采用单元测试。</p></li>
+
+<li><p>你需要确定单元测试框架的选型，这和开发语言直接相关。比如，Java 最常用的单元测试框架是 Junit 和 TestNG；C/C++ 最常用的单元测试框架是 CppTest 和 Parasoft C/C++test；框架选型完成后，你还需要对桩代码框架和 Mock 代码框架选型，选型的主要依据是开发所采用的具体技术栈。</p></li>
+
+<li><p>通常，单元测试框架、桩代码 /Mock 代码的选型工作由开发架构师和测试架构师共同决定。</p></li>
+
+<li><p>为了能够衡量单元测试的代码覆盖率，通常你还需要引入计算代码覆盖率的工具。不同的语言会有不同的代码覆盖率统计工具，比如 Java 的 JaCoCo，JavaScript 的 Istanbul。在后续的文章中，我还会详细为你介绍代码覆盖率的内容。</p></li>
+
+<li><p>最后你需要把单元测试执行、代码覆盖率统计和持续集成流水线做集成，以确保每次代码递交，都会自动触发单元测试，并在单元测试执行过程中自动统计代码覆盖率，最后以“单元测试通过率”和“代码覆盖率”为标准来决定本次代码递交是否能够被接受。</p></li>
+</ol>
+
+<h3 id="现状">现状</h3>
+
+<p>我待过一些中国的互联网公司，也问过一些创业公司，进行单测的不多。我也一直在想没有单测，但是整体的质量也还能“说的过去”的原因是什么。</p>
+
+<p>首先没有单测的主要原因还是和中国互联网的现状有关，中国的互联网本质是商业公司，在中国激烈的竞争环境下，业务的快速发展导致需求的快速上线是一个常态。这也导致了无论是产品还是开发经理，都是以支撑业务为kpi，其次才是质量。所以单测是一件不能直接体现到kpi上的隐形需求，项目排期一般也没有单测的时间。</p>
+
+<p>那整体质量还过的去的原因其实也是因为互联网对质量的容忍度，允许出现一些非严重的问题，需要测试人员或qa通过checklist、集成测试工具或方法的提升能发现核心问题就够了，甚至通过监控和用户反馈紧急召回就够了。从这个方面也能说明中国的功能测试短期内不会像google一样完全被代替掉，还是会存在，根本是研发底层对质量的要求没有变化。不过不可否认的是，测试的一个趋势是写以提高质量的代码为目标，或许研发测试完全一体化之后，测试来写单测也不是一件不可能的事</p>
+
+<h2 id="gui测试">GUI测试</h2>
+
+<h3 id="现状-1">现状</h3>
+
+<p>对于测试来说，并没有接触到代码级测试。经历过的公司，有的即使做了，也是由开发自行做单元测试或者代码评审之类。其他的自动化技术，有做过gui和api的自动化测试。但是gui自动化测试呢，在产品更迭迅速的互联网公司，经常页面，产品逻辑有微小变化，大多数用例就要推倒重来，维护成本太高。</p>
+
+<h3 id="web基于-selenium-搭建">WEB基于 Selenium 搭建</h3>
+
+<h3 id="移动测试-appium">移动测试 Appium</h3>
+
+<h3 id="小程序自动化测试-https-www-cnblogs-com-test-xiaobai-p-9066331-html"><a href="https://www.cnblogs.com/Test-xiaobai/p/9066331.html">小程序自动化测试</a></h3>
+
+<h2 id="api测试">API测试</h2>
+
+<h3 id="基于-postman-和-newman-的-api-测试">基于 Postman 和 Newman 的 API 测试</h3>
+
+<p>集成 Postman 和 Newman 的方案，然后再结合 Jenkins 就可以很方便地实现 API 测试与 CI/CDl 流水线的集成。Newman 其实就是一个命令行工具，可以直接执行 Postman 导出的测试用例。
+用 Postman 开发调试测试用例，完成后通过 Newman 执行，这个方案看似很完美。</p>
+
+<p>但是在实际工程实践中，测试场景除了简单调用单个 API 以外，还存在连续调用多个 API 的情况。
+此时，往往会涉及到多个 API 调用时的数据传递问题，即下一个 API 调用的参数可能是上一个 API 调用返回结果中的某个值。</p>
+
+<p>另外，还会经常遇到的情况是，API 调用前需要先执行一些特定的操作，比如准备测试数据等。
+因此，对于需要连续调用多个 API 并且有参数传递的情况，Postman+Newman 似乎就不再是理想的测试方案了。</p>
+
+<h3 id="基于代码的-api-测试">基于代码的 API 测试</h3>
+
+<p>为了解决这个问题，于是就出现了基于代码的 API 测试框架。比较典型的是，基于 Java 的 OkHttP 和 Unirest、基于 Python 的 http.client 和 Requests、基于 NodeJS 的 Native 和 Request 等。</p>
+
+<p>小型的互联网企业，往往会根据自己的业务需求，选用这些成熟的 API 测试框架。
+但是，对于中大型的互联网企业，一般都会自己开发更适合自身业务上下文的 API 测试框架，比如 eBay，我们为了实现代码化的 API 测试，开发了自己的 HttpClient，后期为了使 API 测试的代码更简洁易懂，就基于 Rest-Assured 封装了全新的 API 测试框架。</p>
+
+<blockquote>
+<p>引用 康美之心 淇水之情:</p>
+
+<p>Rest-assured是一个非常适合，非常好用的API开源测试框架，我已经在我们项目里基于Spring-boot，Rest-Assured，Ccucumber开发了一个标准通用的微服务API自动化测试框架，我们项目里的所有微服务API都可以基于框架快速高效的在各个测试环境无缝切换进行自动化测试，并且完全集成到了公司的CICD Jenkins平台，以前从开发到单元测试，FVT测试，UAT测试，回归测试到MTP需要3天左右时间的Size的Story，现在相同工作量Size的Story只需不到一天时间就可以全部完成，期间除了产品代码开发和少部分特殊数据的准备，部分新增用例的开发外，全部都是在Jenkins上自动完成。</p>
+</blockquote>
+
+<p>这种根据公司业务上下文开发实现的 API 测试框架，在使用上有很多优点，而且灵活性也很好，主要体现在以下几个方面：</p>
+
+<ul>
+<li>可以灵活支持<strong>多个 API 的顺序调用</strong>，方便数据在多个 API 之间传递，即上一个 API 调用返回结果中的某个字段值可以作为后续 API 调用的输入参数；</li>
+<li>方便在 API 调用之前或者之后执行额外的任意操作，可以在调用前执行<strong>数据准备</strong>操作，可以在调用后执行<strong>现场清理</strong>工作等；</li>
+<li>可以很方便地支持数据驱动测试，这里的数据驱动测试概念和 GUI 测试中的数据驱动测试完全相同，也就是可以将测试数据和测试代码分离解耦；</li>
+<li>由于直接采用了代码实现，所以可以更灵活地处理测试验证的断言（Assert）；</li>
+<li>原生支持命令行的测试执行方式，可以方便地和 CI/CD 工具做集成。</li>
+</ul>
+
+<p>自动生成 API 测试代码是指，基于 Postman 的 Collection 生成基于代码的 API 测试用例。</p>
+
+<h2 id="性能测试">性能测试</h2>
+
+<h3 id="后端性能测试工具的原理是什么">后端性能测试工具的原理是什么？</h3>
+
+<p>首先，后端性能测试工具会基于客户端与服务器端的通信协议，构建模拟业务操作的虚拟用户脚本</p>
+
+<p>然后，开发完成了虚拟用户脚本之后，后端性能测试工具会以多线程或多进程的方式并发执行虚拟用户脚本，来模拟大量并发用户的同时访问，从而对服务器施加测试负载。</p>
+
+<p>接着，在施加测试负载的整个过程中，后端性能测试工具除了需要监控和收集被测系统的各种性能数据以外，还需要监控被测系统各个服务器的各种软硬件资源</p>
+
+<p>最后，测试执行完成后，后端性能测试工具会将系统监控器收集的所有信息汇总为完整测试报告</p>
+
+<p>需要强调的是，测试结果分析器只是按需提供多种不同维度和表现形式的数据展现工作，而对数据的分析工作，还是要依赖于具有丰富经验的性能测试工程师。</p>
+
+<h3 id="后端性能测试场景设计是什么意思-具体会涉及哪些内容">后端性能测试场景设计是什么意思，具体会涉及哪些内容？</h3>
+
+<p>性能测试场景设计，是后端性能测试中的重要概念，也是压力控制器发起测试负载的依据。</p>
+
+<p>性能测试场景设计，目的是要描述性能测试过程中所有与测试负载以及监控相关的内容。通常来讲，性能测试场景设计主要会涉及以下部分：</p>
+
+<ul>
+<li><p>并发用户数是多少？</p></li>
+
+<li><p>测试刚开始时，以什么样的速率来添加并发用户？比如，每秒增加 5 个并发用户。</p></li>
+
+<li><p>达到最大并发用户数后持续多长时间？</p></li>
+
+<li><p>测试结束时，以什么样的速率来减少并发用户？比如，每秒减少 5 个并发用户。</p></li>
+
+<li><p>需要包含哪些业务操作，各个业务操作的占比是多少？比如，10% 的用户在做登录操作，70% 的用户在做查询操作，其他 20% 的用户在做订单操作。</p></li>
+
+<li><p>一轮虚拟用户脚本执行结束后，需要等待多长时间开始下一次执行？</p></li>
+
+<li><p>同一虚拟用户脚本中，各个操作之间的等待时间是多少？</p></li>
+
+<li><p>需要监控哪些被测服务器的哪些指标？</p></li>
+
+<li><p>脚本出错时的处理方式是什么？比如，错误率达到 10% 时，自动停止该脚本。</p></li>
+
+<li><p>需要使用多少台压力产生器？</p></li>
+</ul>
+
+<p>以上这些场景组合在一起，就构成了性能测试场景设计的主要内容。也就是说，性能测试场景会对测试负载组成、负载策略、资源监控范围定义、终止方式，以及负载产生规划作出定义，而其中的每一项还会包含更多的内容。具体请参见如图 1 所示的思维导图。</p>
+
+<p><img src="/img/test-preference-scenario.png" alt="test-preference-scenario" /></p>
+
+<h3 id="业内主流的后端性能测试工具有哪些">业内主流的后端性能测试工具有哪些？</h3>
+
+<p>目前，业内有很多成熟的后端性能测试工具，比如传统的 <strong>LoadRunner、JMeter、NeoLoad</strong> 等。另外，现在还有很多云端部署的后端性能测试工具或平台，比如 <strong>CloudTest、Loadstorm、阿里的 PTS</strong>等。</p>
+
+<p>另外，JMeter 是目前开源领域最主流的性能测试工具。JMeter 的功能非常灵活，能够支持 HTTP、FTP、数据库的性能测试，也能够充当 HTTP 代理来录制浏览器的 HTTP 请求，还可以根据 Apache 等 Web 服务器的日志文件回放 HTTP 流量，还可以通过扩展支持海量的并发。</p>
+
+<p>所以互联网企业往往选用 JMeter 方案，而且通常会自己维护扩展版本。</p>
+
+<h2 id="关于测试计划">关于测试计划</h2>
+
+<h3 id="现状-2">现状</h3>
+
+<p>测试计划总是被打乱，而且在前期需求未分析的情况下，测试进度估算的总是不准，很难把控
+做好测试计划，很多时候被风险打乱，也就是不确定性打乱。如跨部门合作、技术攻关、预研项目不成熟等的引进等的不确定性
+同时测试计划受开发进度，质量影响很大，可能之前估计一周搞完的结果质量太差，需要搞两周，那最后的发布日期都定下来，很可能就堆人，压缩测试周期了。</p>
+
+<table>
+<thead>
+<tr>
+<th>分类</th>
+<th>功能</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>单元测试</td>
+<td>确保类、模块功能正确</td>
+</tr>
+
+<tr>
+<td>集成测试</td>
+<td>确保组件间接口、交互和链路正确</td>
+</tr>
+
+<tr>
+<td>组件测试</td>
+<td>确保服务提供方和消费方都遵循契约规范</td>
+</tr>
+
+<tr>
+<td>端到端测试</td>
+<td>确保整个应用满足用户需求</td>
+</tr>
+
+<tr>
+<td>探索测试</td>
+<td>手工探索学习功能，改进自动化测试</td>
+</tr>
+</tbody>
+</table>
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/mongo-export-csv/" data-toggle="tooltip" data-placement="top" title="Mongo Export Csv">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/springboot-how-run/" data-toggle="tooltip" data-placement="top" title="SpringBoot 究竟是如何跑起来的?">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+<div id="disqus-comment"></div>
+
+
+
+            </div>
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/devops" title="devops">
+                            devops
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/docker" title="docker">
+                            docker
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/domain-driven-design" title="domain-driven-design">
+                            domain-driven-design
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/drools" title="drools">
+                            drools
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/dubbo" title="dubbo">
+                            dubbo
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java" title="java">
+                            java
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java%E5%B9%B6%E5%8F%91%E5%AE%9E%E6%88%98" title="java并发实战">
+                            java并发实战
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E5%AE%9E%E6%88%98" title="java性能调优实战">
+                            java性能调优实战
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/jvm" title="jvm">
+                            jvm
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/kubernetes" title="kubernetes">
+                            kubernetes
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/linux" title="linux">
+                            linux
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/mq" title="mq">
+                            mq
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/mysql" title="mysql">
+                            mysql
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/mysql%E5%AE%9E%E6%88%9845%E8%AE%B2" title="mysql实战45讲">
+                            mysql实战45讲
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/redis" title="redis">
+                            redis
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/spring" title="spring">
+                            spring
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E4%B9%A6%E5%8D%95" title="书单">
+                            书单
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F" title="分布式">
+                            分布式
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E5%AE%B9%E5%99%A8" title="容器">
+                            容器
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8" title="工具使用">
+                            工具使用
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E5%B9%B6%E5%8F%91" title="并发">
+                            并发
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84" title="数据结构">
+                            数据结构
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E9%AB%98%E6%89%8B%E8%AF%BE" title="消息队列高手课">
+                            消息队列高手课
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E7%AE%97%E6%B3%95" title="算法">
+                            算法
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E7%BC%93%E5%AD%98" title="缓存">
+                            缓存
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE" title="网络协议">
+                            网络协议
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E8%B6%A3%E8%B0%88%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE" title="趣谈网络协议">
+                            趣谈网络协议
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%BE%8E" title="软件工程之美">
+                            软件工程之美
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E9%80%8F%E8%A7%86http%E5%8D%8F%E8%AE%AE" title="透视http协议">
+                            透视http协议
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E9%9D%A2%E8%AF%95" title="面试">
+                            面试
+                        </a>
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+                <section>
+                    <hr>
+                    <h5>FRIENDS</h5>
+                    <ul class="list-inline">
+                        
+                        <li><a target="_blank" href="https://servicemesher.com">servicemesher的博客</a></li>
+                        
+                    </ul>
+                </section>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                   
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="Quguang&#39;s Blog" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fa fa-circle fa-stack-2x"></i>
+                               <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+                   
+                    
+                    <li>
+                        <a href="mailto:quguang1011@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    
+
+                    
+
+		    
+                    
+                    <li>
+                        <a target="_blank" href="/your%20wechat%20qr%20code%20image">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-wechat fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/techqu">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/yourlinkedinid">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://medium.com/@quguang1011">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-medium fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+            
+                    
+                    <li>
+                        <a target="_blank" href="https://stackoverflow.com/users/yourstackoverflowid">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+            
+                    
+                    
+                    
+            
+            
+            
+                </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Quguang&#39;s Blog 2020
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+</body>
+</html>

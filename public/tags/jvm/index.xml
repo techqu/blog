@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>JVM on Quguang&#39;s Blog</title>
+    <link>https://quguang.wang/tags/jvm/</link>
+    <description>Recent content in JVM on Quguang&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 28 Dec 2019 08:51:05 +0800</lastBuildDate>
+    
+	<atom:link href="https://quguang.wang/tags/jvm/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>JVM中都有哪些常见的垃圾回收器，各自的特点是什么？</title>
+      <link>https://quguang.wang/post/xiaoe-tech-jvm-06-garbage-collector/</link>
+      <pubDate>Sat, 28 Dec 2019 08:51:05 +0800</pubDate>
+      
+      <guid>https://quguang.wang/post/xiaoe-tech-jvm-06-garbage-collector/</guid>
+      <description>&lt;p&gt;如果你不合理的设置内存，就会导致新生代内存不充足，然后导致很多对象不停的迁移到老年代去，最后导致老年代也要不停的进行垃圾回收。&lt;/p&gt;
+
+&lt;p&gt;最后这频繁的垃圾回收，就会极大的影响系统的性能。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Stop the World”问题分析：JVM最让人无奈的痛点！</title>
+      <link>https://quguang.wang/post/xiaoe-tech-jvm-07-stop-the-world/</link>
+      <pubDate>Sat, 28 Dec 2019 08:51:05 +0800</pubDate>
+      
+      <guid>https://quguang.wang/post/xiaoe-tech-jvm-07-stop-the-world/</guid>
+      <description>&lt;p&gt;如果你不合理的设置内存，就会导致新生代内存不充足，然后导致很多对象不停的迁移到老年代去，最后导致老年代也要不停的进行垃圾回收。&lt;/p&gt;
+
+&lt;p&gt;最后这频繁的垃圾回收，就会极大的影响系统的性能。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>线上系统部署时如何设置JVM内存大小</title>
+      <link>https://quguang.wang/post/xiaoe-tech-jvm-05-jvm-properties-set/</link>
+      <pubDate>Sat, 28 Dec 2019 08:51:05 +0800</pubDate>
+      
+      <guid>https://quguang.wang/post/xiaoe-tech-jvm-05-jvm-properties-set/</guid>
+      <description>&lt;p&gt;如果你不合理的设置内存，就会导致新生代内存不充足，然后导致很多对象不停的迁移到老年代去，最后导致老年代也要不停的进行垃圾回收。&lt;/p&gt;
+
+&lt;p&gt;最后这频繁的垃圾回收，就会极大的影响系统的性能。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>JVM中有哪些垃圾回收算法，每个算法各自的优劣？</title>
+      <link>https://quguang.wang/post/xiaoe-tech-jvm-04-garbage-algorithm/</link>
+      <pubDate>Thu, 26 Dec 2019 14:12:44 +0800</pubDate>
+      
+      <guid>https://quguang.wang/post/xiaoe-tech-jvm-04-garbage-algorithm/</guid>
+      <description>&lt;p&gt;上一篇文章我们重新梳理了一下什么时候触发垃圾回收，以及到底哪些对象可以垃圾回收&lt;/p&gt;
+
+&lt;p&gt;另外，对新生代填满，GC Roots对象，软引用、弱引用，还有finalize()等概念进行了比较细致的梳理。&lt;/p&gt;
+
+&lt;p&gt;那么这篇文章，我们就来看看在对新生代进行垃圾回收的时候，到底是采取一种什么样的算法进行的呢？&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>JVM的分代模型与垃圾回收机制</title>
+      <link>https://quguang.wang/post/xiaoe-tech-jvm-03-heap-stack-metaspace/</link>
+      <pubDate>Wed, 25 Dec 2019 14:12:44 +0800</pubDate>
+      
+      <guid>https://quguang.wang/post/xiaoe-tech-jvm-03-heap-stack-metaspace/</guid>
+      <description>&lt;p&gt;上一篇文章给大家分析了JVM中的几块内存区域分别都是干什么的，今天的文章就给大家初步介绍一下垃圾回收的概念。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>JVM的内存区域划分</title>
+      <link>https://quguang.wang/post/xiaoe-tech-jvm-02-memory-partition/</link>
+      <pubDate>Tue, 24 Dec 2019 14:12:44 +0800</pubDate>
+      
+      <guid>https://quguang.wang/post/xiaoe-tech-jvm-02-memory-partition/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>JVM的类加载机制</title>
+      <link>https://quguang.wang/post/xiaoe-tech-jvm-01-classloader/</link>
+      <pubDate>Tue, 24 Dec 2019 14:12:44 +0800</pubDate>
+      
+      <guid>https://quguang.wang/post/xiaoe-tech-jvm-01-classloader/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>java内存溢出分析工具：jmap使用实战</title>
+      <link>https://quguang.wang/post/java-jvm-jmap/</link>
+      <pubDate>Mon, 19 Aug 2019 17:49:12 +0800</pubDate>
+      
+      <guid>https://quguang.wang/post/java-jvm-jmap/</guid>
+      <description>&lt;p&gt;java内存溢出分析工具：jmap使用实战&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>理解GC日志</title>
+      <link>https://quguang.wang/post/jvm-understand-gc-log/</link>
+      <pubDate>Mon, 24 Dec 2018 19:03:40 +0800</pubDate>
+      
+      <guid>https://quguang.wang/post/jvm-understand-gc-log/</guid>
+      <description>&lt;p&gt;理解GC日志，基于jdk1.7,一步步看懂GC日志&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>JVM性能调优</title>
+      <link>https://quguang.wang/post/jvm-performance-optimization/</link>
+      <pubDate>Mon, 24 Dec 2018 18:48:04 +0800</pubDate>
+      
+      <guid>https://quguang.wang/post/jvm-performance-optimization/</guid>
+      <description>&lt;p&gt;linux性能调优和年轻代大小选择和年老代大小的选择&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>JVM 工具</title>
+      <link>https://quguang.wang/post/jvm-tools/</link>
+      <pubDate>Mon, 24 Dec 2018 18:08:25 +0800</pubDate>
+      
+      <guid>https://quguang.wang/post/jvm-tools/</guid>
+      <description>&lt;p&gt;本文介绍了常用的JDK的命令行工具&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>对象存活判断、垃圾收集算法和垃圾收集器</title>
+      <link>https://quguang.wang/post/geektime-jvm-garabage-collection/</link>
+      <pubDate>Thu, 20 Dec 2018 08:44:54 +0800</pubDate>
+      
+      <guid>https://quguang.wang/post/geektime-jvm-garabage-collection/</guid>
+      <description>&lt;p&gt;全文出自《深入理解java虚拟机》第三章。 垃圾收集器与内存分配策略。包含三部分内容：如何判断哪些对象需要回收，如何回收和一些常见的垃圾收集器。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

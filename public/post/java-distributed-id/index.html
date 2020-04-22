@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Quguang&#39;s Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://quguang.wang/img/bg-china.jpg">
+    <meta property="twitter:image" content="https://quguang.wang/img/bg-china.jpg" />
+    
+
+    
+    <meta name="title" content="分布式系统唯一ID生成方案汇总" />
+    <meta property="og:title" content="分布式系统唯一ID生成方案汇总" />
+    <meta property="twitter:title" content="分布式系统唯一ID生成方案汇总" />
+    
+
+    
+    <meta name="description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。">
+    <meta property="og:description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。" />
+    <meta property="twitter:description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="瞿广, quguang, , 瞿广的网络日志, 瞿广的博客, quguang Blog, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Istio, Kubernetes, 微服务, Microservice">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>分布式系统唯一ID生成方案汇总-瞿广的博客 | quguang Blog</title>
+
+    <link rel="canonical" href="/post/java-distributed-id/">
+
+    <link rel="stylesheet" href="/css/iDisqus.min.css"/>
+	
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+    
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    
+    <script src="/js/jquery.min.js"></script>
+    
+    
+    <script src="/js/bootstrap.min.js"></script>
+    
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Quguang&#39;s Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/life">life</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/math">math</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/note">note</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/tech">tech</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/top/about/">ABOUT</a></li>
+                    
+
+                    
+		    <li>
+                        <a href="/search">SEARCH <img src="/img/search.png" height="15" style="cursor: pointer;" alt="Search"></a>
+		    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/bg-china.jpg')
+    }
+</style>
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                    </div>
+                    <h1>分布式系统唯一ID生成方案汇总</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 
+                        
+                            瞿广
+                         
+                        on 
+                        Sunday, February 17, 2019
+                        
+                        
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <header>
+                    <h2>TOC</h2>
+                </header>
+                <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#1-数据库自增长序列或字段">1. 数据库自增长序列或字段</a></li>
+<li><a href="#2-uuid">2. UUID</a></li>
+<li><a href="#3-uuid的变种">3. UUID的变种</a></li>
+<li><a href="#4-redis生成id">4. Redis生成ID</a></li>
+<li><a href="#5-twitter的snowflake算法">5. Twitter的snowflake算法</a></li>
+<li><a href="#6-利用zookeeper生成唯一id">6. 利用zookeeper生成唯一ID</a></li>
+<li><a href="#7-mongodb的objectid">7. MongoDB的ObjectId</a></li>
+</ul></li>
+</ul>
+</nav>
+                
+                <p>系统唯一ID是我们在设计一个系统的时候常常会遇见的问题，也常常为这个问题而纠结。生成ID的方法有很多，适应不同的场景、需求以及性能要求。所以有些比较复杂的系统会有多个ID生成的策略。下面就介绍一些常见的ID生成策略。</p>
+
+<h2 id="1-数据库自增长序列或字段">1. 数据库自增长序列或字段</h2>
+
+<p>最常见的方式。利用数据库，全数据库唯一。</p>
+
+<p>优点：</p>
+
+<p>1）简单，代码方便，性能可以接受。</p>
+
+<p>2）数字ID天然排序，对分页或者需要排序的结果很有帮助。</p>
+
+<p>缺点：</p>
+
+<p>1）不同数据库语法和实现不同，数据库迁移的时候或多数据库版本支持的时候需要处理。</p>
+
+<p>2）在单个数据库或读写分离或一主多从的情况下，只有一个主库可以生成。有单点故障的风险。</p>
+
+<p>3）在性能达不到要求的情况下，比较难于扩展。</p>
+
+<p>4）如果遇见多个系统需要合并或者涉及到数据迁移会相当痛苦。</p>
+
+<p>5）分表分库的时候会有麻烦。</p>
+
+<p>优化方案：</p>
+
+<p>1）针对主库单点，如果有多个Master库，则每个Master库设置的起始数字不一样，步长一样，可以是Master的个数。比如：Master1 生成的是 1，4，7，10，Master2生成的是2,5,8,11 Master3生成的是 3,6,9,12。这样就可以有效生成集群中的唯一ID，也可以大大降低ID生成数据库操作的负载。</p>
+
+<h2 id="2-uuid">2. UUID</h2>
+
+<p>常见的方式。可以利用数据库也可以利用程序生成，一般来说全球唯一。</p>
+
+<p>优点：</p>
+
+<p>1）简单，代码方便。</p>
+
+<p>2）生成ID性能非常好，基本不会有性能问题。</p>
+
+<p>3）全球唯一，在遇见数据迁移，系统数据合并，或者数据库变更等情况下，可以从容应对。</p>
+
+<p>缺点：</p>
+
+<p>1）没有排序，无法保证趋势递增。</p>
+
+<p>2）UUID往往是使用字符串存储，查询的效率比较低。</p>
+
+<p>3）存储空间比较大，如果是海量数据库，就需要考虑存储量的问题。</p>
+
+<p>4）传输数据量大</p>
+
+<p>5）不可读。</p>
+
+<h2 id="3-uuid的变种">3. UUID的变种</h2>
+
+<p>1）为了解决UUID不可读，可以使用UUID to Int64的方法。及</p>
+
+<pre><code class="language-java">/// &lt;summary&gt;
+/// 根据GUID获取唯一数字序列
+/// &lt;/summary&gt;
+public static long GuidToInt64()
+{
+    byte[] bytes = Guid.NewGuid().ToByteArray();
+    return BitConverter.ToInt64(bytes, 0);
+}
+</code></pre>
+
+<p>2）为了解决UUID无序的问题，NHibernate在其主键生成方式中提供了Comb算法（combined guid/timestamp）。保留GUID的10个字节，用另6个字节表示GUID生成的时间（DateTime）。</p>
+
+<pre><code class="language-java">/// &lt;summary&gt; 
+/// Generate a new &lt;see cref=&quot;Guid&quot;/&gt; using the comb algorithm. 
+/// &lt;/summary&gt; 
+private Guid GenerateComb()
+{
+    byte[] guidArray = Guid.NewGuid().ToByteArray();
+ 
+    DateTime baseDate = new DateTime(1900, 1, 1);
+    DateTime now = DateTime.Now;
+ 
+    // Get the days and milliseconds which will be used to build    
+    //the byte string    
+    TimeSpan days = new TimeSpan(now.Ticks - baseDate.Ticks);
+    TimeSpan msecs = now.TimeOfDay;
+ 
+    // Convert to a byte array        
+    // Note that SQL Server is accurate to 1/300th of a    
+    // millisecond so we divide by 3.333333    
+    byte[] daysArray = BitConverter.GetBytes(days.Days);
+    byte[] msecsArray = BitConverter.GetBytes((long)
+      (msecs.TotalMilliseconds / 3.333333));
+ 
+    // Reverse the bytes to match SQL Servers ordering    
+    Array.Reverse(daysArray);
+    Array.Reverse(msecsArray);
+ 
+    // Copy the bytes into the guid    
+    Array.Copy(daysArray, daysArray.Length - 2, guidArray,
+      guidArray.Length - 6, 2);
+    Array.Copy(msecsArray, msecsArray.Length - 4, guidArray,
+      guidArray.Length - 4, 4);
+ 
+    return new Guid(guidArray);
+}
+</code></pre>
+
+<p>用上面的算法测试一下，得到如下的结果：作为比较，前面3个是使用COMB算法得出的结果，最后12个字符串是时间序（统一毫秒生成的3个UUID），过段时间如果再次生成，则12个字符串会比图示的要大。后面3个是直接生成的GUID。</p>
+
+<p>如果想把时间序放在前面，可以生成后改变12个字符串的位置，也可以修改算法类的最后两个Array.Copy。</p>
+
+<h2 id="4-redis生成id">4. Redis生成ID</h2>
+
+<p>当使用数据库来生成ID性能不够要求的时候，我们可以尝试使用Redis来生成ID。这主要依赖于Redis是单线程的，所以也可以用生成全局唯一的ID。可以用Redis的原子操作 INCR和INCRBY来实现。</p>
+
+<p>可以使用Redis集群来获取更高的吞吐量。假如一个集群中有5台Redis。可以初始化每台Redis的值分别是1,2,3,4,5，然后步长都是5。各个Redis生成的ID为：</p>
+
+<p>A：1,6,11,16,21</p>
+
+<p>B：2,7,12,17,22</p>
+
+<p>C：3,8,13,18,23</p>
+
+<p>D：4,9,14,19,24</p>
+
+<p>E：5,10,15,20,25</p>
+
+<p>这个，随便负载到哪个机确定好，未来很难做修改。但是3-5台服务器基本能够满足器上，都可以获得不同的ID。但是步长和初始值一定需要事先需要了。使用Redis集群也可以方式单点故障的问题。</p>
+
+<p>另外，比较适合使用Redis来生成每天从0开始的流水号。比如订单号=日期+当日自增长号。可以每天在Redis中生成一个Key，使用INCR进行累加。</p>
+
+<p>优点：</p>
+
+<p>1）不依赖于数据库，灵活方便，且性能优于数据库。</p>
+
+<p>2）数字ID天然排序，对分页或者需要排序的结果很有帮助。</p>
+
+<p>缺点：</p>
+
+<p>1）如果系统中没有Redis，还需要引入新的组件，增加系统复杂度。</p>
+
+<p>2）需要编码和配置的工作量比较大。</p>
+
+<h2 id="5-twitter的snowflake算法">5. Twitter的snowflake算法</h2>
+
+<p>snowflake是Twitter开源的分布式ID生成算法，结果是一个long型的ID。其核心思想是：使用41bit作为毫秒数，10bit作为机器的ID（5个bit是数据中心，5个bit的机器ID），12bit作为毫秒内的流水号（意味着每个节点在每毫秒可以产生 4096 个 ID），最后还有一个符号位，永远是0。具体实现的代码可以参看<a href="https://github.com/twitter/snowflake。">https://github.com/twitter/snowflake。</a></p>
+
+<p>代码如下：</p>
+
+<pre><code class="language-java">/// &lt;summary&gt;
+    /// From: https://github.com/twitter/snowflake
+    /// An object that generates IDs.
+    /// This is broken into a separate class in case
+    /// we ever want to support multiple worker threads
+    /// per process
+    /// &lt;/summary&gt;
+    public class IdWorker
+    {
+        private long workerId;
+        private long datacenterId;
+        private long sequence = 0L;
+
+        private static long twepoch = 1288834974657L;
+
+        private static long workerIdBits = 5L;
+        private static long datacenterIdBits = 5L;
+        private static long maxWorkerId = -1L ^ (-1L &lt;&lt; (int)workerIdBits);
+        private static long maxDatacenterId = -1L ^ (-1L &lt;&lt; (int)datacenterIdBits);
+        private static long sequenceBits = 12L;
+
+        private long workerIdShift = sequenceBits;
+        private long datacenterIdShift = sequenceBits + workerIdBits;
+        private long timestampLeftShift = sequenceBits + workerIdBits + datacenterIdBits;
+        private long sequenceMask = -1L ^ (-1L &lt;&lt; (int)sequenceBits);
+
+        private long lastTimestamp = -1L;
+        private static object syncRoot = new object();
+
+        public IdWorker(long workerId, long datacenterId)
+        {
+
+            // sanity check for workerId
+            if (workerId &gt; maxWorkerId || workerId &lt; 0)
+            {
+                throw new ArgumentException(string.Format(&quot;worker Id can't be greater than %d or less than 0&quot;, maxWorkerId));
+            }
+            if (datacenterId &gt; maxDatacenterId || datacenterId &lt; 0)
+            {
+                throw new ArgumentException(string.Format(&quot;datacenter Id can't be greater than %d or less than 0&quot;, maxDatacenterId));
+            }
+            this.workerId = workerId;
+            this.datacenterId = datacenterId;
+        }
+
+        public long nextId()
+        {
+            lock (syncRoot)
+            {
+                long timestamp = timeGen();
+
+                if (timestamp &lt; lastTimestamp)
+                {
+                    throw new ApplicationException(string.Format(&quot;Clock moved backwards.  Refusing to generate id for %d milliseconds&quot;, lastTimestamp - timestamp));
+                }
+
+                if (lastTimestamp == timestamp)
+                {
+                    sequence = (sequence + 1) &amp; sequenceMask;
+                    if (sequence == 0)
+                    {
+                        timestamp = tilNextMillis(lastTimestamp);
+                    }
+                }
+                else
+                {
+                    sequence = 0L;
+                }
+
+                lastTimestamp = timestamp;
+
+                return ((timestamp - twepoch) &lt;&lt; (int)timestampLeftShift) | (datacenterId &lt;&lt; (int)datacenterIdShift) | (workerId &lt;&lt; (int)workerIdShift) | sequence;
+            }
+        }
+
+        protected long tilNextMillis(long lastTimestamp)
+        {
+            long timestamp = timeGen();
+            while (timestamp &lt;= lastTimestamp)
+            {
+                timestamp = timeGen();
+            }
+            return timestamp;
+        }
+
+        protected long timeGen()
+        {
+            return (long)(DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
+        }
+    }
+</code></pre>
+
+<p>测试代码如下：</p>
+
+<pre><code>  private static void TestIdWorker()
+        {
+            HashSet&lt;long&gt; set = new HashSet&lt;long&gt;();
+            IdWorker idWorker1 = new IdWorker(0, 0);
+            IdWorker idWorker2 = new IdWorker(1, 0);
+            Thread t1 = new Thread(() =&gt; DoTestIdWoker(idWorker1, set));
+            Thread t2 = new Thread(() =&gt; DoTestIdWoker(idWorker2, set));
+            t1.IsBackground = true;
+            t2.IsBackground = true;
+
+            t1.Start();
+            t2.Start();
+            try
+            {
+                Thread.Sleep(30000);
+                t1.Abort();
+                t2.Abort();
+            }
+            catch (Exception e)
+            {
+            }
+
+            Console.WriteLine(&quot;done&quot;);
+        }
+
+        private static void DoTestIdWoker(IdWorker idWorker, HashSet&lt;long&gt; set)
+        {
+            while (true)
+            {
+                long id = idWorker.nextId();
+                if (!set.Add(id))
+                {
+                    Console.WriteLine(&quot;duplicate:&quot; + id);
+                }
+
+                Thread.Sleep(1);
+            }
+        }
+</code></pre>
+
+<p>snowflake算法可以根据自身项目的需要进行一定的修改。比如估算未来的数据中心个数，每个数据中心的机器数以及统一毫秒可以能的并发数来调整在算法中所需要的bit数。</p>
+
+<p>优点：</p>
+
+<p>1）不依赖于数据库，灵活方便，且性能优于数据库。</p>
+
+<p>2）ID按照时间在单机上是递增的。</p>
+
+<p>缺点：</p>
+
+<p>1）在单机上是递增的，但是由于涉及到分布式环境，每台机器上的时钟不可能完全同步，也许有时候也会出现不是全局递增的情况。</p>
+
+<h2 id="6-利用zookeeper生成唯一id">6. 利用zookeeper生成唯一ID</h2>
+
+<p>zookeeper主要通过其znode数据版本来生成序列号，可以生成32位和64位的数据版本号，客户端可以使用这个版本号来作为唯一的序列号。
+很少会使用zookeeper来生成唯一ID。主要是由于需要依赖zookeeper，并且是多步调用API，如果在竞争较大的情况下，需要考虑使用分布式锁。因此，性能在高并发的分布式环境下，也不甚理想。</p>
+
+<h2 id="7-mongodb的objectid">7. MongoDB的ObjectId</h2>
+
+<p>MongoDB的ObjectId和snowflake算法类似。它设计成轻量型的，不同的机器都能用全局唯一的同种方法方便地生成它。MongoDB 从一开始就设计用来作为分布式数据库，处理多个节点是一个核心要求。使其在分片环境中要容易生成得多。</p>
+
+<p>其格式如下：</p>
+
+<p>前4 个字节是从标准纪元开始的时间戳，单位为秒。时间戳，与随后的5 个字节组合起来，提供了秒级别的唯一性。由于时间戳在前，这意味着ObjectId 大致会按照插入的顺序排列。这对于某些方面很有用，如将其作为索引提高效率。这4 个字节也隐含了文档创建的时间。绝大多数客户端类库都会公开一个方法从ObjectId 获取这个信息。
+接下来的3 字节是所在主机的唯一标识符。通常是机器主机名的散列值。这样就可以确保不同主机生成不同的ObjectId，不产生冲突。
+为了确保在同一台机器上并发的多个进程产生的ObjectId 是唯一的，接下来的两字节来自产生ObjectId 的进程标识符（PID）。
+前9 字节保证了同一秒钟不同机器不同进程产生的ObjectId 是唯一的。后3 字节就是一个自动增加的计数器，确保相同进程同一秒产生的ObjectId 也是不一样的。同一秒钟最多允许每个进程拥有2563（16 777 216）个不同的ObjectId。</p>
+
+<p>实现的源码可以到MongoDB官方网站下载。</p>
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/java-interview-resource-list/" data-toggle="tooltip" data-placement="top" title="Java Interview Resource List">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/java-how-to-design-seckill/" data-toggle="tooltip" data-placement="top" title="如何设计一个秒杀系统">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+<div id="disqus-comment"></div>
+
+
+
+            </div>
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/devops" title="devops">
+                            devops
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/docker" title="docker">
+                            docker
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/domain-driven-design" title="domain-driven-design">
+                            domain-driven-design
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/drools" title="drools">
+                            drools
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/dubbo" title="dubbo">
+                            dubbo
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java" title="java">
+                            java
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java%E5%B9%B6%E5%8F%91%E5%AE%9E%E6%88%98" title="java并发实战">
+                            java并发实战
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E5%AE%9E%E6%88%98" title="java性能调优实战">
+                            java性能调优实战
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/jvm" title="jvm">
+                            jvm
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/kubernetes" title="kubernetes">
+                            kubernetes
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/linux" title="linux">
+                            linux
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/mq" title="mq">
+                            mq
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/mysql" title="mysql">
+                            mysql
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/mysql%E5%AE%9E%E6%88%9845%E8%AE%B2" title="mysql实战45讲">
+                            mysql实战45讲
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/redis" title="redis">
+                            redis
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/spring" title="spring">
+                            spring
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E4%B9%A6%E5%8D%95" title="书单">
+                            书单
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F" title="分布式">
+                            分布式
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E5%AE%B9%E5%99%A8" title="容器">
+                            容器
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8" title="工具使用">
+                            工具使用
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E5%B9%B6%E5%8F%91" title="并发">
+                            并发
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84" title="数据结构">
+                            数据结构
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E9%AB%98%E6%89%8B%E8%AF%BE" title="消息队列高手课">
+                            消息队列高手课
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E7%AE%97%E6%B3%95" title="算法">
+                            算法
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E7%BC%93%E5%AD%98" title="缓存">
+                            缓存
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE" title="网络协议">
+                            网络协议
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E8%B6%A3%E8%B0%88%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE" title="趣谈网络协议">
+                            趣谈网络协议
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%BE%8E" title="软件工程之美">
+                            软件工程之美
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E9%80%8F%E8%A7%86http%E5%8D%8F%E8%AE%AE" title="透视http协议">
+                            透视http协议
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E9%9D%A2%E8%AF%95" title="面试">
+                            面试
+                        </a>
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+                <section>
+                    <hr>
+                    <h5>FRIENDS</h5>
+                    <ul class="list-inline">
+                        
+                        <li><a target="_blank" href="https://servicemesher.com">servicemesher的博客</a></li>
+                        
+                    </ul>
+                </section>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                   
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="Quguang&#39;s Blog" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fa fa-circle fa-stack-2x"></i>
+                               <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+                   
+                    
+                    <li>
+                        <a href="mailto:quguang1011@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    
+
+                    
+
+		    
+                    
+                    <li>
+                        <a target="_blank" href="/your%20wechat%20qr%20code%20image">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-wechat fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/techqu">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/yourlinkedinid">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://medium.com/@quguang1011">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-medium fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+            
+                    
+                    <li>
+                        <a target="_blank" href="https://stackoverflow.com/users/yourstackoverflowid">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+            
+                    
+                    
+                    
+            
+            
+            
+                </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Quguang&#39;s Blog 2020
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+</body>
+</html>

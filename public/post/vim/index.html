@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Quguang&#39;s Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://quguang.wang/img/bg-china.jpg">
+    <meta property="twitter:image" content="https://quguang.wang/img/bg-china.jpg" />
+    
+
+    
+    <meta name="title" content="编辑器之神-Vim学习" />
+    <meta property="og:title" content="编辑器之神-Vim学习" />
+    <meta property="twitter:title" content="编辑器之神-Vim学习" />
+    
+
+    
+    <meta name="description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。">
+    <meta property="og:description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。" />
+    <meta property="twitter:description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="瞿广, quguang, , 瞿广的网络日志, 瞿广的博客, quguang Blog, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Istio, Kubernetes, 微服务, Microservice">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>编辑器之神-Vim学习-瞿广的博客 | quguang Blog</title>
+
+    <link rel="canonical" href="/post/vim/">
+
+    <link rel="stylesheet" href="/css/iDisqus.min.css"/>
+	
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+    
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    
+    <script src="/js/jquery.min.js"></script>
+    
+    
+    <script src="/js/bootstrap.min.js"></script>
+    
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Quguang&#39;s Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/life">life</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/math">math</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/note">note</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/tech">tech</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/top/about/">ABOUT</a></li>
+                    
+
+                    
+		    <li>
+                        <a href="/search">SEARCH <img src="/img/search.png" height="15" style="cursor: pointer;" alt="Search"></a>
+		    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/bg-china.jpg')
+    }
+</style>
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/linux" title="linux">
+                            linux
+                        </a>
+                        
+                    </div>
+                    <h1>编辑器之神-Vim学习</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 
+                        
+                            瞿广
+                         
+                        on 
+                        Saturday, July 20, 2019
+                        
+                        
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <header>
+                    <h2>TOC</h2>
+                </header>
+                <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#环境准备">环境准备</a></li>
+<li><a href="#学习方法论">学习方法论</a></li>
+<li><a href="#知识点">知识点</a>
+<ul>
+<li><a href="#1-选中模式">1. 选中模式</a></li>
+<li><a href="#2-基于单词的移动">2. 基于单词的移动</a></li>
+<li><a href="#3-基于字符的查找移动">3. 基于字符的查找移动</a></li>
+<li><a href="#4-文本对象">4. 文本对象</a>
+<ul>
+<li><a href="#分隔符文本对象">分隔符文本对象</a></li>
+<li><a href="#范围文本对象">范围文本对象</a></li>
+</ul></li>
+<li><a href="#5-操作符待决模式">5. 操作符待决模式</a></li>
+<li><a href="#6-设置标记-快速回跳">6. 设置标记、快速回跳</a></li>
+<li><a href="#7-复制-粘贴-翻页">7. 复制 粘贴 翻页</a></li>
+<li><a href="#8-查找替换">8. 查找替换</a></li>
+<li><a href="#9-分屏">9.分屏</a></li>
+<li><a href="#10-滑动屏幕">10.滑动屏幕</a></li>
+<li><a href="#11-大小写">11.大小写</a></li>
+</ul></li>
+<li><a href="#改善编程体验-ideavimextension介绍">改善编程体验: IdeaVimExtension介绍</a>
+<ul>
+<li><a href="#ideavimextension安装使用">IdeaVimExtension安装使用</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+                
+                <p><strong>编辑器之神-vim,神的编辑器-emacs</strong></p>
+
+<p>最近开始使用vim键盘流，写代码时真心不想再去碰鼠标，来回切换很麻烦。以下是记录了一些常用但是我不会的快捷键</p>
+
+<h2 id="环境准备">环境准备</h2>
+
+<ul>
+<li>安装vim</li>
+<li>sublime、vscode、idea等编辑器安装vim插件</li>
+</ul>
+
+<h2 id="学习方法论">学习方法论</h2>
+
+<ul>
+<li>一个前提：键盘映射</li>
+<li>一个定则：2 8</li>
+<li>一个要求：不用鼠标</li>
+<li>一个方法：刻意练习</li>
+<li>一个重要的事情：得不到重复的技能回遗忘</li>
+<li>一个终极目标：写作速度与思维速度一致</li>
+</ul>
+
+<h2 id="知识点">知识点</h2>
+
+<h3 id="1-选中模式">1. 选中模式</h3>
+
+<p>v V ctrol-v</p>
+
+<h3 id="2-基于单词的移动">2. 基于单词的移动</h3>
+
+<p>词首w b     词尾e ge</p>
+
+<h3 id="3-基于字符的查找移动">3. 基于字符的查找移动</h3>
+
+<p>f F   所在   ; 重复  ,回退</p>
+
+<p>t  T 之前   ; ,</p>
+
+<h3 id="4-文本对象">4. 文本对象</h3>
+
+<p>x = dl
+X = dh
+D = d$
+C = c$</p>
+
+<h4 id="分隔符文本对象">分隔符文本对象</h4>
+
+<p>ib 小括号</p>
+
+<p>ab</p>
+
+<p>iB i} 花括号</p>
+
+<p>aB a}</p>
+
+<p>i&gt;</p>
+
+<p>a&gt;</p>
+
+<h4 id="范围文本对象">范围文本对象</h4>
+
+<p>iw word</p>
+
+<p>aw</p>
+
+<p>is sentence
+as</p>
+
+<p>ip part
+ap</p>
+
+<p>i-in
+a-around</p>
+
+<h3 id="5-操作符待决模式">5. 操作符待决模式</h3>
+
+<p>d{motion} delete</p>
+
+<p>c{motion} change</p>
+
+<p>y{motion} yank</p>
+
+<p>v   view</p>
+
+<h3 id="6-设置标记-快速回跳">6. 设置标记、快速回跳</h3>
+
+<p>m{mark}</p>
+
+<p>`{mark}</p>
+
+<h3 id="7-复制-粘贴-翻页">7. 复制 粘贴 翻页</h3>
+
+<p>y</p>
+
+<p>p</p>
+
+<p>ctrol f b \ d u</p>
+
+<h3 id="8-查找替换">8. 查找替换</h3>
+
+<dl>
+<dt>#</dt>
+</dl>
+
+<p>:set hls</p>
+
+<dl>
+<dt>/pattern  n跳转</dt>
+</dl>
+
+<p>:%s/pattern/string/g 使用c替换确认</p>
+
+<p>在命令行模式下，实现替换7，8行的字符b,用字符a替换字符b</p>
+
+<p>输入：7，8s/b/a/g</p>
+
+<p>其中：b就是旧的（之前的）字符
+    a是新的（现在的）字符</p>
+
+<h3 id="9-分屏">9.分屏</h3>
+
+<p>垂直：vs  close
+水平：sv
+切屏：ctrl+w+w</p>
+
+<h3 id="10-滑动屏幕">10.滑动屏幕</h3>
+
+<p>zt(top)
+zz 滑动屏幕使当前行置于屏幕中央
+zb(bottom)</p>
+
+<p>ctrl+e  滑动一行
+ctrl+y  滑动一行</p>
+
+<p>ctrl+d  滑动半屏
+ctrl+u  滑动半屏</p>
+
+<p>ctrl+f  滑动一屏
+ctrl+b  滑动一屏</p>
+
+<h3 id="11-大小写">11.大小写</h3>
+
+<p>~
+gu
+gU</p>
+
+<h2 id="改善编程体验-ideavimextension介绍">改善编程体验: IdeaVimExtension介绍</h2>
+
+<p>Intellij IDEA是个非常优秀的开发环境,提供了相当好用的快捷键,让用户有机会脱离鼠标来使用IDE.</p>
+
+<p>另外官方还提供了IdeaVim插件,熟悉vim的用户可以使用几乎与vim相同的方式操作IDEA的编辑器来编写代码.但是作为非英文用户,却有一个&rdquo;输入法切换&rdquo;的痛点.</p>
+
+<p>考虑如下两种情况:</p>
+
+<p>编辑器中在insert模式下,编写了一段中文注释,然后需要回到normal模式移动光标到其他位置继续编写代码.
+正在编辑器normal模式下操作,此时突然有紧急邮件或者钉钉消息需要回复,输入法切换为中文回复后再回到编辑器.
+类似上面两种场景,当回到normal模式编辑器时,我们都不得不人工操作一次输入法切换,即使您已经为输入法切换设置了非常好用的快捷键(按一下Shift),这个操作依然是恼人的,经常会忘记,输入几个字符后才发现,这可能带来误操作.</p>
+
+<p>我们的期望只有一个:</p>
+
+<p>在任何情况下,进入normal模式,输入法必是英文状态.</p>
+
+<p>因此我基于IdeaVim的扩展点开发了一个帮助切换输入法的小插件IdeaVimExtension</p>
+
+<h3 id="ideavimextension安装使用">IdeaVimExtension安装使用</h3>
+
+<p>如果您已经是IdeaVim的用户,那么直接在Intellj IDEA的插件中心搜索IdeaVimExtension进行安装.或者到IdeaVimExtension插件主页进行下载安装.
+IdeaVimExtension是依赖IdeaVim的,需要事先安装IdeaVim</p>
+
+<p>确保你的操作系统已经开启了英文输入法</p>
+
+<p>Windows需要开启en_US输入法
+macOS需要开启ABC或en_US输入法
+Linux 不支持
+安装重启IDEA后,打开任意代码编辑器在normal模式下输入如下两个命令来激活IdeaVimExtension插件</p>
+
+<ul>
+<li>:set keep-english-in-normal : 在normal模式保持英文状态</li>
+<li>:set keep-english-in-normal-and-restore-in-insert : 在normal模式保持英文状态,并在回到insert时恢复输入法到原来的状态.例如,编写一段中文注释,用中文输入法写了一段文字,进入normal模式移动光标到下一行,再回到插入模式继续使用中文编辑.</li>
+</ul>
+
+<p>上面两个命令在每次IDEA重启后都需要重新输入,也可以通过在用户目录下添加 .ideavimrc文件,将命令添加到该文件中,这样在IDEA重启时可以自动执行该文件中的指令.另外,该文件中也可以添加其他受支持的vim指令.类似vim的.vimrc文件.</p>
+
+<p><a href="https://blog.csdn.net/u012260238/article/details/81141158">https://blog.csdn.net/u012260238/article/details/81141158</a></p>
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/saas-hrm/" data-toggle="tooltip" data-placement="top" title="传统Saas项目实例">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/geektime-network-protocol-udp-tcp/" data-toggle="tooltip" data-placement="top" title="《趣谈网络协议》- Udp Tcp">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+<div id="disqus-comment"></div>
+
+
+
+            </div>
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/devops" title="devops">
+                            devops
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/docker" title="docker">
+                            docker
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/domain-driven-design" title="domain-driven-design">
+                            domain-driven-design
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/drools" title="drools">
+                            drools
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/dubbo" title="dubbo">
+                            dubbo
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java" title="java">
+                            java
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java%E5%B9%B6%E5%8F%91%E5%AE%9E%E6%88%98" title="java并发实战">
+                            java并发实战
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E5%AE%9E%E6%88%98" title="java性能调优实战">
+                            java性能调优实战
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/jvm" title="jvm">
+                            jvm
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/kubernetes" title="kubernetes">
+                            kubernetes
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/linux" title="linux">
+                            linux
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/mq" title="mq">
+                            mq
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/mysql" title="mysql">
+                            mysql
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/mysql%E5%AE%9E%E6%88%9845%E8%AE%B2" title="mysql实战45讲">
+                            mysql实战45讲
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/redis" title="redis">
+                            redis
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/spring" title="spring">
+                            spring
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E4%B9%A6%E5%8D%95" title="书单">
+                            书单
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F" title="分布式">
+                            分布式
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E5%AE%B9%E5%99%A8" title="容器">
+                            容器
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8" title="工具使用">
+                            工具使用
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E5%B9%B6%E5%8F%91" title="并发">
+                            并发
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84" title="数据结构">
+                            数据结构
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E9%AB%98%E6%89%8B%E8%AF%BE" title="消息队列高手课">
+                            消息队列高手课
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E7%AE%97%E6%B3%95" title="算法">
+                            算法
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E7%BC%93%E5%AD%98" title="缓存">
+                            缓存
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE" title="网络协议">
+                            网络协议
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E8%B6%A3%E8%B0%88%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE" title="趣谈网络协议">
+                            趣谈网络协议
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%BE%8E" title="软件工程之美">
+                            软件工程之美
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E9%80%8F%E8%A7%86http%E5%8D%8F%E8%AE%AE" title="透视http协议">
+                            透视http协议
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E9%9D%A2%E8%AF%95" title="面试">
+                            面试
+                        </a>
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+                <section>
+                    <hr>
+                    <h5>FRIENDS</h5>
+                    <ul class="list-inline">
+                        
+                        <li><a target="_blank" href="https://servicemesher.com">servicemesher的博客</a></li>
+                        
+                    </ul>
+                </section>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                   
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="Quguang&#39;s Blog" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fa fa-circle fa-stack-2x"></i>
+                               <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+                   
+                    
+                    <li>
+                        <a href="mailto:quguang1011@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    
+
+                    
+
+		    
+                    
+                    <li>
+                        <a target="_blank" href="/your%20wechat%20qr%20code%20image">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-wechat fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/techqu">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/yourlinkedinid">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://medium.com/@quguang1011">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-medium fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+            
+                    
+                    <li>
+                        <a target="_blank" href="https://stackoverflow.com/users/yourstackoverflowid">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+            
+                    
+                    
+                    
+            
+            
+            
+                </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Quguang&#39;s Blog 2020
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+</body>
+</html>

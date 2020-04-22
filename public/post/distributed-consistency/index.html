@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Quguang&#39;s Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://quguang.wang/img/bg-china.jpg">
+    <meta property="twitter:image" content="https://quguang.wang/img/bg-china.jpg" />
+    
+
+    
+    <meta name="title" content="从分布式一致性谈到CAP理论、BASE理论、分布式事务" />
+    <meta property="og:title" content="从分布式一致性谈到CAP理论、BASE理论、分布式事务" />
+    <meta property="twitter:title" content="从分布式一致性谈到CAP理论、BASE理论、分布式事务" />
+    
+
+    
+    <meta name="description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。">
+    <meta property="og:description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。" />
+    <meta property="twitter:description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="瞿广, quguang, , 瞿广的网络日志, 瞿广的博客, quguang Blog, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Istio, Kubernetes, 微服务, Microservice">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>从分布式一致性谈到CAP理论、BASE理论、分布式事务-瞿广的博客 | quguang Blog</title>
+
+    <link rel="canonical" href="/post/distributed-consistency/">
+
+    <link rel="stylesheet" href="/css/iDisqus.min.css"/>
+	
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+    
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    
+    <script src="/js/jquery.min.js"></script>
+    
+    
+    <script src="/js/bootstrap.min.js"></script>
+    
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Quguang&#39;s Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/life">life</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/math">math</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/note">note</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/tech">tech</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/top/about/">ABOUT</a></li>
+                    
+
+                    
+		    <li>
+                        <a href="/search">SEARCH <img src="/img/search.png" height="15" style="cursor: pointer;" alt="Search"></a>
+		    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/bg-china.jpg')
+    }
+</style>
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F" title="分布式">
+                            分布式
+                        </a>
+                        
+                    </div>
+                    <h1>从分布式一致性谈到CAP理论、BASE理论、分布式事务</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 
+                        
+                            瞿广
+                         
+                        on 
+                        Monday, January 14, 2019
+                        
+                        
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <header>
+                    <h2>TOC</h2>
+                </header>
+                <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#理论基础">理论基础</a>
+<ul>
+<li><a href="#acid">ACID</a></li>
+<li><a href="#下面介绍常见的一致性模型">下面介绍常见的一致性模型：</a></li>
+<li><a href="#cap理论">CAP理论</a></li>
+<li><a href="#cap-理论的延伸-base-理论">CAP 理论的延伸：BASE 理论</a>
+<ul>
+<li><a href="#1-基本可用">1、基本可用</a></li>
+<li><a href="#2-软状态">2、软状态</a></li>
+<li><a href="#3-最终一致性">3、最终一致性</a></li>
+</ul></li>
+<li><a href="#xa规范">XA规范</a></li>
+</ul></li>
+<li><a href="#分布式一致性协议">分布式一致性协议</a>
+<ul>
+<li><a href="#分布式事务产生的背景">分布式事务产生的背景</a></li>
+<li><a href="#分布式事务">分布式事务</a></li>
+</ul></li>
+<li><a href="#常见分布式事务解决方案">常见分布式事务解决方案</a></li>
+<li><a href="#总结">总结</a>
+<ul>
+<li><a href="#各方案使用场景">各方案使用场景</a></li>
+<li><a href="#分布式事务方案设计">分布式事务方案设计</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+                
+                <p>什么是事务，简单说事务就是要么全不做，要么全做。一部分做一部分不做就会出一致性问题。</p>
+
+<p>传统的单体应用不会横跨多个数据库，可以通过单机事务保证一致性。</p>
+
+<p>然而在海量数据的场景下，需要对数据库做拆分，即分库分表，而Cobar、MyCat这类分库分表中间并不提供分布式事务的特性，并且基于二阶段提交的分布式事务性能较差，对于大多数业务场景来说，并不需要强一致，只需要保证最终一致性即可。</p>
+
+<h2 id="理论基础">理论基础</h2>
+
+<h3 id="acid">ACID</h3>
+
+<p>简单而言，ACID 是从不同维度描述事务的特性：</p>
+
+<ul>
+<li>原子性：事务操作的整体性。</li>
+<li>一致性：事务操作正常或异常下数据的正确性。</li>
+<li>隔离性：事务并发操作下数据的正确性。</li>
+<li>持久性：事务对数据修改的可靠性。</li>
+</ul>
+
+<h3 id="下面介绍常见的一致性模型">下面介绍常见的一致性模型：</h3>
+
+<ul>
+<li><strong>强一致性</strong>：要求无论更新操作是在哪个数据副本上执行，之后所有的读操作都要能获得最新的数据。
+对于单副本数据来说，读写操作是在同一数据上执行的，容易保证强一致性。对多副本数据来说，则需要使用分布式事务协议。</li>
+<li><strong>弱一致性</strong>：在这种一致性下，用户读到某一操作对系统特定数据的更新需要一段时间，我们将这段时间称为&rdquo;不一致性窗口&rdquo;。</li>
+<li><strong>最终一致性</strong>：是弱一致性的一种特例，在这种一致性下系统保证用户最终能够读取到某操作对系统特定数据的更新（读取操作之前没有该数据的其他更新操作）。&rdquo;不一致性窗口&rdquo;的大小依赖于交互延迟、系统的负载，以及数据的副本数等。</li>
+</ul>
+
+<h3 id="cap理论">CAP理论</h3>
+
+<p><img src="/img/CAP.png" alt="CAP理论" /></p>
+
+<table>
+<thead>
+<tr>
+<th>选择</th>
+<th>说明</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>CA</td>
+<td>放弃分区容错性，加强一致性和可用性，其实就是传统的单机数据库的选择</td>
+</tr>
+
+<tr>
+<td>AP</td>
+<td>放弃一致性（这里说的一致性是强一致性），追求分区容错性和可用性，这是很多分布式系统设计时的选择，例如很多NoSQL系统就是如此</td>
+</tr>
+
+<tr>
+<td>CP</td>
+<td>放弃可用性，追求一致性和分区容错性，基本不会选择，网络问题会直接让整个系统不可用</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="cap-理论的延伸-base-理论">CAP 理论的延伸：BASE 理论</h3>
+
+<p>BASE是Basically Available（基本可用）、Soft state（软状态）和Eventually consistent（最终一致性）三个短语的缩写。BASE理论是对CAP中一致性和可用性权衡的结果，其来源于对大规模互联网系统分布式实践的总结， 是基于CAP定理逐步演化而来的。BASE理论的核心思想是：即使无法做到强一致性，但每个应用都可以根据自身业务特点，采用适当的方式来使系统达到最终一致性。接下来看一下BASE中的三要素：</p>
+
+<h4 id="1-基本可用">1、基本可用</h4>
+
+<p>基本可用是指分布式系统在出现不可预知故障的时候，允许损失部分可用性&mdash;-注意，这绝不等价于系统不可用。比如：</p>
+
+<p>（1）响应时间上的损失。正常情况下，一个在线搜索引擎需要在0.5秒之内返回给用户相应的查询结果，但由于出现故障，查询结果的响应时间增加了1~2秒</p>
+
+<p>（2）系统功能上的损失：正常情况下，在一个电子商务网站上进行购物的时候，消费者几乎能够顺利完成每一笔订单，但是在一些节日大促购物高峰的时候，由于消费者的购物行为激增，为了保护购物系统的稳定性，部分消费者可能会被引导到一个降级页面</p>
+
+<h4 id="2-软状态">2、软状态</h4>
+
+<p>软状态指允许系统中的数据存在中间状态，并认为该中间状态的存在不会影响系统的整体可用性，即允许系统在不同节点的数据副本之间进行数据同步的过程存在延时</p>
+
+<h4 id="3-最终一致性">3、最终一致性</h4>
+
+<p>最终一致性强调的是所有的数据副本，在经过一段时间的同步之后，最终都能够达到一个一致的状态。因此，最终一致性的本质是需要系统保证最终数据能够达到一致，而不需要实时保证系统数据的强一致性。</p>
+
+<p>总的来说，BASE理论面向的是大型高可用可扩展的分布式系统，和传统的事务ACID特性是相反的，<strong>它完全不同于ACID的强一致性模型，而是通过牺牲强一致性来获得可用性，并允许数据在一段时间内是不一致的，但最终达到一致状态。但同时，在实际的分布式场景中，不同业务单元和组件对数据一致性的要求是不同的，因此在具体的分布式系统架构设计过程中，ACID特性和BASE理论往往又会结合在一起</strong>。</p>
+
+<h3 id="xa规范">XA规范</h3>
+
+<p>X/Open 组织（即现在的 Open Group ）定义了分布式事务处理模型。 X/Open DTP 模型（ 1994 ）包括<strong>应用程序（ AP ）、事务管理器（ TM ）、资源管理器（ RM ）、通信资源管理器（ CRM ）</strong>四部分。一般，常见的事务管理器（ TM ）是交易中间件，常见的资源管理器（ RM ）是数据库，常见的通信资源管理器（ CRM ）是消息中间件。</p>
+
+<p>通常把一个数据库内部的事务处理，如对多个表的操作，作为本地事务看待。数据库的事务处理对象是本地事务，而分布式事务处理的对象是全局事务。 所谓全局事务，是指分布式事务处理环境中，多个数据库可能需要共同完成一个工作，这个工作即是一个全局事务，例如，一个事务中可能更新几个不同的数据库。对数据库的操作发生在系统的各处但必须全部被提交或回滚。此时一个数据库对自己内部所做操作的提交不仅依赖本身操作是否成功，还要依赖与全局事务相关的其它数据库的操作是否成功，如果任一数据库的任一操作失败，则参与此事务的所有数据库所做的所有操作都必须回滚。 一般情况下，某一数据库无法知道其它数据库在做什么，因此，在一个 DTP 环境中，交易中间件是必需的，由它通知和协调相关数据库的提交或回滚。而一个数据库只将其自己所做的操作（可恢复）影射到全局事务中。</p>
+
+<p>XA 就是 X/Open DTP 定义的交易中间件与数据库之间的接口规范（即接口函数），交易中间件用它来通知数据库事务的开始、结束以及提交、回滚等。 XA 接口函数由数据库厂商提供。</p>
+
+<h2 id="分布式一致性协议">分布式一致性协议</h2>
+
+<p>　　国际开放标准组织 <a href="http://opengroup.org/">Open Group</a>定义了DTS（分布式事务处理模型），模型中包含4个角色：<strong>应用程序、事务管理器、资源管理器、通信资源管理器</strong>四部分。<strong>事务处理器</strong>是统管全局的<strong>管理者</strong>，<strong>资源处理器</strong>和<strong>通信资源处理器</strong>是事务的<strong>参与者</strong>。</p>
+
+<p>J2EE规范也包含此分布式事务处理模型的规范，并在所有的AppServer中进行实现，J2EE规范中定义了TX协议和XA协议，TX协议定义应用程序与事务管理器之间的接口，而XA协议定义了事务管理器与资源处理器之间的接口，在过去，大家使用AppServer，例如：Websphere、Weblogic、Jboss等配置数据源的时候会看见类似XADatasource的数据源，这就是实现了DTS的关系型数据库的数据源。企业级开发JEE中，关系型数据库、JMS服务扮演资源管理器的角色，而EJB容器则扮演事务管理器的角色。</p>
+
+<p><a href="https://en.wikipedia.org/wiki/Two-phase_commit_protocol">两阶段提交协议</a>、<a href="https://en.wikipedia.org/wiki/Three-phase_commit_protocol">三阶段提交协议</a>以及阿里巴巴提出的TCC，它们都是根据DTS这一思想演变出来的。</p>
+
+<h3 id="分布式事务产生的背景">分布式事务产生的背景</h3>
+
+<p>随着分布式计算的发展，事务在分布式计算领域也得到了广泛的应用。在单机数据库中，我们很容易能够实现一套满足ACID特性的事务处理系统，但在分布式数据库中，数据分散在各台不同的机器上，如何对这些数据进行分布式的事务处理具有非常大的挑战。</p>
+
+<p>分布式事务是指事务的参与者、支持事务的服务器、资源服务器以及事务管理器分别位于分布式系统的不同节点上，通常一个分布式事务中会涉及对多个数据源或业务系统的操作。</p>
+
+<p>可以设想一个最典型的分布式事务场景：一个跨银行的转账操作涉及调用两个异地的银 行服务，其中一个是本地银行提供的取款服务，另一个则是目标银行提供的存款服务，这两个服务本身是无状态并且相互独立的，共同构成了一个完整的分布式事 物。如果从本地银行取款成功，但是因为某种原因存款服务失败了，那么就必须回滚到取款之前的状态，否则用户可能会发现自己的钱不翼而飞了。</p>
+
+<p>从这个例子可以看到，一个分布式事务可以看做是多个分布式的操作序列组成的，例如 上面例子的取款服务和存款服务，通常可以把这一系列分布式的操作序列称为子事务。因此，分布式事务也可以被定义为一种嵌套型的事务，同时也就具有了 ACID事务特性。但由于在分布式事务中，各个子事务的执行是分布式的，因此要实现一种能够保证ACID特性的分布式事务处理系统就显得格外复杂。</p>
+
+<h3 id="分布式事务">分布式事务</h3>
+
+<p>分布式事务是指会涉及到操作多个数据库的事务。其实就是将对同一库事务的概念扩大到了对多个库的事务。目的是为了保证分布式系统中的数据一致性。分布式事务处理的关键是必须有一种方法可以知道事务在任何地方所做的所有动作，提交或回滚事务的决定必须产生统一的结果（全部提交或全部回滚）</p>
+
+<h2 id="常见分布式事务解决方案">常见分布式事务解决方案</h2>
+
+<p>分布式事务的实现有许多种，其中较经典是由 Tuxedo 提出的 XA 分布式事务协议，XA 协议包含二阶段提交（2PC）和三阶段提交（3PC）两种实现，消息中间件、tcc、gts、提供回滚接口、分布式数据库，<a href="http://www.txlcn.org/zh-cn/">基于SpringCloud的分布式事务框架(LCN)</a>，<a href="https://github.com/alibaba/fescar/wiki/%E9%98%BF%E9%87%8C%E5%B7%B4%E5%B7%B4%E5%BC%80%E6%BA%90%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-FESCAR">阿里巴巴开源分布式事务解决方案 FESCAR</a>等。</p>
+
+<h2 id="总结">总结</h2>
+
+<h3 id="各方案使用场景">各方案使用场景</h3>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>2PC</th>
+<th>3PC</th>
+<th>TCC</th>
+<th>本地消息表</th>
+<th>MQ事务</th>
+<th>Sage</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>数据一致性</td>
+<td>强</td>
+<td>强</td>
+<td>弱</td>
+<td>弱</td>
+<td>弱</td>
+<td>弱</td>
+</tr>
+
+<tr>
+<td>容错性</td>
+<td>低</td>
+<td>低</td>
+<td>高</td>
+<td>高</td>
+<td>高</td>
+<td>高</td>
+</tr>
+
+<tr>
+<td>复杂性</td>
+<td>中</td>
+<td>高</td>
+<td>高</td>
+<td>低</td>
+<td>低</td>
+<td>中</td>
+</tr>
+
+<tr>
+<td>性能</td>
+<td>低</td>
+<td>低</td>
+<td>中</td>
+<td>中</td>
+<td>高</td>
+<td>中</td>
+</tr>
+
+<tr>
+<td>维护成本</td>
+<td>低</td>
+<td>中</td>
+<td>高</td>
+<td>中</td>
+<td>中</td>
+<td>高</td>
+</tr>
+</tbody>
+</table>
+
+<p>介绍完分布式事务相关理论和常见解决方案后，最终的目的在实际项目中运用，因此，总结一下各个方案的常见的使用场景：</p>
+
+<ul>
+<li><p><strong>2PC/3PC</strong>：依赖于数据库，能够很好的提供强一致性和强事务性，但相对来说延迟比较高，比较适合传统的单体应用，在同一个方法中存在跨库操作的情况，不适合高并发和高性能要求的场景。</p></li>
+
+<li><p><strong>TCC</strong>：适用于执行时间确定且较短，实时性要求高，对数据一致性要求高，比如互联网金融企业最核心的三个服务：交易、支付、账务。</p></li>
+
+<li><p><strong>本地消息表/MQ</strong>
+事务：都适用于事务中参与方支持操作幂等，对一致性要求不高，业务上能容忍数据不一致到一个人工检查周期，事务涉及的参与方、参与环节较少，业务上有对账/校验系统兜底。</p></li>
+
+<li><p><strong>Saga 事务</strong>：由于 Saga 事务不能保证隔离性，需要在业务层控制并发，适合于业务场景事务并发操作同一资源较少的情况。
+Saga 相比缺少预提交动作，导致补偿动作的实现比较麻烦，例如业务是发送短信，补偿动作则得再发送一次短信说明撤销，用户体验比较差。Saga 事务较适用于补偿动作容易处理的场景。</p></li>
+</ul>
+
+<h3 id="分布式事务方案设计">分布式事务方案设计</h3>
+
+<p>本文介绍的偏向于原理，业界已经有不少开源的或者收费的解决方案，篇幅所限，就不再展开介绍。</p>
+
+<p>实际运用理论时进行架构设计时，许多人容易犯“手里有了锤子，看什么都觉得像钉子”的错误，设计方案时考虑的问题场景过多，各种重试，各种补偿机制引入系统，导致系统过于复杂，落地遥遥无期。</p>
+
+<p><div class="admonition quote"></p>
+
+<p>世界上解决一个计算机问题最简单的方法：“恰好”不需要解决它！</p>
+
+<p>—— 阿里中间件技术专家沈询</p>
+
+<p></div>
+有些问题，看起来很重要，但实际上我们可以通过合理的设计或者将问题分解来规避。</p>
+
+<p>设计分布式事务系统也不是需要考虑所有异常情况，不必过度设计各种回滚，补偿机制。</p>
+
+<p>如果硬要把时间花在解决问题本身，实际上不仅效率低下，而且也是一种浪费。</p>
+
+<p>如果系统要实现回滚流程的话，有可能系统复杂度将大大提升，且很容易出现 Bug，估计出现 Bug 的概率会比需要事务回滚的概率大很多。</p>
+
+<p>在设计系统时，我们需要衡量是否值得花这么大的代价来解决这样一个出现概率非常小的问题，可以考虑当出现这个概率很小的问题，能否采用人工解决的方式，这也是大家在解决疑难问题时需要多多思考的地方。</p>
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/transaction-2pc/" data-toggle="tooltip" data-placement="top" title="分布式事务-2PC(二阶段提交)">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/transaction-local-msg-tb/" data-toggle="tooltip" data-placement="top" title="分布式事务-本地消息表：最终一致性">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+<div id="disqus-comment"></div>
+
+
+
+            </div>
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/devops" title="devops">
+                            devops
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/docker" title="docker">
+                            docker
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/domain-driven-design" title="domain-driven-design">
+                            domain-driven-design
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/drools" title="drools">
+                            drools
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/dubbo" title="dubbo">
+                            dubbo
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java" title="java">
+                            java
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java%E5%B9%B6%E5%8F%91%E5%AE%9E%E6%88%98" title="java并发实战">
+                            java并发实战
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E5%AE%9E%E6%88%98" title="java性能调优实战">
+                            java性能调优实战
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/jvm" title="jvm">
+                            jvm
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/kubernetes" title="kubernetes">
+                            kubernetes
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/linux" title="linux">
+                            linux
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/mq" title="mq">
+                            mq
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/mysql" title="mysql">
+                            mysql
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/mysql%E5%AE%9E%E6%88%9845%E8%AE%B2" title="mysql实战45讲">
+                            mysql实战45讲
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/redis" title="redis">
+                            redis
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/spring" title="spring">
+                            spring
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E4%B9%A6%E5%8D%95" title="书单">
+                            书单
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F" title="分布式">
+                            分布式
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E5%AE%B9%E5%99%A8" title="容器">
+                            容器
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8" title="工具使用">
+                            工具使用
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E5%B9%B6%E5%8F%91" title="并发">
+                            并发
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84" title="数据结构">
+                            数据结构
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E9%AB%98%E6%89%8B%E8%AF%BE" title="消息队列高手课">
+                            消息队列高手课
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E7%AE%97%E6%B3%95" title="算法">
+                            算法
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E7%BC%93%E5%AD%98" title="缓存">
+                            缓存
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE" title="网络协议">
+                            网络协议
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E8%B6%A3%E8%B0%88%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE" title="趣谈网络协议">
+                            趣谈网络协议
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%BE%8E" title="软件工程之美">
+                            软件工程之美
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E9%80%8F%E8%A7%86http%E5%8D%8F%E8%AE%AE" title="透视http协议">
+                            透视http协议
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E9%9D%A2%E8%AF%95" title="面试">
+                            面试
+                        </a>
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+                <section>
+                    <hr>
+                    <h5>FRIENDS</h5>
+                    <ul class="list-inline">
+                        
+                        <li><a target="_blank" href="https://servicemesher.com">servicemesher的博客</a></li>
+                        
+                    </ul>
+                </section>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                   
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="Quguang&#39;s Blog" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fa fa-circle fa-stack-2x"></i>
+                               <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+                   
+                    
+                    <li>
+                        <a href="mailto:quguang1011@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    
+
+                    
+
+		    
+                    
+                    <li>
+                        <a target="_blank" href="/your%20wechat%20qr%20code%20image">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-wechat fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/techqu">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/yourlinkedinid">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://medium.com/@quguang1011">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-medium fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+            
+                    
+                    <li>
+                        <a target="_blank" href="https://stackoverflow.com/users/yourstackoverflowid">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+            
+                    
+                    
+                    
+            
+            
+            
+                </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Quguang&#39;s Blog 2020
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+</body>
+</html>

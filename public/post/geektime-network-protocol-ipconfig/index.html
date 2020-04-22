@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Quguang&#39;s Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://quguang.wang/img/bg-china.jpg">
+    <meta property="twitter:image" content="https://quguang.wang/img/bg-china.jpg" />
+    
+
+    
+    <meta name="title" content="《趣谈网络协议》-Ipconfig" />
+    <meta property="og:title" content="《趣谈网络协议》-Ipconfig" />
+    <meta property="twitter:title" content="《趣谈网络协议》-Ipconfig" />
+    
+
+    
+    <meta name="description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。">
+    <meta property="og:description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。" />
+    <meta property="twitter:description" content="瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="瞿广, quguang, , 瞿广的网络日志, 瞿广的博客, quguang Blog, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Istio, Kubernetes, 微服务, Microservice">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>《趣谈网络协议》-Ipconfig-瞿广的博客 | quguang Blog</title>
+
+    <link rel="canonical" href="/post/geektime-network-protocol-ipconfig/">
+
+    <link rel="stylesheet" href="/css/iDisqus.min.css"/>
+	
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+    
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    
+    <script src="/js/jquery.min.js"></script>
+    
+    
+    <script src="/js/bootstrap.min.js"></script>
+    
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Quguang&#39;s Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/life">life</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/math">math</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/note">note</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/tech">tech</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/top/about/">ABOUT</a></li>
+                    
+
+                    
+		    <li>
+                        <a href="/search">SEARCH <img src="/img/search.png" height="15" style="cursor: pointer;" alt="Search"></a>
+		    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/bg-china.jpg')
+    }
+</style>
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE" title="网络协议">
+                            网络协议
+                        </a>
+                        
+                        <a class="tag" href="/tags/%E8%B6%A3%E8%B0%88%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE" title="《趣谈网络协议》">
+                            《趣谈网络协议》
+                        </a>
+                        
+                    </div>
+                    <h1>《趣谈网络协议》-Ipconfig</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 
+                        
+                            瞿广
+                         
+                        on 
+                        Wednesday, January 16, 2019
+                        
+                        
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <header>
+                    <h2>TOC</h2>
+                </header>
+                <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#无类型域间选路-cidr">无类型域间选路（CIDR）</a></li>
+<li><a href="#子网切分">子网切分</a></li>
+<li><a href="#超网划分">超网划分：</a></li>
+<li><a href="#公有ip和私有ip">公有IP和私有IP</a></li>
+<li><a href="#mac-地址">MAC 地址</a></li>
+<li><a href="#网络设备的状态标识">网络设备的状态标识</a></li>
+<li><a href="#子网切分的例子">子网切分的例子</a></li>
+<li><a href="#附">附</a></li>
+</ul></li>
+</ul>
+</nav>
+                
+                <p>从一行查看IP地址的命令开始讲解，
+Window上是ipconfig，Linux上是ifconfig，和 ip addr</p>
+
+<pre><code class="language-shell">root@test:~# ip addr
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default 
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether fa:16:3e:c7:79:75 brd ff:ff:ff:ff:ff:ff
+    inet 10.100.122.2/24 brd 10.100.122.255 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::f816:3eff:fec7:7975/64 scope link 
+       valid_lft forever preferred_lft forever
+</code></pre>
+
+<p>这个命令显示了这台机器上所有的网卡。大部分的网卡都会有一个IP地址，当然，这不是必须的。</p>
+
+<p>如上，<code>10.100.122.2</code>就是一个IP地址。这个地址被点分割为四个部分，每个部分8个bit，所以IP地址总共是32位。这样产生的IP地址的数量很快就不够用了。因为不够用，于是就有了IPv6，也就是上面的输出结果里面<code>inet6 fe80::f816:3eff:fec7:7975/64</code>。这个有128位，现在看是够用了。</p>
+
+<p>本来就不够用的IP地址就不够，还被分成了5类。</p>
+
+<p><img src="/img/ip.jpg" alt="ip" />
+在网络地址中，至少在当时设计的时候，对于 A、B、 C 类主要分两部分，前面一部分是<strong>网络号</strong>，后面一部分是<strong>主机号</strong>。</p>
+
+<p><img src="/img/ip-category.jpg" alt="ip" /></p>
+
+<h2 id="无类型域间选路-cidr">无类型域间选路（CIDR）</h2>
+
+<div class="admonition note"><p class="admonition-title">CIDR</p>
+  
+为了方便表示IP和子网掩码 大佬们想到了一个简单的方法：IP/子网掩码位数 （CIDR表示法）
+
+举例 ：IP为192.168.0.0 子网掩码为255.255.255.0 用CIDR法表示
+
+
+- step1：先将子网掩码由二进制转换为十进制
+- 11111111.11111111.11111111.00000000
+- setp2：CIDR表示为：192.168.0.0/24
+
+
+</div>
+
+<p>这种方式打破了原来设计的几类地址的做法，将 32 位的 IP 地址一分为二，前面是<strong>网络号</strong>，后面是<strong>主机号</strong>。</p>
+
+<p>伴随CIDR存在的，一个是广播地址（10.100.122.255），另一个是子网掩码（255.255.255.0）。如果发送这个地址，所有 10.100.122 网络里面的机器都可以收到。</p>
+
+<p>在最初的网络里，网络根据ip地址分为的三种类型 而 形成的三个网域 ,这三个网域内的各个机器可以进行方便的访问 但是这一个网域内的机器数目太过庞大 也不便于管理 为了将网域分为更小的范围 ,人们想出来了一种解决方案，正是靠子网掩码来将一个大网域划分为更多的小网域</p>
+
+<p><strong>子网掩码的计算</strong>：根据IP的网络ID和主机ID就可以得出子网掩码,将网络ID所在的位置全部化为1 将主机ID所在的位数全部化为0</p>
+
+<p>将子网掩码和 IP 地址进行 AND 计算。前面三个 255，转成二进制都是 1。1 和任何数值取 AND，都是原来数值，因而前三个数不变，为 10.100.122。后面一个 0，转换成二进制是 0，0 和任何数值取 AND，都是 0，因而最后一个数变为 0，合起来就是 10.100.122.0。这就是
+网络号，将子网掩码和 IP 地址按位计算 AND，就可得到网络号。</p>
+
+<h2 id="子网切分">子网切分</h2>
+
+<p>将主机ID借一位到网络ID上，就可实现切分为两个子网</p>
+
+<h2 id="超网划分">超网划分：</h2>
+
+<p>在某些情况下，我们需要将多个小网络合并成一个大网络，每个网络主机ID变多，
+网络ID变少，原来的主机ID位向网络ID位借位。其目的是节约路由器的记录数</p>
+
+<pre><code>举例：
+220.78.10101000.0   168
+220.78.10101001.0   169
+220.78.10101010.0   170
+220.78.10101011.0   171
+220.78.10101100.0   172
+220.78.10101101.0   173
+220.78.10101110.0   174
+220.78.10101111.0   175
+</code></pre>
+
+<p>这8个IP地址就可以合并为一个ip来节省路由器的资源，加快访问速度,<code>220.78.168.0/21</code></p>
+
+<h2 id="公有ip和私有ip">公有IP和私有IP</h2>
+
+<p><div class="admonition note"></p>
+
+<ul>
+<li>publicIP：这种IP地址可以直接连接至Internet</li>
+<li>privateIP：这种ip地址不能直接连接到internet，主要用于规划局域网内的规划</li>
+</ul>
+
+<p>私有IP分别在ABC三类当中各保留一段作为私有ip网段</p>
+
+<ul>
+<li>classA: 10.0.0.0 &ndash; 10.255.255.255</li>
+<li>classB: 172.16.0.0 &mdash; 172.31.255.255</li>
+<li>classC:192.168.0.0 &ndash; 192.168.255.255</li>
+</ul>
+
+<p>这三段中的ip的地址是无法上网的，只能限于内部网络使用</p>
+
+<p></div>
+　　与私有IP地址对应的是公有地址（Public address），由Inter NIC（Internet Network Information Center 因特网信息中心）负责。这些IP地址分配给注册并向Inter NIC提出申请的组织机构。通过它直接访问因特网。  　　</p>
+
+<p>　　私有IP的出现是为了解决公有IP地址不够用的情况。从A、B、C三类IP地址中拿出一部分作为私有IP地址，这些IP地址不能被路由到Internet骨干网上，Internet路由器也将丢弃该私有地址。如果私有IP地址想要连至Internet，需要将私有地址转换为公有地址。这个转换过程称为网络地址转换（Network Address Translation，NAT），通常使用路由器来执行NAT转换。</p>
+
+<p>范围如下：</p>
+
+<ul>
+<li>A: 10.0.0.0~10.255.255.255,即10.0.0.0/8</li>
+<li>B:172.16.0.0~172.31.255.255,即172.16.0.0/12</li>
+<li>C:192.168.0.0~192.168.255.255,即192.168.0.0/16</li>
+</ul>
+
+<p>这五类地址中，还有一类 D 类是 <strong>组播地址</strong>。使用这一类地址，属于某个组的机器都能收到。这有点类似在公司里面大家都加入了一个邮件组。发送邮件，加入这个组的都能收到。组播地址在后面讲述 VXLAN 协议的时候会提到。</p>
+
+<p>在 IP 地址的后面有个 scope，对于 eth0 这张网卡来讲，是 global，说明这张网卡是可以对外的，可以接收来自各个地方的包。对于 lo 来讲，是 host，说明这张网卡仅仅可以供本机相互通信。</p>
+
+<p><strong>lo 全称是loopback，又称环回接口</strong>，往往会被分配到 127.0.0.1 这个地址。这个地址用于本机通信，经过内核处理后直接返回，不会在任何网络中出现。</p>
+
+<h2 id="mac-地址">MAC 地址</h2>
+
+<p>在 IP 地址的上一行是<code>link/ether fa:16:3e:c7:79:75 brd ff:ff:ff:ff:ff:ff，</code>这个被称为<strong>MAC地址</strong>，是一个网卡的物理地址，用十六进制，6 个 byte 表示。</p>
+
+<p>它的唯一性设计是为了组网的时候，不同的网卡放在一个网络里面的时候，可以不用担心冲突。从硬件角度，保证不同的网卡有不同的标识。</p>
+
+<p>所以，MAC 地址的通信范围比较小，局限在一个子网里面。例如，从 <code>192.168.0.2/24</code> 访问 <code>192.168.0.3/24</code> 是可以用 MAC 地址的。一旦跨子网，即从 <code>192.168.0.2/24</code> 到 <code>192.168.1.2/24</code>，MAC 地址就不行了，需要 IP 地址起作用了。</p>
+
+<h2 id="网络设备的状态标识">网络设备的状态标识</h2>
+
+<p>解析完了 MAC 地址，我们再来看 <code>&lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt;</code> 是干什么的？这个叫作<strong>net_device flags</strong>，<strong>网络设备的状态标识</strong>。</p>
+
+<ul>
+<li><strong>UP</strong> 表示网卡处于启动的状态</li>
+<li><strong>BROADCAST</strong> 表示这个网卡有广播地址，可以发送广播包；</li>
+<li><strong>MULTICAST</strong> 表示网卡可以发送多播包；</li>
+<li><strong>LOWER_UP</strong> 表示 L1 是启动的，也即网线插着呢。</li>
+<li><strong>MTU1500</strong> 是指什么意思呢？是哪一层的概念呢？最大传输单元 MTU 为 1500，这是以太网的默认值。</li>
+</ul>
+
+<p>MTU 是二层 MAC 层的概念。MAC 层有 MAC 的头，以太网规定连 MAC 头带正文合起来，不允许超过 1500 个字节。正文里面有 IP 的头、TCP 的头、HTTP 的头。如果放不下，就需要分片来传输。</p>
+
+<p><code>qdisc pfifo_fast</code> 是什么意思呢？qdisc 全称是 <strong>queueing discipline</strong>,中文叫<strong>排队规则</strong>。内核如果需要通过某个网络接口发送数据包，它都需要按照为这个接口配置的 qdisc（排队规则）把数据包加入队列。</p>
+
+<hr />
+
+<h2 id="子网切分的例子">子网切分的例子</h2>
+
+<ol>
+<li><p>已知：</p>
+
+<ul>
+<li>IP地址：172.16.100.200</li>
+<li>子网掩码：255.255.224.0</li>
+</ul></li>
+
+<li><p>用CIDR表示：</p>
+
+<pre><code>step1：将子网掩码由二进制转换为十进制
+          255.255.224.0
+          11111111.11111111.11100000.00000000
+step2：CIDR表示为
+          172.16.100.200/19
+</code></pre></li>
+
+<li><p>网络ID是多少</p>
+
+<pre><code>step1：将IP地址由二进制转换为十进制
+        10101100.00010000.01100100.11001000
+step2：将二进制的IP地址与二进制的子网掩码进行运算 子网掩码为1时保留原IP位 否则为0
+        1 0 1 0 1 1 0 0 .0 0 0 1 0 0 0 0. 0 1 1 0 0 1 0 0. 1 1 0 0 1 0 0 0
+        1 1 1 1 1 1 1 1. 1 1 1 1 1 1 1 1. 1 1 1 0 0 0 0 0. 0 0 0 0 0 0 0 0
+    =   1 0 1 0 1 1 0 0 .0 0 0 1 0 0 0 0. 0 1 1 0 0 0 0 0. 0 0 0 0 0 0 0 0
+step3:将二进制的结果转换为十进制
+        172.16.96.0/19
+</code></pre></li>
+
+<li><p>网络主机数有多少</p>
+
+<pre><code>num=2^(32-19)-2
+</code></pre></li>
+
+<li><p>网络主机的范围是多少</p>
+
+<pre><code>step1：将长度为子网掩码为1的数IP记录下来（即网络ID）
+        1 0 1 0 1 1 0 0 .0 0 0 1 0 0 0 0. 0 1 1 x x x x x . x x x x x x x x
+        1 1 1 1 1 1 1 1. 1 1 1 1 1 1 1 1. 1 1 1 
+step2：将x全部变为0即最小值 将x全部变为1即最大值
+        1 0 1 0 1 1 0 0 .0 0 0 1 0 0 0 0. 0 1 1 0 0 0 0 0.0
+        1 0 1 0 1 1 0 0 .0 0 0 1 0 0 0 0. 0 1 1 x 1 1 1 1 .255
+step3：将二进制的结果转换为十进制（ip的最后一组不能为0和255）
+        最小值：172.16.96.1
+        最大值：172.16.177.254
+</code></pre></li>
+</ol>
+
+<h2 id="附">附</h2>
+
+<p>课程所有协议</p>
+
+<p><img src="/img/geektime-network-protocol.png" alt="所有协议" /></p>
+
+<blockquote>
+<p>参考文章：<a href="https://time.geekbang.org/column/article/7772">https://time.geekbang.org/column/article/7772</a></p>
+</blockquote>
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/2018-2019/" data-toggle="tooltip" data-placement="top" title="2018总结-2019计划">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/geektime-kubernetes-introduction/" data-toggle="tooltip" data-placement="top" title="《深入剖析Kubernetes》-入门">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+<div id="disqus-comment"></div>
+
+
+
+            </div>
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/devops" title="devops">
+                            devops
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/docker" title="docker">
+                            docker
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/domain-driven-design" title="domain-driven-design">
+                            domain-driven-design
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/drools" title="drools">
+                            drools
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/dubbo" title="dubbo">
+                            dubbo
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java" title="java">
+                            java
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java%E5%B9%B6%E5%8F%91%E5%AE%9E%E6%88%98" title="java并发实战">
+                            java并发实战
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E5%AE%9E%E6%88%98" title="java性能调优实战">
+                            java性能调优实战
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/jvm" title="jvm">
+                            jvm
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/kubernetes" title="kubernetes">
+                            kubernetes
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/linux" title="linux">
+                            linux
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/mq" title="mq">
+                            mq
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/mysql" title="mysql">
+                            mysql
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/mysql%E5%AE%9E%E6%88%9845%E8%AE%B2" title="mysql实战45讲">
+                            mysql实战45讲
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/redis" title="redis">
+                            redis
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/spring" title="spring">
+                            spring
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E4%B9%A6%E5%8D%95" title="书单">
+                            书单
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F" title="分布式">
+                            分布式
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E5%AE%B9%E5%99%A8" title="容器">
+                            容器
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8" title="工具使用">
+                            工具使用
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E5%B9%B6%E5%8F%91" title="并发">
+                            并发
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84" title="数据结构">
+                            数据结构
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E9%AB%98%E6%89%8B%E8%AF%BE" title="消息队列高手课">
+                            消息队列高手课
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E7%AE%97%E6%B3%95" title="算法">
+                            算法
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E7%BC%93%E5%AD%98" title="缓存">
+                            缓存
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE" title="网络协议">
+                            网络协议
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E8%B6%A3%E8%B0%88%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE" title="趣谈网络协议">
+                            趣谈网络协议
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%BE%8E" title="软件工程之美">
+                            软件工程之美
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E9%80%8F%E8%A7%86http%E5%8D%8F%E8%AE%AE" title="透视http协议">
+                            透视http协议
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E9%9D%A2%E8%AF%95" title="面试">
+                            面试
+                        </a>
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+                <section>
+                    <hr>
+                    <h5>FRIENDS</h5>
+                    <ul class="list-inline">
+                        
+                        <li><a target="_blank" href="https://servicemesher.com">servicemesher的博客</a></li>
+                        
+                    </ul>
+                </section>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                   
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="Quguang&#39;s Blog" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fa fa-circle fa-stack-2x"></i>
+                               <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+                   
+                    
+                    <li>
+                        <a href="mailto:quguang1011@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    
+
+                    
+
+		    
+                    
+                    <li>
+                        <a target="_blank" href="/your%20wechat%20qr%20code%20image">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-wechat fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/techqu">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/yourlinkedinid">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://medium.com/@quguang1011">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-medium fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+            
+                    
+                    <li>
+                        <a target="_blank" href="https://stackoverflow.com/users/yourstackoverflowid">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+            
+                    
+                    
+                    
+            
+            
+            
+                </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Quguang&#39;s Blog 2020
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+</body>
+</html>
