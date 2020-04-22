@@ -5,7 +5,7 @@ lastmod: 2019-02-22T22:27:38+08:00
 draft: false
 keywords: []
 description: ""
-tags: ["MySQL"]
+tags: ["MySQL","MYSQL实战45讲"]
 categories: ["Tech"]
 author: "瞿广"
 
@@ -82,12 +82,19 @@ insert into t1 (select * from t2 where id<=100)
 - 往T2插入1000行数据，t1插入100行
 
 ## 2 三种方法
-## 2.1 Index Nested-Loop Join
+## 2.1 Index Nested-Loop Join(驱动表上有索引)
 
 ```sql
 selec * from t1 straight_join t2 on (t1.a = t2.a)
 ```
-t1是驱动表，t2是被驱动表
+straight_join
+
+> TRAIGHT_JOIN is similar to JOIN, except that the left table is always read before the right table. 
+> This can be used for those (few) cases for which the join optimizer puts the tables in the wrong order
+
+意思就是说STRAIGHT_JOIN功能同join类似，但能让左边的表来驱动右边的表，能改表优化器对于联表查询的执行顺序。
+
+因此：t1是驱动表，t2是被驱动表
 
 ### 执行流程：
 
@@ -119,7 +126,8 @@ t1是驱动表，t2是被驱动表
 显然，这么做还不如直接join好。
 
 ### 问题二：怎么选择驱动表？
-在这个join语句执行过程中，驱动表是走全表扫描，而被驱动表是走树搜索。
+
+**在这个join语句执行过程中，驱动表是走全表扫描，而被驱动表是走树搜索。**
 
 假设被驱动表的行数是M。每次在被驱动表一行数据，要先搜索索引a，再搜索主键索引。每次搜索一棵树近似复杂度是以 2 为底的M的对数，记为log2M，所以再被驱动表上查一行的时间复杂度是 2*log2M。
 
@@ -128,7 +136,7 @@ t1是驱动表，t2是被驱动表
 1. 使用join语句，性能比强行拆成多个单表执行sql语句的性能要好。
 2. 如果使用join语句的话，需要让小表做驱动表
 
-但是，需要注意，这个结论的前提是**“可以使用被驱动表的索引”**
+但是，需要注意，这个结论的前提是 **可以使用被驱动表的索引**
 
 ## 2.2 Simple Nested-loop join
 
@@ -143,7 +151,7 @@ select * from t1 straight_join t2 on (t1.a = t2.b)
 
 当然MYSQL没有使用这个方法，而是下面的 `Block Nested-Loop Join`
 
-## 2.3 Block Nested-Loop Join
+## 2.3 Block Nested-Loop Join(被驱动表上没有可用的索引)
 
 这时候，被驱动表上没有可用的索引，算法的流程是这样的：
 

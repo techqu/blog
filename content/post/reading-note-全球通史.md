@@ -1,12 +1,12 @@
 ---
-title: "读书笔记-全球通史"
+title: "《全球通史》"
 date: 2019-11-10T17:44:38+08:00
 lastmod: 2019-11-10T17:44:38+08:00
 draft: false
 keywords: []
 description: ""
 tags: []
-categories: ["Tech"]
+categories: ["note"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

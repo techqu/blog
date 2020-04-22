@@ -5,7 +5,7 @@ lastmod: 2019-05-15T19:36:47+08:00
 draft: false
 keywords: []
 description: ""
-tags: ["面试","消息队列","MQ"]
+tags: ["面试","MQ"]
 categories: ["Tech"]
 author: "瞿广"
 

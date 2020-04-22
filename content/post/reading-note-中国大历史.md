@@ -1,12 +1,12 @@
 ---
-title: "Reading Note 中国大历史"
+title: "《中国大历史》"
 date: 2019-11-10T16:36:40+08:00
 lastmod: 2019-11-10T16:36:40+08:00
 draft: false
 keywords: []
 description: ""
 tags: []
-categories: ["Tech"]
+categories: ["note"]
 author: "瞿广"
 
 # You can also close(false) or open(true) something for this content.

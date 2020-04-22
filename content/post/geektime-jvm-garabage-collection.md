@@ -5,7 +5,7 @@ draft: false
 author: "瞿广"
 originallink: ""
 summary: "这里填写文章文章摘要。"
-tags: ["java","JVM","虚拟机"]
+tags: ["java","JVM"]
 categories: ["Tech"]
 ---
  全文出自《深入理解java虚拟机》第三章。 垃圾收集器与内存分配策略。包含三部分内容：如何判断哪些对象需要回收，如何回收和一些常见的垃圾收集器。

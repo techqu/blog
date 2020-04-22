@@ -5,7 +5,7 @@ lastmod: 2019-02-25T08:00:23+08:00
 draft: false
 keywords: []
 description: ""
-tags: ["MySQL"]
+tags: ["MySQL","MYSQL实战45讲"]
 categories: ["Tech"]
 author: "瞿广"
 

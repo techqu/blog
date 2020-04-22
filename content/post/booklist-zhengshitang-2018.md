@@ -6,7 +6,7 @@ draft: false
 thumbnail: "/img/undraw/undraw_reading_list_4boi.png"
 keywords: []
 description: ""
-tags: ["booklist"]
+tags: ["书单"]
 categories: ["note"]
 author: "政事堂pro"
 

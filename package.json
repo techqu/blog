@@ -1,0 +1,24 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "```bash hugo new post/scala-learning-pattern-matching.md ```",
+  "main": "index.js",
+  "dependencies": {
+    "atomic-algolia": "^0.3.17"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "algolia": "atomic-algolia"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/techqu/blog.git"
+  },
+  "author": "quguang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/techqu/blog/issues"
+  },
+  "homepage": "https://github.com/techqu/blog#readme"
+}

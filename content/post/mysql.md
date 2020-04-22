@@ -5,7 +5,7 @@ lastmod: 2019-05-22T22:27:38+08:00
 draft: false
 keywords: []
 description: ""
-tags: ["MySQL"]
+tags: ["MySQL","MYSQL实战45讲"]
 categories: ["Tech"]
 author: "瞿广"
 # You can also close(false) or open(true) something for this content.
@@ -60,7 +60,7 @@ MySQL的逻辑架构图
  - 存储引擎：存储数据，提供读写接口
 
 
-
+![img/MySQL-Architecture.png](/img/MySQL-Architecture.png)
 
 ## 日志系统：一条SQL更新语句是如何执行的
 

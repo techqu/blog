@@ -15,9 +15,9 @@ home = ["HTML", "RSS", "Algolia"]
 [params]
   header_image = "img/bg-china.jpg"
   SEOTitle = "瞿广的博客 | quguang Blog"
-  description = "瞿广，程序员, 开源爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。"
+  description = "瞿广，程序员, 技术爱好者，生活探险家 | 这里是 瞿广 的博客，与你一起发现更大的世界。"
   keyword = "瞿广, quguang, , 瞿广的网络日志, 瞿广的博客, quguang Blog, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Istio, Kubernetes, 微服务, Microservice"
-  slogan = "路在脚下，心向远方"
+  slogan = ""
 
   image_404 = "img/404-bg.jpg"
   title_404 = "你来到了没有知识的荒原 :("
@@ -29,9 +29,9 @@ home = ["HTML", "RSS", "Algolia"]
 
   # algolia site search
   algolia_search = true
-  algolia_appId = ""
-  algolia_indexName = ""
-  algolia_apiKey = ""
+  algolia_appId = "V7U7QO1TC4"
+  algolia_indexName = "myblog"
+  algolia_apiKey = "ac29b8356bd3b2ceee369bf3894f34e4"
 
   # Sidebar settings
   sidebar_about_description = "Software Developer, Open Source Enthusiast and Life Adventurer"
@@ -54,12 +54,14 @@ home = ["HTML", "RSS", "Algolia"]
   # reward_guide = "如果这篇文章对你有用,请随意打赏" 
 
   friends = true
-  bookmarks = false
+  bookmarks = true 
   about_me = true
 
   # Include any custom CSS and/or JS files, url or relative to /static folder
   #custom_css = ["css/lightbox.css", "https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css", "css/main.css"]
   #custom_js = ["js/lightbox.js", "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js", "js/main.js"]
+  customCSS = ["css/douban.css"] # Include custom CSS files
+  customJS = ["js/douban.js"] # Include custom JS files
 
   # Highlight.js theme
   # demo: https://highlightjs.org/static/demo/
@@ -76,7 +78,7 @@ home = ["HTML", "RSS", "Algolia"]
   #instagram     = "full profile url in instagram"
   github         = "https://github.com/techqu"
   wechat         = "your wechat qr code image"
-#  medium         = "full profile url in medium"
+ medium         = "https://medium.com/@quguang1011"
   #pinterest     = "full profile url in pinterest"
   #reddit        = "full profile url in reddit"
   #gitlab        = "full profile url in gitlab"

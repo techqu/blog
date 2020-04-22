@@ -5,7 +5,7 @@ draft: false
 author: "瞿广"
 originallink: ""
 summary: "这里填写文章文章摘要。"
-tags: ["java","JVM","虚拟机"]
+tags: ["java","JVM"]
 categories: ["Tech"]
 ---
 
