@@ -1,6 +1,6 @@
-[submodule "public"]
-	path = public
-	url = https://github.com/techqu/techqu.github.io.git
-[submodule "themes/hugo-theme-cleanwhite"]
-	path = themes/hugo-theme-cleanwhite
-	url = https://github.com/zhaohuabing/hugo-theme-cleanwhite.git
+# [submodule "public"]
+# 	path = public
+# 	url = https://github.com/techqu/techqu.github.io.git
+# [submodule "themes/hugo-theme-cleanwhite"]
+# 	path = themes/hugo-theme-cleanwhite
+# 	url = https://github.com/zhaohuabing/hugo-theme-cleanwhite.git
